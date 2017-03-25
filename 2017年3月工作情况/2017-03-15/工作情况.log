@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.2.23)  8 MAR 2017 21:30
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.2.23)  25 MAR 2017 13:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**第(3-8)天完成的任务和问题.tex
-(./第(3-8)天完成的任务和问题.tex
+**工作情况.tex
+(./工作情况.tex
 LaTeX2e <2016/02/01>
 Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -1262,8 +1262,8 @@ Package: xeCJK-listings 2016/02/10 v3.3.4 xeCJK patch file for listings
 LaTeX Warning: Unused global option(s):
     [left=1.5cm,right=1.5cm].
 
-(./第(3-8)天完成的任务和问题.aux)
-\openout1 = `第(3-8)天完成的任务和问题.aux'.
+(./工作情况.aux)
+\openout1 = `工作情况.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 143.
 LaTeX Font Info:    ... okay on input line 143.
@@ -1395,10 +1395,9 @@ Overfull \hbox (4.32pt too wide) in paragraph at lines 145--145
 | []| 
  []
 
-(./第(3-8)天完成的任务和问题.toc
+(./工作情况.toc
 LaTeX Font Info:    Try loading font information for U+msa on input line 2.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 2.
@@ -1407,7 +1406,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 2.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ))
 \tf@toc=\write3
-\openout3 = `第(3-8)天完成的任务和问题.toc'.
+\openout3 = `工作情况.toc'.
 
 
 
@@ -1418,11 +1417,8 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [1
 
-]
-File: hty-controller.png Graphic file (type QTm)
- <use  "hty-controller.png" >
-File: hty-network.png Graphic file (type QTm)
- <use  "hty-network.png" >
+] 
+AED: lastpage setting LastPage
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1431,48 +1427,18 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [2
 
-]
-File: hty-compute1.png Graphic file (type QTm)
- <use  "hty-compute1.png" >
+] (./工作情况.aux)
 
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-[3]
-File: 1.png Graphic file (type QTm)
- <use  "1.png" >
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[4]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.184 ...��中，忘记配置[ovs]节点的local\>
-                                                  _ip
-? 
-! Emergency stop.
-<inserted text> 
-                $
-l.184 ...��中，忘记配置[ovs]节点的local\>
-                                                  _ip
-End of file on the terminal!
-
- 
+ ) 
 Here is how much of TeX's memory you used:
- 24177 strings out of 493638
- 443736 string characters out of 6146796
- 516110 words of memory out of 5000000
- 27298 multiletter control sequences out of 15000+600000
- 10356 words of font info for 61 fonts, out of 8000000 for 9000
+ 24047 strings out of 493638
+ 442196 string characters out of 6146796
+ 511099 words of memory out of 5000000
+ 27183 multiletter control sequences out of 15000+600000
+ 8771 words of font info for 52 fonts, out of 8000000 for 9000
  1328 hyphenation exceptions out of 8191
- 48i,12n,72p,10372b,1133s stack positions out of 5000i,500n,10000p,200000b,80000s
-Output written on 第(3-8)天完成的任务和问题.pdf (4 pages).
-0000s
+ 48i,12n,72p,10361b,246s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 第(3-8)天完成的任务和问题.pdf (5 pages).
+Output written on 工作情况.pdf (2 pages).

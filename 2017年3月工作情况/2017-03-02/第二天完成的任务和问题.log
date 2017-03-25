@@ -1400,45 +1400,42 @@ LaTeX Font Info:    Try loading font information for U+msa on input line 2.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 2.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
-\tf@toc=\write3
-\openout3 = `第二天完成的任务和问题.toc'.
-
-
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
+LaTeX Font Info:    Try loadin Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
 [1
 
-] 
-AED: lastpage setting LastPage
+]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.160 ...�到网络节点的/etc/neutron/metadata_
+                                                  agent.ini
+? 
+! Emergency stop.
+<inserted text> 
+                $
+l.160 ...�到网络节点的/etc/neutron/metadata_
+                                                  agent.ini
+End of file on the terminal!
 
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[2
-
-] (./第二天完成的任务和问题.aux)
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
-
- ) 
+ 
 Here is how much of TeX's memory you used:
- 24141 strings out of 493638
- 442865 string characters out of 6146796
- 514106 words of memory out of 5000000
- 27273 multiletter control sequences out of 15000+600000
+ 23973 strings out of 493638
+ 440297 string characters out of 6146796
+ 507106 words of memory out of 5000000
+ 27136 multiletter control sequences out of 15000+600000
+ 4076 words of font info for 32 fonts, out of 8000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 48i,12n,72p,10368b,274s stack positions out of 5000i,500n,10000p,200000b,80000s
+Output written on 第二天完成的任务和问题.pdf (1 page).
+ page).
+quences out of 15000+600000
  8787 words of font info for 54 fonts, out of 8000000 for 9000
  1328 hyphenation exceptions out of 8191
  48i,12n,72p,10368b,1133s stack positions out of 5000i,500n,10000p,200000b,80000s
-
-Output written on 第二天完成的任务和问题.pdf (2 pages).
+Output written on 第二天完成的任务和问题.pdf (1 page).
+henation exceptions out of 8191
+ 48i,12n,72p,10368b,1133s stack positions out of 5000i,500n,10000p,200000b,80000s
+Output written on 第二天完成的任务和问题.pdf (1 page).
