@@ -1,0 +1,189 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{关于J版高可用方案调研\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+\begin{document}
+
+\tableofcontents
+
+\clearpage
+
+\section{HA模式有个基本的原则}
+	\begin{itemize}
+		\item[1.]能A/A尽量A/A，不能的话则A/P(有的公司认为A/P不是HA)
+		\item[2.]有原生HA方案(内部实现的)，尽量原生。否则使用额外的HA软件比如pacemaker等
+		\item[3.]尽力考虑负载均衡
+		\item[4.]尽可能简单，不要太复杂。
+	\end{itemize}
+
+\section{支持VRRP实现的keepalived软件实现}
+\subsection{VRRP的优势}
+	\begin{itemize}
+		\item[1.]
+		
+	\end{itemize}
+\subsection{VRRP存在的问题}
+	\begin{itemize}
+		\item[1.]
+		
+	\end{itemize}
+
+\section{使用DVR方案}
+\subsection{DVR优势}
+\begin{itemize}
+	\item[1.]未使用DVR的neutron，内部不同子网之间的vm信息交互，以及vm访问外网，都需要走网络节点的路由。增加了网络的负载，同时网络节点非HA。
+	\item[2.]DVR可以将不同子网vm的信息交互，走计算节点的路由，分担了部分网络节点的负载。
+\end{itemize}
+\subsection{DVR存在的问题}
+\begin{itemize}
+	\item[1.]未分配浮动ip的vm，访问外网，仍旧要走网络节点。
+	\item[2.]在DVR的同时，网络节点也要做HA(例如使用pacemaker)。遗憾的是，J版neutron不同时支持HA和DVR。
+\end{itemize}
+\subsection{DVR后续版本的开发}
+\begin{itemize}
+	\item[1.]kilo版本支持HA+DVR，同时支持内网Vlan（J版DVR只支持vxlan或者gre）
+	\item[2.]liberty版本支持分布式SNAT
+\end{itemize}
+
+\section{pacemaker+corosync实现两节点或多节点集群}
+\subsection{}
+
+\end{document}
