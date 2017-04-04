@@ -1,0 +1,8 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "latexCompile.compiler": "xelatex",
+    "latexCompile.openAfterCompile": true,
+    "latexCompile.openLogAfterError": true,
+    "latexCompile.mainFile": null
+    
+}
