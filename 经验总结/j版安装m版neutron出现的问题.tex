@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{第(3-8)天完成的任务和问题\qquad}
+\chead{软件源相关命令\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -147,41 +147,21 @@
 \clearpage
 
 
-\section{第(3-8)天完成的任务和问题}
-
-\subsection{任务一：完成openstack的juno版本的安装}
+\subsection{问题一：glance,keystone,nova无法启动}
 \begin{itemize}
-	\item[1.]完成网络节点neutron的安装配置
-	\item[2.]完成控制节点的dashboard的安装配置
-	\item[3.]创建一个虚拟机实例instance，测试网络的连通性
+	\item[1.]通过apt-get安装neutron之后，重启机器。glance,keystone,nova服务无法启动
+	\item[2.]由于高版本的neutron安装时，需要依赖其他服务的相关组件，对需要的包会进行自动升级
+	\item[3.]升级后的包与低版本的其他组件不兼容
+	\item[4.]
 \end{itemize}
 
-\subsection{任务二：格式化三台机器，重新进行juno版本的安装，安装到镜像}
+\subsection{使用新立德查看软件列表}
 \begin{itemize}
-	\item[1.]从172.16.19.33下载ubuntu14.04.1的iso文件，命令如下
-		\begin{lstlisting}
-            scp root@172.16.19.33:/home/uftp/hty/iso/other/ubuntu-14.04.3-server-amd64.iso ./Downloads/
-        \end{lstlisting}
-	\item[2.]机器网络设置如下 
-	\item[3.]控制节点配置如下图
-		\sizedfic{0.6}{hty-controller.png}
-	\item[4.]网络节点配置如下图
-		\sizedfic{0.6}{hty-network.png}
-	\item[5.]计算节点配置如下图	
-		\sizedfic{0.6}{hty-compute1.png}
+	\item[1.]利用apt-get install synaptic命令安装该软件
+	\item[2.]使用 ssh -X root@主机ip 并输入密码，打开该软件的图形化界面
+	\item[3.]可以查看软件列表，包括未安装和已安装
+	\item[4.]快捷键ctrl+e,强制安装固定版本的软件。等同于命令apt-get install package=version
 \end{itemize}
 
-\subsection{问题一：按照juno版本文档创建外部子网，虚拟路由无法获得gateway地址}
-\begin{itemize}
-	\item[1.]文档指示，外网dhcp服务disable。如下图所示
-        \sizedfic{0.6}{1.png}
-	\item[2.]disable导致虚拟路由的gateway无法获得ip,我在此部分将其dhcp服务enable
-	\item[3.]注意：可能通过其他办法获取ip，暂时先进行该处理
-\end{itemize}
 
-\subsection{问题二：创建的虚拟机实例在dashboard显示已经分配了ip，但是根本没有拿到}
-\begin{itemize}
-	\item[1.]原因：网络节点的/etc/neutron/plugins/ml2/ml2\_conf.ini文件中，忘记配置[ovs]节点的local\_ip
-		\sizedfic{0.6}{2.png}
-\end{itemize}
 \end{document}
