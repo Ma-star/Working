@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{ps指令\qquad}
+\chead{docker基础\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,11 +146,50 @@
 
 \clearpage
 
-\subsection{docker安装}
+\section{docker安装}
 \begin{itemize}
-	\item[1.]sdf
+	\item[1.]apt-get install apt-transport-https ca-certificates curl software-properties-common 安装可用的包
+	\item[2.]curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 添加GPG key
+	\item[3.]sudo apt-key fingerprint 0EBFCD88 验证GPG是否添加成功
+	\item[4.]add-apt-repository 源 添加docker的源
+	\item[5.]apt-get update 更新软件列表
+	\item[6.]apt-get install docker-ce 安装docker社区版
+	\item[7.]docker run hello-world  从Docker hub下载hello-world镜像并运行
+	\item[8.]docker ps -a  查看运行和已退出的所有镜像
+	\item[9.]docker run docker/whalesay cowsay boo 下载和运行鲸鱼镜像
+	\item[10.]docker images   罗列出本地系统的所有镜像
+	\item[11.]docker run docker/whalesay cowsay boo-boo 运行鲸鱼镜像
 \end{itemize}
 
+\section{构建自定义image}
+\begin{itemize}
+	\item[1.]mkdir mydockerbuild 创建一个目录
+	\item[2.]cd mydockerbuild    切换到该目录
+	\item[3.]nano Dockerfile     创建并编辑文件，在该文件保存若干命令
+	\item[4.]命令一：FROM docker/whalesay:latest 检查本地是否已经下载鲸鱼镜像，如果没有需从docker hub下载
+	\item[5.]命令二：RUN apt-get -y update \&\& apt-get install -y fortunes 安装fortunes
+	\item[6.]命令三：CMD /usr/games/fortune -a | cowsay 暂时不理解
+	\item[7.]docker build -t docker-whale \.  依赖当前目录的Dockerfile文件生成docker-whale镜像
+	\item[8.]docker run docker-whale  运行刚生成的镜像
+\end{itemize}
 
+\section{创建Docker hub的账户和仓库}
+\begin{itemize}
+	\item[1.]浏览器访问https://hub.docker.com/，注册一个账户
+	\item[2.]验证email并且登录创建一个仓库
+\end{itemize}
+
+\section{标记，push，pull镜像}
+\begin{itemize}
+	\item[1.]docker images 罗列已经存在的镜像
+	\item[2.]需要将上传的镜像进行标记tag，否则无法上传。使用docker tag命令
+	\item[3.]docker tag imageID accountName/imageName:versionTag
+	\item[4.]docker images 查看带有标记的镜像是否存在
+	\item[5.]docker login  输入用户名和密码登录docker账户
+	\item[6.]docker push accountName/imageName 上传打过标记的镜像
+	\item[7.]docker images 罗列出本地所有的镜像
+	\item[8.]docker rmi -f imageID | imageName 根据id或者name强制删除镜像，否则无法从docker hub进行pull
+	\item[9.]docker run 下载的镜像
+\end{itemize}
 
 \end{document}

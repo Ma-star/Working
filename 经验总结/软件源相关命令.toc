@@ -1,3 +1,0 @@
-\contentsline {section}{\numberline {1}软件源相关命令}{2}
-\contentsline {subsection}{\numberline {1.1}apt的常用命令}{2}
-\contentsline {subsection}{\numberline {1.2}apt详细描述如下}{2}

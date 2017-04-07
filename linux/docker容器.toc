@@ -1,4 +1,0 @@
-\contentsline {section}{\numberline {1}docker安装}{2}
-\contentsline {section}{\numberline {2}构建自定义image}{2}
-\contentsline {section}{\numberline {3}创建Docker hub的账户和仓库}{3}
-\contentsline {section}{\numberline {4}标记，push，pull镜像}{3}
