@@ -1,0 +1,188 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{调试方法\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+\begin{document}
+
+\tableofcontents
+
+\clearpage
+\section{调试方法} 
+\subsection{openstack的包}
+    \begin{itemize}
+        \item[1.]/usr/lib/python2.7/dist-packages  安装包所在路经
+		\item[2.]/usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf 执行此命令可以看到错误信息
+		\item[3.]vi /usr/lib/python2.7/dist-packages/oslo/config/cfg.py 查看引起错误的页面进行调整
+    \end{itemize}
+\subsection{openstack各服务启动，并能查看错误信息}
+	\begin{itemize}
+		\item[1.]查看keystone:python /usr/bin/keystone-all
+		\item[2.]查看glance-api:/usr/bin/python /usr/bin/glance-api		
+		\item[3.]查看glance-registry：/usr/bin/python /usr/bin/glance-registry 
+		\item[4.]查看nova-api：/usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf
+		\item[5.]查看nova-cert：/usr/bin/python /usr/bin/nova-cert --config-file=/etc/nova/nova.conf
+		\item[6.]查看nova-conductor：/usr/bin/python /usr/bin/nova-conductor --config-file=/etc/nova/nova.conf
+		\item[7.]查看nova-scheduler：/usr/bin/python /usr/bin/nova-scheduler --config-file=/etc/nova/nova.conf
+		\item[8.]查看nova-consoleauth：/usr/bin/python /usr/bin/nova-consoleauth --config-file=/etc/nova/nova.conf
+		\item[9.]查看nova-novncproxy：/usr/bin/python /usr/bin/nova-novncproxy --config-file=/etc/nova/nova.conf
+	\end{itemize}
+\subsection{glance-registry修改的文件列表如下}
+	\begin{itemize}
+		\item[1.]/usr/lib/python2.7/dist-packages/glance/cmd/__init__.py
+		\item[2.]/usr/lib/python2.7/dist-packages/glance/i18n.py
+		\item[3.]/usr/lib/python2.7/dist-packages/glance/cmd/registry.py
+		\item[4.]/usr/lib/python2.7/dist-packages/glance/common/config.py
+		\item[5.]/usr/lib/python2.7/dist-packages/glance/common/wsgi.py
+		\item[6.]/usr/lib/python2.7/dist-packages/glance/common/utils.py
+		\item[7.]/usr/lib/python2.7/dist-packages/glance/openstack/common/log.py
+		\item[8.]/usr/lib/python2.7/dist-packages/glance_store/backend.py
+		\item[9.]/usr/lib/python2.7/dist-packages/glance_store/i18n.py
+		\item[10.]/usr/lib/python2.7/dist-packages/glance_store/driver.py
+		\item[11.]/usr/lib/python2.7/dist-packages/glance/notifier.py
+		\item[12.]/usr/lib/python2.7/dist-packages/glance/domain/__init__.py
+		\item[13.]
+		\item[14.]
+		\item[15.]
+		\item[16.]
+		\item[17.]
+
+	\end{itemize}
+\end{document}

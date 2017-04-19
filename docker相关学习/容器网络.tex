@@ -173,22 +173,41 @@
 	\item[14.]-P or --publish-all=true|false --映射容器所有端口到宿主主机
 \end{itemize}
 
-\subsection{容器访问控制}
+\subsection{使用pipework,将docker容器配置到本地网络环境中}
 \begin{itemize}
-	\item[1.]
-	\item[2.]
-	\item[3.]
-	\item[4.]
-	\item[5.]
-	\item[6.]
-	\item[7.]
-	\item[8.]
-	\item[9.]
-	\item[10.]
-	\item[11.]
-	\item[1.]
+	\item[1.]安装pipework
+		\begin{lstlisting}
+			git clone https://github.com/jpetazzo/pipework
+			cp ~/pipework/pipework /usr/local/bin/
+		\end{lstlisting}
+	\item[2.]启动Docker容器
+		\begin{lstlisting}
+			docker run -itd --name test1 ubuntu /bin/bash
+		\end{lstlisting}
+	\item[3.]配置容器网络，并连到网桥docker0上。网关在IP地址后面加@指定
+		\begin{lstlisting}
+			pipework docker0 test1 10.0.2.100/24@10.0.2.1
+		\end{lstlisting}
+	\item[4.]将主机eth0桥接到docker0上，并把eth0的IP配置在docker0上。\par
+	这里由于是远程操作，中间网络会断掉，所以放在一条命令中执行。
+		\begin{lstlisting}
+			ip addr add 10.0.2.7/24 dev docker0; \ 
+			ip addr del 10.0.2.7/24 dev eth0; \
+			brctl addif docker0 eth0; \
+			ip route del default; \
+			ip route add default via 10.0.2.1 dev docker0
+		\end{lstlisting}
+	
 \end{itemize}
-
-
+\subsection{doker的四种网络模式}
+\begin{itemize}
+	\item[1.]host模式：与宿主机共用命名空间，不会生成新的网卡。假如宿主机10.10.101.105/24\par
+	用host模式启动一个含有web应用的Docker容器，可以直接使用10.10.101.105:80访问
+	\item[2.]container模式：新创建的容器不会创建自己的网卡，配置自己的ip,而是和指定的容器共享ip和端口访问。
+	\item[3.]none模式：拥有自己的命名空间，但需要手动添加网卡和ip
+	\item[4.]桥接模式：当docker服务启动时，会在主机上创建一个默认docker0的虚拟网卡。容器\par
+	使用他和来和主机相互通信。当创建一个docker的容器的时候，它就创建了一个对接口。这对接口在容器的一端\par
+	的名字是eth0，宿主机会指定一个指定的名字。例如veth**的名字。所有的veth的接口都会桥接到docker,这样\par
+\end{itemize}
 
 \end{document}
