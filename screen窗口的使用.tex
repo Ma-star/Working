@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{linux源码安装\qquad}
+\chead{screen窗口的使用\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,11 +146,19 @@
 
 \clearpage
 
-\subsection{关键步骤详解}
+\subsection{使用方法如下}
+	用于开启多个窗口，用于跑单独的服务
     \begin{itemize}
-        \item[1.]./configure  \# 检查系统平台是否满足需求，例如检查有没有cc和Gcc,并生成makefile文件。
-        \item[2.]make         \# 从makefile读取指令，进行编译
-        \item[3.]make install \# 从makefile读取指令，安装
-        \item[4.]make clean   \# 删除一些临时文件
+        \item[1.]第一次创建一个名为stack的窗口，同时在里面创建名为shell的终端，脚本类型为/bin/bash。创建后退出。
+			begin{lstlisting}
+				screen -d -m -S stack -t shell -s /bin/bash 
+			end{lstlisting}}
+	    \item[2.]screen的相关命令如下：
+		screen -r stack表示：进入名为stack的screen的某个窗口
+		screen -ls表示:罗列出所有的窗口
+		screen -d表示：退出当前窗口，但窗口还是存在的
+		exit表示:销毁当前窗口并退出
+		screen -S stack -X screen -t neutron：创建一个名为neutron的终端
+		control + a + shift + 引号：可以罗列出当前窗口的所有终端，并按住方向键选择
     \end{itemize}
 \end{document}

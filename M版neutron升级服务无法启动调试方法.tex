@@ -149,8 +149,10 @@
 \subsection{openstack的包}
     \begin{itemize}
         \item[1.]/usr/lib/python2.7/dist-packages  安装包所在路经
-		\item[2.]/usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf 执行此命令可以看到错误信息
-		\item[3.]vi /usr/lib/python2.7/dist-packages/oslo/config/cfg.py 查看引起错误的页面进行调整
+		\item[2.]由于服务启动不了，在日志文件看不到错误信息，需要使用ps命令
+		\item[3.]ps -aux | grep 在正常运行的机器运行该命令，会看到进程运行的命令。复制该命令调试服务
+		\item[4.]/usr/bin/python /usr/bin/nova-api --config-file=/etc/nova/nova.conf 执行此命令可以看到错误信息
+		\item[5.]vi /usr/lib/python2.7/dist-packages/oslo/config/cfg.py 查看引起错误的页面进行调整
     \end{itemize}
 \subsection{openstack各服务启动，并能查看错误信息}
 	\begin{itemize}
