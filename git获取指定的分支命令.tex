@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{screen窗口的使用\qquad}
+\chead{桥接网络配置\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,31 +146,38 @@
 
 \clearpage
 
-\subsection{使用方法如下}
-	用于开启多个窗口，用于跑单独的服务
-    \begin{itemize}
-		\item[1.]设置环境变量
-			SCREEN_NAME="stack"
-        \item[2.]第一次创建一个名为stack的窗口，同时在里面创建名为shell的终端，脚本类型为/bin/bash。创建后退出。
-			begin{lstlisting}
-				screen -d -m -S stack -t shell -s /bin/bash 
-			end{lstlisting}}
-		\item[3.]窗口个性化设置如下
-			SCREEN_HARDSTATUS=${SCREEN_HARDSTATUS:-}
-			if [ -z "$SCREEN_HARDSTATUS" ]; then
-				SCREEN_HARDSTATUS='%{= .} %-Lw%{= .}%> %n%f %t*%{= .}%+Lw%< %-=%{g}(%{d}%H/%l%{g})'
-			fi
-			# 恢复离线的screen作业stack，并且设置状态栏的样式
-			screen -r \$SCREEN_NAME -X hardstatus alwayslastline "$SCREEN_HARDSTATUS"
-			# 将PROMPT_COMMAND的值设为“/bin/true”
-			screen -r \$SCREEN_NAME -X setenv PROMPT_COMMAND /bin/true 
-			注意将\$前的\去掉
-	    \item[4.]screen的相关命令如下：
-			screen -r stack表示：进入名为stack的screen的某个窗口
-			screen -ls表示:罗列出所有的窗口
-			screen -d表示：退出当前窗口，但窗口还是存在的
-			exit表示:销毁当前窗口并退出
-			screen -S stack -X screen -t neutron：创建一个名为neutron的终端
-			control + a + shift + 引号：可以罗列出当前窗口的所有终端，并按住方向键选择
-    \end{itemize}
+\section{恒天云项目开发相关说明}
+
+\subsection{说明一：从恒天云的git获取下载代码到自己用户所属的开发环境}
+\begin{itemize}
+	\item[1.] 首先通过ssh命令，远程到开发环境的机器
+        \begin{lstlisting}
+            ssh weiguangzhou@172.16.7.1
+        \end{lstlisting}
+        
+	\item[2.] 从172.16.5.77的git服务器进行克隆
+        \begin{lstlisting}
+            git clone git@172.16.5.77:hengtianyun/hengtianyun.git
+        \end{lstlisting}
+	\item[3.] 查看git仓库的所有分支，默认第一个是master
+        \begin{lstlisting}
+            git branch -a
+        \end{lstlisting}
+	\item[4.] 通过pull命令，再次更新代码
+        \begin{lstlisting}
+            git pull
+        \end{lstlisting}
+	\item[5.] 获取horizon的分支
+        \begin{lstlisting}
+            git checkout hengtianyun_v3.9_dev
+        \end{lstlisting}
+\end{itemize}
+
+\subsection{说明二：使用pycharm调试horizon}
+\begin{itemize}
+	\item[1.] 进入coding,选择一个默认项目，打开，点击右边菜单栏的wiki
+	\item[2.] 在wiki中找到pycharm调试horizon的文档，进行配置
+\end{itemize}
+
+
 \end{document}

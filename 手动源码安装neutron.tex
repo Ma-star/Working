@@ -162,34 +162,39 @@
     \end{itemize}
 \subsection{手动源码安装步骤}
     \begin{itemize}
-	    \item[1.]创建文件夹，作为虚拟环境，并切换到该文件夹
+	    \item[1.]创建文件夹wgzhou，并切换进去，作为自己的工作目录
 			begin{lstlisting}
-				mkdir test
-				cd test
+				mkdir wgzhou
+				cd wgzhou
 			end{lstlisting}
 		\item[2.]安装virtualenv
 			begin{lstlisting}
 				pip install virtualenv
 			end{lstlisting}
-			安装之后使用ls命令，查看当前文件夹的内容，会多出来bin,lib,etc,local等文件夹。以后安装的包会放在
+			安装之后使用ls命令，查看当前文件夹的内容，会多出来bin,lib,local等文件夹。以后安装的包会放在
 			这些文件夹，将不会和系统的混合在一起。这就是隔离的意义。
-		\item[3.]启动虚拟环境
+		\item[3.]创建名为test的虚拟环境,并切花进test目录
+			begin{lstlisting}
+				virtualenv test
+				cd test
+			end{lstlisting}
+		\item[4.]启动虚拟环境
 			begin{lstlisting}
 				source bin/activate
 			end{lstlisting}
-        \item[4.]安装neutron依赖包
+        \item[5.]安装neutron依赖包
 			begin{lstlisting}
 				pip install -r requirements.txt
 			end{lstlisting}
-		\item[5.]安装neutron模块
+		\item[6.]安装neutron模块
 			begin{lstlisting}
 				python setup.py install
 			end{lstlisting}
-		\item[6.]通过源码的tools文件夹下的generate_config_file_samples.sh脚本生成配置文件，并拷贝到/etc/neutron文件夹下
+		\item[7.]通过源码的tools文件夹下的generate_config_file_samples.sh脚本生成配置文件，并拷贝到/etc/neutron文件夹下
 			begin{lstlisting}
 				./tools/generate_config_file_samples.sh
 			end{lstlisting}	
-		\item[7.]本以为已经安装成功，可以直接启动服务，投入使用。下面是遇到的问题
+		\item[8.]本以为已经安装成功，可以直接启动服务，投入使用。下面是遇到的问题
 			#直接运行neutron-server,TypeError: set_defaults() got an unexpected keyword argument 'sqlite_db'？
 			解决办法：local/lib/python2.7/site-packages/neutron/common/config.py，将该参数删除，即可。
 
@@ -226,9 +231,6 @@
 			解决办法：pip install memecached并没有成功，使用apt-get install memecached命令在系统环境中安装，并将安装的包
 			拷贝到虚拟环境中。
 			拷贝命令:cp /usr/lib/python2.7/dist-packages/memcache.py /root/wgzhou/test/lib/python2.7/site-packages/
-			
-        \item[8.]
-		\item[9.]
 		
     \end{itemize}
 
