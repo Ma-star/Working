@@ -1,3 +1,0 @@
-\contentsline {section}{\numberline {1}恒天云项目开发相关说明}{2}
-\contentsline {subsection}{\numberline {1.1}说明一：从恒天云的git获取下载代码到自己用户所属的开发环境}{2}
-\contentsline {subsection}{\numberline {1.2}说明二：使用pycharm调试horizon}{2}

@@ -157,13 +157,11 @@
 			end{lstlisting}}
 		\item[3.]窗口个性化设置如下
 			SCREEN_HARDSTATUS=${SCREEN_HARDSTATUS:-}
-			if [ -z "$SCREEN_HARDSTATUS" ]; then
-				SCREEN_HARDSTATUS='%{= .} %-Lw%{= .}%> %n%f %t*%{= .}%+Lw%< %-=%{g}(%{d}%H/%l%{g})'
-			fi
-			# 恢复离线的screen作业stack，并且设置状态栏的样式
-			screen -r \$SCREEN_NAME -X hardstatus alwayslastline "$SCREEN_HARDSTATUS"
-			# 将PROMPT_COMMAND的值设为“/bin/true”
-			screen -r \$SCREEN_NAME -X setenv PROMPT_COMMAND /bin/true 
+    if [ -z "$SCREEN_HARDSTATUS" ]; then
+        SCREEN_HARDSTATUS='%{= .} %-Lw%{= .}%> %n%f %t*%{= .}%+Lw%< %-=%{g}(%{d}%H/%l%{g})'
+    fi
+    screen -r \$SCREEN_NAME -X hardstatus alwayslastline "$SCREEN_HARDSTATUS"
+    screen -r \$SCREEN_NAME -X setenv PROMPT_COMMAND /bin/true 
 			注意将\$前的\去掉
 	    \item[4.]screen的相关命令如下：
 			screen -r stack表示：进入名为stack的screen的某个窗口

@@ -137,17 +137,47 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{工作情况 \qquad}
+\chead{安装openssh-server注意事项 \qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
 
+\tableofcontents
 
-\section{工作情况}
+\clearpage
 
-\subsection{工作一：从恒天云的git获取下载代码到自己用户所属的开发环境}
-\subsection{工作二：使用pycharm调试horizon}
-\subsection{工作三：与朝晖，建鹏，超哥讨论恒天云neutron升级方案}
-\subsection{工作四：学习并使用LayTex,编辑工作情况}
 
+\section{安装openssh-server注意事项}
+
+\subsection{任务一：配置4台机器的openssh-server}
+\begin{itemize}
+	\item[1.]通过ps -e|grep ssh管道命令查看ssh服务是否安装
+	\item[2.]通过apt-get install openssh-server安装ssh服务
+	\item[3.]若没有openssh-server，需通过命令apt-get update更新源
+\end{itemize}
+
+\subsection{任务二：配置openstack的juno版本，已经配置到neutron}
+\begin{itemize}
+	\item[1.]配置到网络节点的/etc/neutron/metadata\_agent.ini
+\end{itemize}
+
+\subsection{问题一：安装openssh-server之后，还是无法ssh访问}
+\begin{itemize}
+	\item[1.]打开配置文件
+        \begin{lstlisting}
+            vi /etc/ssh/sshd_config 
+        \end{lstlisting}
+	\item[2.] 修改文件内容，將參數PermitRootLogin修改爲yes
+        \begin{lstlisting}
+            PermitRootLogin yes
+        \end{lstlisting}
+	\item[3.]每台机器都要这么配置
+	\item[4.]注意：配置之后要重启
+\end{itemize}
+
+\subsection{问题二：配置neutron后，无法使用neutron命令，提示unsupported locale setting}
+\begin{itemize}
+	\item[1.]解决办法：可在admin-openrc.sh脚本中添加export LC\_ALL=en\_US.UTF-8
+	\item[2.]也可在使用neutron命令之前，单独运行export LC\_ALL=en\_US.UTF-8
+\end{itemize}
 \end{document}

@@ -173,7 +173,7 @@
 			end{lstlisting}
 			安装之后使用ls命令，查看当前文件夹的内容，会多出来bin,lib,local等文件夹。以后安装的包会放在
 			这些文件夹，将不会和系统的混合在一起。这就是隔离的意义。
-		\item[3.]创建名为test的虚拟环境,并切花进test目录
+		\item[3.]创建名为test的虚拟环境,并切换	进test目录
 			begin{lstlisting}
 				virtualenv test
 				cd test
@@ -182,9 +182,14 @@
 			begin{lstlisting}
 				source bin/activate
 			end{lstlisting}
-        \item[5.]安装neutron依赖包
+        \item[5.]切换到neutron源码包，安装neutron依赖包
 			begin{lstlisting}
 				pip install -r requirements.txt
+			end{lstlisting}
+			出现报错：netifaces.c:1:20: fatal error: Python.h: No such file or directory
+			执行下面命令即可
+			begin{lstlisting}
+				sudo apt-get install python2.7-dev
 			end{lstlisting}
 		\item[6.]安装neutron模块
 			begin{lstlisting}
@@ -231,6 +236,9 @@
 			解决办法：pip install memecached并没有成功，使用apt-get install memecached命令在系统环境中安装，并将安装的包
 			拷贝到虚拟环境中。
 			拷贝命令:cp /usr/lib/python2.7/dist-packages/memcache.py /root/wgzhou/test/lib/python2.7/site-packages/
+
+			#由于neutron-openvswitch-agent的配置文件中，bridge_mappings = external:br-ex，需要用命令手动添加br-ex
+			解决办法:ovs-vsctl add-br br-ex
 		
     \end{itemize}
 

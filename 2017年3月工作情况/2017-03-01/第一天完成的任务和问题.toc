@@ -1,4 +1,0 @@
-\contentsline {section}{\numberline {1}20170301完成的任务和问题}{2}
-\contentsline {subsection}{\numberline {1.1}任务一：对四台机器重装ubuntu14.04.1的系统}{2}
-\contentsline {subsection}{\numberline {1.2}问题一：重装机器后，发现网卡名并非传统的eth*，需要重命名}{2}
-\contentsline {subsection}{\numberline {1.3}问题二：ip绑定的网卡与网线插上去的网口不对应}{2}
