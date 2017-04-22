@@ -162,22 +162,17 @@
     \end{itemize}
 \subsection{手动源码安装步骤}
     \begin{itemize}
-	    \item[1.]创建文件夹wgzhou，并切换进去，作为自己的工作目录
-			begin{lstlisting}
-				mkdir wgzhou
-				cd wgzhou
-			end{lstlisting}
 		\item[2.]安装virtualenv
 			begin{lstlisting}
 				pip install virtualenv
 			end{lstlisting}
+		\item[3.]创建名为venv的虚拟环境,并切换	进venv目录
+			begin{lstlisting}
+				virtualenv venv
+				cd venv
+			end{lstlisting}
 			安装之后使用ls命令，查看当前文件夹的内容，会多出来bin,lib,local等文件夹。以后安装的包会放在
 			这些文件夹，将不会和系统的混合在一起。这就是隔离的意义。
-		\item[3.]创建名为test的虚拟环境,并切换	进test目录
-			begin{lstlisting}
-				virtualenv test
-				cd test
-			end{lstlisting}
 		\item[4.]启动虚拟环境
 			begin{lstlisting}
 				source bin/activate
@@ -191,7 +186,7 @@
 			begin{lstlisting}
 				sudo apt-get install python2.7-dev
 			end{lstlisting}
-		\item[6.]安装neutron模块
+		\item[6.]安装neutron组件
 			begin{lstlisting}
 				python setup.py install
 			end{lstlisting}
@@ -219,7 +214,7 @@
 			思路：由于neutron是装在虚拟环境中，所有对应的neutron-rootwrap的路经不能使用默认的
 			解决办法：vi /etc/neutron/neutron.conf 修改agent节点的root_helper参数
 			原：root_helper = sudo /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
-			改为：root_helper = sudo /root/wgzhou/test/bin/neutron-rootwrap /root/wgzhou/test/etc/neutron/rootwrap.conf
+			改为：root_helper = sudo /root/wgzhou/test/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
 
 			#运行neutron-openvswitch-agent,提示neutron-rootwrap: Executable not found: ovs-vsctl？
 			解决办法：通过apt-get install openvswitch-switch安装switch
@@ -232,13 +227,17 @@
 			文件夹下的服务，是无法识别，以及使用该service。源码安装并没有在该文件夹下生成相关neutron的二进制文件，所以无法识别。
 
 			#运行neutron ext-list 提示No module named memcache
-			原因：由于之前的服务都是按照j版openstack进行安装，并没有memcached的安装。但m版的neutron是需要memcache服务的支持
+			原因：由于之前的服务都是按照j版openstack进行安装，并没有在之前安装memcached。但m版的neutron是需要memcached服务的支持
 			解决办法：pip install memecached并没有成功，使用apt-get install memecached命令在系统环境中安装，并将安装的包
 			拷贝到虚拟环境中。
 			拷贝命令:cp /usr/lib/python2.7/dist-packages/memcache.py /root/wgzhou/test/lib/python2.7/site-packages/
 
 			#由于neutron-openvswitch-agent的配置文件中，bridge_mappings = external:br-ex，需要用命令手动添加br-ex
 			解决办法:ovs-vsctl add-br br-ex
+
+			#计算节点运行python setup.py install的时候，报错It's also possible that there is a mismatch between the package name in setup.cfg and the argument given to pbr.version.VersionInfo
+		    原因：PBR从git标签生成“版本”
+			解决办法：安装git，执行命令apt-get install git 
 		
     \end{itemize}
 
