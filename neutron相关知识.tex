@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{桥接网络配置\qquad}
+\chead{neutron相关知识\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,28 +146,37 @@
 
 \clearpage
 
-\subsection{桥接网络配置}
-    \begin{lstlisting}
-        auto br-ex
-        iface br-ex inet static
-        address 172.16.19.147
-        netmask 255.255.255.0
-        gateway 172.16.19.254
-        dns-nameservers 172.16.5.1
-
-        auto eth0
-        iface eth0 inet manual
-        up ifconfig $IFACE 0.0.0.0 up
-        up ip link set $IFACE promisc on
-        down ip link set $IFACE promisc off
-        down ifconfig $IFACE down
-    \end{lstlisting}
-\subsection{临时更换mac地址}
-    \begin{itemize}
-        \item[1.]ovs-vsctl del-br br-ex 删除br-ex网桥
-        \item[2.]ovs-vsctl add-br br-ex 添加br-ex网桥
-        \item[3.]ip link list 查看br-ex和eth0的mac地址
-        \item[4.]ip link set br-ex addr eth0的mac地址(由于网络安全限制，ip和mac需绑定，不是很明白)
-        \item[5.]ovs-vsctl add-port br-ex eth0 将eth0桥接到br-ex虚拟网桥
+\subsection{虚拟的二层网络结构，主要是完成两种网络设备的虚拟化：NIC硬件与交换设备}
+   \begin{itemize}
+        \item[1.]neutron通过l3的抽象router提供路由器的功能
+		\item[2.]通过l2的抽象network/subnet完成对真实二层物理网络的映射
+		\item[3.]l2层中的交换设备有linux bridge,open vswitch
+		\item[4.]l2层还提供了一个重要的抽象port，代表虚拟交换机上的虚拟交换端口
     \end{itemize}
+\subsection{neutron-server}
+    \begin{itemize}
+        \item[1.]
+    \end{itemize}
+\subsection{ML2 Plugin:主要工作是管理虚拟网络资源}
+    \begin{itemize}
+        \item[1.]
+    \end{itemize}
+\subsection{Port Binding扩展}
+    \begin{itemize}
+        \item[1.]
+    \end{itemize}
+\subsection{Open vswitch agent}
+    \begin{itemize}
+        \item[1.]
+    \end{itemize}
+\subsection{service plugin}
+    \begin{itemize}
+        \item[1.]DVR
+		\item[2.]SDN
+		\item[2.]NFV/SRIOV
+    \end{itemize}
+\subsection{neutron热点话题}
+    \begin{itemize}
+        \item[1.]
+    \end{itemize}	
 \end{document}

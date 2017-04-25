@@ -1,0 +1,236 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{虚拟机创建的整个流程\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+\begin{document}
+
+\tableofcontents
+
+\clearpage
+
+\subsection{}
+   \begin{nova的体系结构}
+        \item[1.]目前的nova主要由API，compute,conductor,scheduler四个核心组成，它们之间通过AMQP消息队列进行通信。
+        \item[2.]API是进入Nova的HTTP接口
+        \item[3.]compute和VMM交互来运行虚拟机并管理虚拟机的生命周期。
+        \item[4.]scheduler从可用池中选择最合适的计算节点来创建新的虚拟机实例
+        \item[5.]conductor为数据库的访问提供一层安全保障
+		\item[6.]scheduler只是读取数据库的内容，api则有Policy的保护，因此它们都可以直接操作数据库。不用经过conductor，但openstack还是希望
+		涉及数据库的操作都通过conductor
+		\item[7.]client是openstack为了简化对restful api的使用所提供的api封装novaclient,负责将用户的请求转换标准的http请求。
+    \end{itemize}
+\subsection{创建虚拟机的一个例子}
+    \begin{itemize}
+        \item[1.]用户执行novaclient提供的创建虚拟机的命令，api服务监听到novaclient发送的http请求并且将它转换成AMQP消息，通过消息队列调用conductor服务。
+        \item[2.]conductor服务通过消息队列接受到任务之后，做一些准备工作，例如汇总虚拟机参数，再通过消息队列告诉scheduler去选择一个满足虚拟机创建要求的主机。
+        \item[3.]conductor拿到scheduler提供的目标主机之后，会去要求compute服务创建虚拟机。
+    \end{itemize}
+\subsection{nova-api执行过程}
+	nova api的执行过程主要分为3个阶段：
+	 \begin{itemize}
+        \item[1.]novaclient将用户命令转换为标准http请求的阶段
+        \item[2.]paste deploy将请求路由到具体的wsgi application的阶段
+        \item[3.]routes将请求路由到具体函数并执行的阶段
+    \end{itemize}
+\subsection{nova-compute创建虚拟机的过程}
+	create instance 创建虚拟机
+    \begin{itemize}
+        \item[1.]compute.api.create_db_entry_for_new_instance：为新的实例创建数据库条目
+        \item[2.]compute.manager._start_building：开始创建
+        \item[3.]compute.manager._allocate_network：分配网络
+		\item[4.]compute.manager._prep_block_device：准备块设备
+		\item[5.]compute.manager._spawn：调用virt driver创建虚拟机
+		\item[6.]
+    \end{itemize}
+\subsection{instance创建的具体流程}
+\begin{itemize}
+        \item[1.]keystone认证
+		\item[2.]生成Token
+		\item[3.]nova-api接受请求
+		\item[4.]验证token
+		\item[5.]check policies检查访问权限
+		\item[6.]check quota
+		\item[7.]create instance db entry 创建实例的数据库条目
+		\item[8.]创建filter_properties,用于scheduler
+		\item[9.]发送rpc给nova-conductor
+		\item[10.]nova-conductor创建request_spec,用于scheduler
+		\item[11.]nova-conductor发送rpc给nova-scheduler
+		\item[12.]nova-scheduler选择物理机
+		\item[13.]对Host进行Filtering
+		\item[14.]对合适的Host进行Weighting并排序
+		\item[15.]发送RPC给选择出的nova-compute
+		\item[16.]nova-compute接受请求
+		\item[17.]resource_tracker claims resources for the new instance and update resources usages
+		\item[18.]调用neutron api 配置network，instance处于networking状态
+		\item[19.]生成MAC Address
+		\item[20.]获取DHCP Server配置
+		\item[21.]获取network信息
+		\item[22.]获取security group 信息
+		\item[23.]根据上面搜集的信息创建port,配置了fixed ip
+		\item[24.]nova-compute调用libvirt driver spawn instance
+		\item[25.]libvirt driver 创建image
+		\item[26.]调用glance下载image，成为base,格式为raw
+		\item[27.]基于base image，用qemu-img命令创建一个qcow2的image
+		\item[28.]按照flavor的大小resize image
+		\item[29.]配置configuration drive
+		\item[30.]配置injection file
+		\item[31.]Libvirt Driver定义XML
+		\item[32.]Libvirt Driver将instance连接到网络设备上
+		\item[33.]创建qbr网桥
+		\item[34.]创建veth pair:qvb和qvo
+		\item[35.]将qvb添加到qbr上
+		\item[36.]将qvo添加到br-int上
+		\item[37.]Libvirt启动VM
+		\item[38.]VM从DHCP Server获取IP
+		\item[39.]cloud-init连接metadata server,注入key
+		\item[40.]通过VNC可以看到启动过程
+		\item[41.]attach一个floating ip，然后ssh进去
+		\item[42.]vm内部可以访问外网
+		\item[43.]添加一个cinder volume
+		\item[44.]cinder api接受到请求创建一个volume
+		\item[45.]cinder api调用cinder scheduler选择一个cinder volume
+		\item[46.]cinder volume创建一个iscsi target
+		\item[47.]cinder volume创建一个logic volume，加入iscis target
+		\item[48.]compute node连接那个iscis target,disk 出现在host上
+		\item[49.]将这个disk attach到虚拟机上
+		\item[50.]
+\end{itemize}	
+\end{document}

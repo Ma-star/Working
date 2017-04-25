@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{桥接网络配置\qquad}
+\chead{创建虚拟机过程出现的问题\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,28 +146,10 @@
 
 \clearpage
 
-\subsection{桥接网络配置}
-    \begin{lstlisting}
-        auto br-ex
-        iface br-ex inet static
-        address 172.16.19.147
-        netmask 255.255.255.0
-        gateway 172.16.19.254
-        dns-nameservers 172.16.5.1
-
-        auto eth0
-        iface eth0 inet manual
-        up ifconfig $IFACE 0.0.0.0 up
-        up ip link set $IFACE promisc on
-        down ip link set $IFACE promisc off
-        down ifconfig $IFACE down
-    \end{lstlisting}
-\subsection{临时更换mac地址}
-    \begin{itemize}
-        \item[1.]ovs-vsctl del-br br-ex 删除br-ex网桥
-        \item[2.]ovs-vsctl add-br br-ex 添加br-ex网桥
-        \item[3.]ip link list 查看br-ex和eth0的mac地址
-        \item[4.]ip link set br-ex addr eth0的mac地址(由于网络安全限制，ip和mac需绑定，不是很明白)
-        \item[5.]ovs-vsctl add-port br-ex eth0 将eth0桥接到br-ex虚拟网桥
-    \end{itemize}
+\subsection{来源：/var/log/neutron/neutron-server.log}
+   操作：neutron.plugins.ml2.plugin----> Attempt 10 to bind port ***
+   错误提示：neutron.plugins.ml2.managers ---->Failed to bind port *** on host controller for vnic_type normal using segments
+   [{'segmentation_id': None, 'physical_network': u'external', 'id': u'dbba80f8-b1e9-4116-a498-866a325aea81', 'network_type': u'flat'}]
+   警告：neutron.plugins.ml2.rpc----> Device *** requested by agent ovs-agent-controller on network 89f4a974-c745-4263-87e5-7f268253c80e not bound, vif_type: binding_failed
+	
 \end{document}
