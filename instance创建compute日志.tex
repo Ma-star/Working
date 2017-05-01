@@ -1,0 +1,206 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{instance创建compute日志\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+\begin{document}
+
+\tableofcontents
+
+\clearpage
+
+\subsection{创建内网instance，成功}
+2017-05-01 23:09:11.855 2779 AUDIT nova.compute.manager [req-22eb68d5-6685-47dd-b204-821efb72491d None] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] Starting instance...
+2017-05-01 23:09:11.990 2779 AUDIT nova.compute.claims [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] Attempting claim: memory 64 MB, disk 1 GB
+2017-05-01 23:09:11.991 2779 AUDIT nova.compute.claims [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] Total memory: 3952 MB, used: 1024.00 MB
+2017-05-01 23:09:11.998 2779 AUDIT nova.compute.claims [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] memory limit: 5928.00 MB, free: 4904.00 MB
+2017-05-01 23:09:11.998 2779 AUDIT nova.compute.claims [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] Total disk: 25 GB, used: 8.00 GB
+2017-05-01 23:09:11.999 2779 AUDIT nova.compute.claims [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] disk limit not specified, defaulting to unlimited
+2017-05-01 23:09:12.011 2779 AUDIT nova.compute.claims [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] Claim successful
+2017-05-01 23:09:12.105 2779 INFO nova.scheduler.client.report [-] Compute_service record updated for ('compute1', 'compute1')
+2017-05-01 23:09:12.233 2779 INFO nova.scheduler.client.report [-] Compute_service record updated for ('compute1', 'compute1')
+2017-05-01 23:09:12.746 2779 INFO nova.virt.libvirt.driver [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] Creating image
+2017-05-01 23:09:13.130 2779 INFO nova.scheduler.client.report [-] Compute_service record updated for ('compute1', 'compute1')
+2017-05-01 23:09:13.158 2779 INFO nova.virt.disk.vfs.api [-] Unable to import guestfsfalling back to VFSLocalFS
+2017-05-01 23:09:16.402 2779 INFO nova.compute.manager [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] VM Started (Lifecycle Event)
+2017-05-01 23:09:16.550 2779 INFO nova.compute.manager [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] During sync_power_state the instance has a pending task (spawning). Skip.
+2017-05-01 23:09:16.554 2779 INFO nova.compute.manager [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] VM Paused (Lifecycle Event)
+2017-05-01 23:09:16.646 2779 INFO nova.compute.manager [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] During sync_power_state the instance has a pending task (spawning). Skip.
+2017-05-01 23:09:20.950 2779 INFO nova.compute.manager [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] VM Resumed (Lifecycle Event)
+2017-05-01 23:09:20.967 2779 INFO nova.virt.libvirt.driver [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] Instance spawned successfully.
+2017-05-01 23:09:21.248 2779 INFO nova.compute.manager [-] [instance: 51628f5f-603e-470d-a3d3-46f766065ac7] VM Resumed (Lifecycle Event)
+\subsection{创建外网instance，失败}
+2017-05-01 23:07:44.348 2779 AUDIT nova.compute.manager [req-8e039b53-c710-4932-849b-dfd842b111a3 None] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Starting instance...
+2017-05-01 23:07:44.506 2779 AUDIT nova.compute.claims [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Attempting claim: memory 64 MB, disk 1 GB
+2017-05-01 23:07:44.510 2779 AUDIT nova.compute.claims [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Total memory: 3952 MB, used: 960.00 MB
+2017-05-01 23:07:44.511 2779 AUDIT nova.compute.claims [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] memory limit: 5928.00 MB, free: 4968.00 MB
+2017-05-01 23:07:44.514 2779 AUDIT nova.compute.claims [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Total disk: 25 GB, used: 7.00 GB
+2017-05-01 23:07:44.515 2779 AUDIT nova.compute.claims [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] disk limit not specified, defaulting to unlimited
+2017-05-01 23:07:44.532 2779 AUDIT nova.compute.claims [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Claim successful
+2017-05-01 23:07:44.653 2779 INFO nova.scheduler.client.report [-] Compute_service record updated for ('compute1', 'compute1')
+2017-05-01 23:07:44.782 2779 INFO nova.scheduler.client.report [-] Compute_service record updated for ('compute1', 'compute1')
+2017-05-01 23:07:45.233 2779 INFO nova.virt.libvirt.driver [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Creating image
+2017-05-01 23:07:45.625 2779 INFO nova.scheduler.client.report [-] Compute_service record updated for ('compute1', 'compute1')
+2017-05-01 23:07:45.675 2779 INFO nova.virt.disk.vfs.api [-] Unable to import guestfsfalling back to VFSLocalFS
+2017-05-01 23:07:46.263 2779 ERROR nova.compute.manager [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Instance failed to spawn
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Traceback (most recent call last):
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]   File "/usr/lib/python2.7/dist-packages/nova/compute/manager.py", line 2322, in _build_resources
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]     yield resources
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]   File "/usr/lib/python2.7/dist-packages/nova/compute/manager.py", line 2192, in _build_and_run_instance
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]     block_device_info=block_device_info)
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]   File "/usr/lib/python2.7/dist-packages/nova/virt/libvirt/driver.py", line 2689, in spawn
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]     write_to_disk=True)
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]   File "/usr/lib/python2.7/dist-packages/nova/virt/libvirt/driver.py", line 4210, in _get_guest_xml
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]     context)
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]   File "/usr/lib/python2.7/dist-packages/nova/virt/libvirt/driver.py", line 3988, in _get_guest_config
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]     flavor, CONF.libvirt.virt_type)
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]   File "/usr/lib/python2.7/dist-packages/nova/virt/libvirt/vif.py", line 352, in get_config
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590]     _("Unexpected vif_type=%s") % vif_type)
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] NovaException: Unexpected vif_type=binding_failed
+2017-05-01 23:07:46.263 2779 TRACE nova.compute.manager [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] 
+2017-05-01 23:07:46.276 2779 AUDIT nova.compute.manager [req-8e039b53-c710-4932-849b-dfd842b111a3 None] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Terminating instance
+2017-05-01 23:07:46.283 2779 WARNING nova.virt.libvirt.driver [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] During wait destroy, instance disappeared.
+2017-05-01 23:07:46.456 2779 INFO nova.virt.libvirt.driver [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Deleting instance files /var/lib/nova/instances/58adae5c-9bee-4bc3-a3b1-8788c44e8590_del
+2017-05-01 23:07:46.457 2779 INFO nova.virt.libvirt.driver [-] [instance: 58adae5c-9bee-4bc3-a3b1-8788c44e8590] Deletion of /var/lib/nova/instances/58adae5c-9bee-4bc3-a3b1-8788c44e8590_del complete
+2017-05-01 23:07:46.645 2779 INFO nova.scheduler.client.report [-] Compute_service record updated for ('compute1', 'compute1')
+2017-05-01 23:07:47.602 2779 WARNING nova.compute.manager [-] While synchronizing instance power states, found 8 instances in the database and 2 instances on the hypervisor.
+2017-05-01 23:08:00.685 2779 AUDIT nova.compute.resource_tracker [-] Auditing locally available compute resources
+
+\end{document}

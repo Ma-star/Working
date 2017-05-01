@@ -146,37 +146,44 @@
 
 \clearpage
 
-\subsection{虚拟的二层网络结构，主要是完成两种网络设备的虚拟化：NIC硬件与交换设备}
-   \begin{itemize}
-        \item[1.]neutron通过l3的抽象router提供路由器的功能
-		\item[2.]通过l2的抽象network/subnet完成对真实二层物理网络的映射
-		\item[3.]l2层中的交换设备有linux bridge,open vswitch
-		\item[4.]l2层还提供了一个重要的抽象port，代表虚拟交换机上的虚拟交换端口
-    \end{itemize}
-\subsection{neutron-server}
-    \begin{itemize}
-        \item[1.]
-    \end{itemize}
-\subsection{ML2 Plugin:主要工作是管理虚拟网络资源}
-    \begin{itemize}
-        \item[1.]
-    \end{itemize}
-\subsection{Port Binding扩展}
-    \begin{itemize}
-        \item[1.]
-    \end{itemize}
-\subsection{Open vswitch agent}
-    \begin{itemize}
-        \item[1.]
-    \end{itemize}
-\subsection{service plugin}
-    \begin{itemize}
-        \item[1.]DVR
-		\item[2.]SDN
-		\item[2.]NFV/SRIOV
-    \end{itemize}
-\subsection{neutron热点话题}
-    \begin{itemize}
-        \item[1.]
-    \end{itemize}	
+\section{}
+根据官方提供的流程图，我个人将OpenStack云主机的创建步骤分为四个阶段：
+KeyStone验证阶段
+Nova服务组件交换
+OpenStack其它服务交换
+执行创建
+\subsection{第一阶段：KeyStone验证}
+1.用户使用Dashboard Horizon或者命令行CLI，通过REST API给Identity 服务Keystone发送用户凭据（credentials）并验证（authenticates）。
+Keystone使用用户凭据进行验证，然后返回一个auth-token。然后后续操作就可以使用这个auth-token通过REST调用请求OpenStack其他的组件。
+2.Horizon或者CLI将launch instance 或者nova-boot转换形成为一个REST API的请求发送给nova-api。
+3.nova-api接到这个请求后，首先向keystone发送一个请求来确认auth-token是否有效和是否有访问权限。Keystone确认auth-token后，发送一个包含角色和权限的更新后的认证头。
+4.nova-api和Nova数据库交互，将用户的创建虚拟机的请求在nova 数据库里记录下来。
+
+\subsection{第二阶段：Nova服务组件交互}
+5.nova-api以rpc.call的方式发送一个请求给nova-schedule,让nova-scheduler去选择一个计算节点来创建虚拟机。注意是通过消息队列发送给nova-scheduler。
+6.nova-schedule调度服务会侦听Scheduler队列，从队列中获取数据。
+7.nova-scheduler和Nova数据库交互，通过调度算法，也就是filtering 和weighing最终选择一台运行nova-compute的计算节点，然后nova-schedule将虚拟机信息使用rpc.cast的模式发送至nova-compute.计算节点队列。让nova-compute在选择好的计算节点中去创建实例。
+8.Nova-Compute从队列获取请求。
+9.nova-compute发送一个rpc.call 请求给nova-conductor，去获取实例的信息，比如host ID和选择的Flavor（CPU、内存和磁盘）。
+10.nova-conductor从队列中获取请求。
+11.nova-conductor与nova的数据库进行交互。nova-conductor返回实例的信息。nova-compute从队列中获取实例的信息。
+
+\subsection{第三阶段：OpenStack其它服务交互}
+在第二阶段nova-compute为了获取到创建实例所需要的资源，比如镜像、网络、存储。
+会使用在第一阶段用户验证后获取到的auth-tokon分别和镜像服务Glance的glance-api，网络服务Neutron的neutron-server已经块存储服务Cinder的cinder-api进行交互。
+而且每次对方收到请求后都需要到keystone上去验证auth-token是否有效。
+12.nova-compute使用验证后获取的auth-token发起一个REST调用给glance-api获取镜像。然后nova-compute使用使用镜像ID。
+从镜像服务中得到Image URI。从（image storage）镜像存储中加载镜像。
+13.glance-api去Keystone上验证auth-token是否有效。如果有效，nova-compute就可以获取镜像的元数据metadata。
+14.nova-compute使用验证后获取的auth-token执行一个REST调用给neutron-server，让neutron-server给分配和配置网络，为实例分配IP地址。
+15.neutron-Server去Keystone验证auth-token是否有效。如果有效，nova-compute就可以获取到网络的相关信息。
+16.nova-compute使用验证后获取的auth-token执行一个REST调用给cinder-api，给实例附加卷存储，也就是云硬盘。
+17.cinder-api去Keystone验证auth-token是否有效，如果有效，那么nova-compute就可以获取到块存储的相关信息。
+
+\subsection{第四阶段：执行创建}
+在第三阶段，nova-compute已经通过Glance、Neutron和Cinder分别获取到了镜像、网络和存储相关的信息。那么在第四阶段nova-compute就开始创建虚拟机了。
+18.nova-compute为hypervisor的驱动生成数据，并且通过libvirt或者其他API让hypervisor执行请求来创建虚拟机。
+这样虚拟机创建的交互流程基本结束，剩下的步骤就是hypervisor最终创建虚拟机的流程。
+然后nova-api去轮训nova database，查看虚拟机的状态是否变成正确创建虚拟机的状态(Active,none,sunning)，若状态正确，则虚拟机创建正常成功。
+	
 \end{document}
