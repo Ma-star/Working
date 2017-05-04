@@ -190,12 +190,12 @@
 			begin{lstlisting}
 				python setup.py install
 			end{lstlisting}
-		\item[7.]通过源码的tools文件夹下的generate_config_file_samples.sh脚本生成配置文件，并拷贝到/etc/neutron文件夹下
+		\item[7.]通过源码的tools文件夹下的generate\_config\_file\_samples.sh脚本生成配置文件，并拷贝到/etc/neutron文件夹下
 			begin{lstlisting}
 				./tools/generate_config_file_samples.sh
 			end{lstlisting}	
 		\item[8.]本以为已经安装成功，可以直接启动服务，投入使用。下面是遇到的问题
-			#直接运行neutron-server,TypeError: set_defaults() got an unexpected keyword argument 'sqlite_db'？
+			#直接运行neutron-server,TypeError: set\_defaults() got an unexpected keyword argument 'sqlite_db'？
 			解决办法：local/lib/python2.7/site-packages/neutron/common/config.py，将该参数删除，即可。
 
 			#运行neutron-server,提示neutron中的某个表是不存在的？
@@ -203,34 +203,25 @@
 			确实是空的。
 			解决办法:运行文档中的命令
 			su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
-			--config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+			--config-file /etc/neutron/plugins/ml2/ml2\_conf.ini upgrade head" neutron
 			提示no passwd entry for neutron，但neutron用户是已经存在的，google查看/etc/passwd果然没有neutron那一栏。
 			了解su 命令之后，发现直接运行下面命令
 			neutron-db-manage --config-file /etc/neutron/neutron.conf \
-			--config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
+			--config-file /etc/neutron/plugins/ml2/ml2\_conf.ini upgrade head
 			再次执行neutron-server，不会报错
 
 			#运行neutron-openvswitch-agent,提示/usr/bin/neutron-rootwrap command not found？
 			思路：由于neutron是装在虚拟环境中，所有对应的neutron-rootwrap的路经不能使用默认的
-			解决办法：vi /etc/neutron/neutron.conf 修改agent节点的root_helper参数
-			原：root_helper = sudo /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
-			改为：root_helper = sudo /root/wgzhou/test/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
+			解决办法：vi /etc/neutron/neutron.conf 修改agent节点的root\_helper参数
+			原：root\_helper = sudo /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
+			改为：root\_helper = sudo /root/wgzhou/test/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
 
 			#运行neutron-openvswitch-agent,提示neutron-rootwrap: Executable not found: ovs-vsctl？
 			解决办法：通过apt-get install openvswitch-switch安装switch
 
-			#运行neutron-l3-agent,提示An interface driver must be specified？
-			原因：运行对应的服务需要指定对应的配置文件，服务的启动方式，参照另一篇文档“neutron各组件的正确启动方式.tex”
-
-			#运行service neutron-server start，提示该服务unrecognize?
-			原因：service命令会将/etc/init与/etc/init.d/目录下的二进制文件对应的服务名识别并进行一系列的操作，如果不在该
-			文件夹下的服务，是无法识别，以及使用该service。源码安装并没有在该文件夹下生成相关neutron的二进制文件，所以无法识别。
-
 			#运行neutron ext-list 提示No module named memcache
 			原因：由于之前的服务都是按照j版openstack进行安装，并没有在之前安装memcached。但m版的neutron是需要memcached服务的支持
-			解决办法：pip install memecached并没有成功，使用apt-get install memecached命令在系统环境中安装，并将安装的包
-			拷贝到虚拟环境中。
-			拷贝命令:cp /usr/lib/python2.7/dist-packages/memcache.py /root/wgzhou/test/lib/python2.7/site-packages/
+			解决办法：pip install python-memcached
 
 			#由于neutron-openvswitch-agent的配置文件中，bridge_mappings = external:br-ex，需要用命令手动添加br-ex
 			解决办法:ovs-vsctl add-br br-ex

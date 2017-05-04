@@ -1,0 +1,325 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{neutron各组件的正确启动方式\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+\begin{document}
+
+\tableofcontents
+
+\clearpage
+\section{控制节点的配置}
+\subsection{/etc/neutron/neutron.conf的文件配置}
+	\begin{lstlisting}
+		[DEFAULT]
+		#配置核心和服务插件
+		core_plugin = ml2
+		service_plugins = router
+		allow_overlapping_ips = True
+
+		#配置认证策略
+		auth_strategy = keystone
+
+		#port端口状态和数据变化通知nova
+		notify_nova_on_port_status_changes = True
+		notify_nova_on_port_data_changes = True
+
+		#配置DRV
+		router_distributed = True 
+
+		#配置消息队列
+		transport_url=rabbit://guest:htYun@2014@hty-mq
+		[database]
+		#配置数据库连接
+		connection = mysql+pymysql://neutron:htYun@2014@hty-controller/neutron
+		[keystone_authtoken]
+		#配置具体的认证信息
+		auth_uri = http://hty-controller:5000/v2.0
+		identity_uri = http://hty-controller:35357
+		memcached_servers = hty-controller:11211
+		admin_tenant_name = service
+		admin_user = neutron
+		admin_password = htYun@2014
+
+		[nova]
+		#配置拓扑变化通知nova需要的认证信息
+		auth_url = http://hty-controller:35357
+		auth_type = password
+		region_name = regionOne
+		admin_tenant_name = service
+		admin_user = nova
+		admin_password = nova_pass@2014
+
+	\end{lstlisting}
+\subsection{/etc/neutron/plugins/ml2/ml2_conf.ini的文件配置}  
+	\begin{lstlisting}
+		[ml2]
+		type_drivers = flat,vlan,gre,vxlan
+		tenant_network_types = vxlan
+		mechanism_drivers = openvswitch,l2population
+		extension_drivers = port_security
+
+		[ml2_type_flat]
+		flat_networks = external
+		[ml2_type_vxlan]
+		vni_ranges = 1:1000
+
+		[securitygroup]
+		enable_ipset = True
+		firewall_driver = iptables_hybrid
+	\end{lstlisting}
+\subsection{/etc/neutron/plugins/ml2/openvswitch_agent.ini的文件配置}
+	\begin{lstlisting}
+		[ovs]
+		#配置隧道网络和桥映射
+		local_ip = 10.10.11.11
+		bridge_mappings = external:br-ex
+
+		[agent]
+		tunnel_types = vxlan
+		l2_population = True
+
+		# For DVR
+		enable_distributed_routing = True
+		arp_responder = True
+
+		[securitygroup]
+		enable_ipset = True
+		firewall_driver = iptables_hybrid
+	\end{lstlisting}
+\subsection{/etc/neutron/l3_agent.ini的文件配置}
+	\begin{lstlisting}
+		[DEFAULT]
+		interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+		external_network_bridge =
+		
+		# For DVR
+		agent_mode = dvr_snat
+	\end{lstlisting}
+\subsection{/etc/neutron/dhcp_agent.ini的文件配置}
+	\begin{lstlisting}
+		[DEFAULT]
+		interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+		enable_isolated_metadata = True
+		dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
+	\end{lstlisting}
+\subsection{/etc/neutron/metadata_agent.ini的文件配置}
+	\begin{lstlisting}
+		[DEFAULT]
+		nova_metadata_ip = hty-controller
+		metadata_proxy_shared_secret = htYun@2014
+	\end{lstlisting}
+
+\subsection{额外的操作}
+	#配置open vswitch服务
+	ovs-vsctl add-br br-ex
+	ovs-vsctl add-port br-ex <INTERFACE_NAME>
+	#同步数据库
+	su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+	#/etc/nova/nova.conf的配置
+	[DEFAULT]
+	use_neutron = True
+	firewall_driver = nova.virt.firewall.NoopFirewallDriver
+	[neutron]
+	url = http://hty-controller:9696
+	auth_url = http://hty-controller:35357/2.0
+	auth_type = password
+	region_name = regionOne
+	admin_tenant_name = service
+	admin_user = neutron
+	admin_password = htYun@2014
+	service_metadata_proxy = True
+	metadata_proxy_shared_secret = htYun@2014
+
+\section{计算节点的配置}
+\subsection{/etc/neutron/neutron.conf的文件配置}
+	\begin{lstlisting}
+		[DEFAULT]
+		core_plugin = ml2
+		service_plugins = router
+		allow_overlapping_ips = True
+
+		auth_strategy = keystone
+		transport_url=rabbit://guest:htYun@2014@hty-mq
+		[keystone_authtoken]
+		#配置具体的认证信息
+		auth_uri = http://hty-controller:5000/v2.0
+		auth_url = http://hty-controller:35357/v2.0
+		memcached_servers = hty-controller:11211
+		auth_type = password
+		project_name = service
+		username = neutron
+		password = htYun@2014
+	\end{lstlisting}
+\subsection{/etc/neutron/plugins/ml2/openvswitch_agent.ini的文件配置（与控制节点大致相同）}
+	\begin{lstlisting}
+		[ovs]
+		#配置隧道网络和桥映射
+		local_ip = 10.10.11.12
+		bridge_mappings = external:br-ex
+
+		[agent]
+		tunnel_types = vxlan
+		l2_population = True
+
+		# For DVR
+		enable_distributed_routing = True
+		arp_responder = True
+
+		[securitygroup]
+		enable_ipset = True
+		firewall_driver = iptables_hybrid
+	\end{lstlisting}
+\subsection{/etc/neutron/l3_agent.ini的文件配置}
+	\begin{lstlisting}
+		[DEFAULT]
+		interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+		external_network_bridge =
+		
+		# For DVR
+		agent_mode = dvr
+	\end{lstlisting}
+\subsection{/etc/neutron/metadata_agent.ini的文件配置}
+	\begin{lstlisting}
+		[DEFAULT]
+		nova_metadata_ip = hty-controller
+		metadata_proxy_shared_secret = htYun@2014
+	\end{lstlisting}
+\end{document}

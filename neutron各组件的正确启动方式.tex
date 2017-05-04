@@ -151,13 +151,13 @@
         \item[1.]neutron-server的启动方式
 			begin{lstlisting}
 				neutron-server --config-file=/etc/neutron/neutron.conf  \
+				--config-file=/etc/neutron/plugins/ml2/ml2_conf.ini
 				--log-file=/var/log/neutron/neutron-server.log
 			end{lstlisting}
 	    \item[2.]neutron-l3-agent的启动方式：
 			begin{lstlisting}
 				neutron-l3-agent  --config-file=/etc/neutron/neutron.conf \
                   --config-file=/etc/neutron/l3_agent.ini \
-                  --config-file=/etc/neutron/fwaas_driver.ini \
                   --log-file=/var/log/neutron/l3-agent.log
 			end{lstlisting}
 		\item[3.]neutron-dhcp-agent的启动方式：
@@ -174,7 +174,7 @@
 			begin{lstlisting}
 				neutron-openvswitch-agent --config-file=/etc/neutron/neutron.conf \
 			  --config-file=/etc/neutron/plugins/ml2/openvswitch_agent.ini \
-			  --log-file=/var/log/neutron/openvswitch-agent.log \
+			  --log-file=/var/log/neutron/openvswitch-agent.log 
 			end{lstlisting}
     \end{itemize}
 \subsection{激活virtualenv:source /root/wgzhou/test/bin/activate}

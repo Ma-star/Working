@@ -150,13 +150,15 @@
     \begin{itemize}
         \item[1.]在准备要停顿的地方输入下面代码
 			begin{lstlisting}
-				import pdb;
-				pdb.set_trace();
+				import pdb
+				pdb.set_trace()
 			end{lstlisting}}
 	    \item[2.]启动程序，程序会在pdb处停下，可使用的命令如下：
 		s表示：进入函数
+		r表示：执行到函数return部分
 		n表示：下一步
 		c表示：继续下一步
-		l表示：列出程序执行到的位置，以及上下文	
+		l表示：列出程序执行到的位置，以及上下文
+
     \end{itemize}
 \end{document}
