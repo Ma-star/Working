@@ -199,7 +199,7 @@
 			end{lstlisting}	
 		\item[8.]本以为已经安装成功，可以直接启动服务，投入使用。下面是遇到的问题
 			#直接运行neutron-server,TypeError: set\_defaults() got an unexpected keyword argument 'sqlite_db'？
-			解决办法：local/lib/python2.7/site-packages/neutron/common/config.py，将该参数删除，即可。
+			解决办法：/root/venv/local/lib/python2.7/site-packages/neutron/common/config.py，将该参数删除，即可。
 
 			#运行neutron-server,提示neutron中的某个表是不存在的？
 			思路：通过mysql -uroot -p123456，进入数据库,使用use neutron切换到neutron,使用show tables命令，发现neutron数据库
@@ -209,8 +209,7 @@
 			--config-file /etc/neutron/plugins/ml2/ml2\_conf.ini upgrade head" neutron
 			提示no passwd entry for neutron，但neutron用户是已经存在的，google查看/etc/passwd果然没有neutron那一栏。
 			了解su 命令之后，发现直接运行下面命令
-			neutron-db-manage --config-file /etc/neutron/neutron.conf \
-			--config-file /etc/neutron/plugins/ml2/ml2\_conf.ini upgrade head
+			apt
 			再次执行neutron-server，不会报错
 
 			#运行neutron-openvswitch-agent,提示/usr/bin/neutron-rootwrap command not found？

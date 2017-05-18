@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{虚拟机获取不到ip的原因排查\qquad}
+\chead{dd制作流程\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,8 +146,25 @@
 
 \clearpage
 
-\subsection{}
-    \begin{itemize}
-        \item[1.]
-    \end{itemize}
+section{大致流程}
+	1.将virtualbox的iso制作成img
+	2.将U盘制作成能够存放img的容器，也就是进行一些预操作
+	3.将img放进制作好的U盘
+	4.制作dd
+section{将virtualbox的iso制作成img}
+	1.由于虚拟机分配的空间较少，需要将做好的img挂载到宿主机
+	2.确保虚拟机能够访问宿主机，将虚拟机的网络模式设置为桥接
+	3.执行命令lsblk和fdisk -l，查看磁盘空间的分配情况,方便后期制作img参数的选择
+	4.sshfs root@172.16.19.146:/root/ /mnt打开一个到宿主机的通道，/mnt文件夹下对应的就是root的文件
+	5.cd /mnt，sudo su，dd bs=512 count=XXX if=/dev/sd* | gzip -6 > XXX.img.gzip
+	  count:是仅读取指定的区块数,默认+1,使用fdisk -l 查看 ,为sectors数
+	  if:目标磁盘
+	  注:1,如果本机硬盘不大,可以远程挂载安装
+	  2,如果需要查看进度,alt+f2重新开命令界面
+	  while killall -USR1 dd;do sleep 5;done
+	  回到alt+f1界面就可以看到进度
+section{将U盘制作成能够存放img的容器，也就是进行一些预操作}
+	1.
+section{将img放进制作好的U盘}
+section{制作dd}
 \end{document}

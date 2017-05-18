@@ -176,8 +176,8 @@
 					modprobe nf_conntrack_ipv6
 					modprobe nf_nat_ipv6
 					modprobe gre
+					modprobe vxlan
 					insmod ./datapath/linux/openvswitch.ko
-					insmod ./datapath/linux/vport-geneve.ko
 					----------------------------------------
 					make modules_install
 					modprobe openvswitch
