@@ -1020,6 +1020,8 @@ neutron router-interface-add demo-router demo-subnet
 neutron router-gateway-set demo-router ext-net
 创建浮动ip：
 neutron floatingip-create ext-net
+neutron floatingip-associate floating-id port-id
+neutron floatingip-disassociate floating-id
 nova floating-ip-associate demo-instance1 ip地址
 创建虚拟机：
 nova boot --flavor --image  --nic net-id=netid --key-name --security-group 虚拟机名字
