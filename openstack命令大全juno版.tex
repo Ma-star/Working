@@ -1007,7 +1007,7 @@ nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
 创建网络：
 neutron net-create ext-net --shared --router:external True \
 --provider:physical_network external --provider:network_type flat
-neutron subnet-create ext-net --name ext-subnet \
+neutron subnet-create ext-net --name ext-subnet
 --allocation-pool start=FLOATING_IP_START,end=FLOATING_IP_END  \
 --gateway EXTERNAL_NETWORK_GATEWAY EXTERNAL_NETWORK_CIDR
 
