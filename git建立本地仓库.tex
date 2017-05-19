@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{linux源码安装\qquad}
+\chead{git建立本地仓库 \qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,11 +146,44 @@
 
 \clearpage
 
-\subsection{关键步骤详解}
-    \begin{itemize}
-        \item[1.]./configure  \# 检查系统平台是否满足需求，例如检查有没有cc和Gcc,并生成makefile文件。
-        \item[2.]make         \# 从makefile读取指令，进行编译
-        \item[3.]make install \# 从makefile读取指令，安装
-        \item[4.]make clean   \# 删除一些临时文件
-    \end{itemize}
+
+\section{git建立本地仓库}
+
+\subsection{}
+\begin{itemize}
+	\item[1.] 创建一个文件夹作为以后的git仓库，并切换进去，执行命令初始化仓库
+		\begin{lstlisting}
+			mkdir git_local_repositroy
+			cd git_local_repositroy
+			git init
+		\end{lstlisting}
+    \item[2.] 在本地创建ssh key
+		\begin{lstlisting}
+			ssh-keygen -t rsa -C "your_email@youremail.com"
+		\end{lstlisting}
+		然后一直回车，直到生成密钥对为止。默认在/root/.ssh/文件夹下包含两个文件。
+		id_rsa代表密钥，id_rsa.pub代表公钥。将公钥复制到git hub网站。
+		在本地终端，使用如下命令进行测试，是否连接成功
+		\begin{lstlisting}
+			ssh -T git@github.com
+		\end{lstlisting}
+	\item[3.]使用git之前需要设置username和email，因为github每次commit都会记录他们
+		\begin{lstlisting}
+			git config --global user.name "your name"
+			git config --global user.email "your_email@youremail.com"
+		\end{lstlisting}
+	\item[4.]添加要上传的仓库
+		\begin{lstlisting}
+			git remote add 仓库在本地的别名 远程仓库地址
+			git remote add Working git@github.com:weiguangzhou/Working.git
+		\end{lstlisting}
+	\item[5.]文件上传命令和下载命令
+		\begin{lstlisting}
+			git pull Working master #从远程仓库，更新最新的文件
+			git add 要上传的文件      #添加指定的文件，准备上传
+			git commit -m "信息"     #提交添加的文件，并备注信息
+			git push Working master #将提交的文件，推送到远程
+		\end{lstlisting}
+\end{itemize}
+
 \end{document}

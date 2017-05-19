@@ -154,28 +154,29 @@
 				--config-file=/etc/neutron/plugins/ml2/ml2_conf.ini
 				--log-file=/var/log/neutron/neutron-server.log
 			end{lstlisting}
-	    \item[2.]neutron-l3-agent的启动方式：
-			begin{lstlisting}
-				neutron-l3-agent  --config-file=/etc/neutron/neutron.conf \
-                  --config-file=/etc/neutron/l3_agent.ini \
-                  --log-file=/var/log/neutron/l3-agent.log
-			end{lstlisting}
-		\item[3.]neutron-dhcp-agent的启动方式：
-			begin{lstlisting}
-				neutron-dhcp-agent --config-file=/etc/neutron/neutron.conf --config-file=/etc/neutron/dhcp_agent.ini \
-				--log-file=/var/log/neutron/dhcp-agent.log
-			end{lstlisting}
-		\item[4.]neutron-metadata-agent的启动方式：
-			begin{lstlisting}
-				neutron-metadata-agent --config-file=/etc/neutron/neutron.conf --config-file=/etc/neutron/metadata_agent.ini \
-		       --log-file=/var/log/neutron/neutron-metadata-agent.log
-			end{lstlisting}
-		\item[5.]neutron-openvswitch-agent的启动方式：
+		\item[2.]neutron-openvswitch-agent的启动方式：
 			begin{lstlisting}
 				neutron-openvswitch-agent --config-file=/etc/neutron/neutron.conf \
 			  --config-file=/etc/neutron/plugins/ml2/openvswitch_agent.ini \
 			  --log-file=/var/log/neutron/openvswitch-agent.log 
 			end{lstlisting}
+	    \item[3.]neutron-l3-agent的启动方式：
+			begin{lstlisting}
+				neutron-l3-agent  --config-file=/etc/neutron/neutron.conf \
+                  --config-file=/etc/neutron/l3_agent.ini \
+                  --log-file=/var/log/neutron/l3-agent.log
+			end{lstlisting}
+		\item[4.]neutron-dhcp-agent的启动方式：
+			begin{lstlisting}
+				neutron-dhcp-agent --config-file=/etc/neutron/neutron.conf --config-file=/etc/neutron/dhcp_agent.ini \
+				--log-file=/var/log/neutron/dhcp-agent.log
+			end{lstlisting}
+		\item[5.]neutron-metadata-agent的启动方式：
+			begin{lstlisting}
+				neutron-metadata-agent --config-file=/etc/neutron/neutron.conf --config-file=/etc/neutron/metadata_agent.ini \
+		       --log-file=/var/log/neutron/neutron-metadata-agent.log
+			end{lstlisting}
+		
     \end{itemize}
 \subsection{激活virtualenv:source /root/wgzhou/test/bin/activate}
 \end{document}

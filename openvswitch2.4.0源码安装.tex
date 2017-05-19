@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{screen窗口的使用\qquad}
+\chead{openvswitch2.4.0源码安装\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,44 +146,89 @@
 
 \clearpage
 
-\subsection{问题汇总}
-1.--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	问题二：keyerror:fips
-	解决办法：vi /usr/lib/python2.7/dist-packages/nova/api/openstack/compute/servers.py
-	修改floating_ips的语句如下：
-	floating_ips = body['server'].get('fips', None)
-
-2.--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	问题三：l3_agent服务启动之后，日志报错，需要l3_agent.ini的[DEFAULT]verbose的参数，但配置文件中并没有这个选项，手动添加也不行
-	解决办法：vi /root/venv/lib/python2.7/site-packages/neutron/agent/common/config.py  
-	修改verbose的条件语句如下：
-	if getattr(conf, "verbose", False):
-        cmd_args.append('--verbose')
-3.--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	问题四：l3_agent服务启动之后，日志报错，unauthrized command ip netns exec qrouter/qdhcp/snat arping/neutron-ns-matadata-proxy
-	解决办法：apt-get install arping ,ln -s /root/venv/bin/neutron-ns-metadata-proxy /usr/bin/
-	遇到同样问题的额外安装包：额外的安装：conntrack，dnsmasq-utils，ipset
-4.--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	修改：控制节点和计算节点，调整nova.conf和neutron.conf的keystone部分。
-	将l3_agent.ini的interface_driver的值修改为openvswitch
-5.--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	问题五：虚拟机获取不到ip地址
-	原因：无意中发现在宿主机ping内网网关192.168.0.1，能够ping通。使用traceroute进行跟踪，先到外网的网关172.16.19.254，再到外外网的网关，之后找到这个ip。怀疑
-	是内网网段特殊影响。
-	解决办法：将内网换成10.0.0.0/24网段，即可。该问题有待追查
-6.--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	问题六：添加dvr功能之后，虚拟机获取不到ip
-	原因：暂时还不能给出很好的解释
-	解决办法：将ml2_conf.ini的mechanism_drivers的l2population选项删除。将openvswitch_agent.ini的l2_population = True改为False。
-7.--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	问题七:通过撤销dvr的配置和删除路由等操作仍旧无法重新恢复之前的功能。
-	原因：openvswitch版本为2.0.2，版本过低，需要升级。否则无法使用	
-	解决办法：手动下载源码安装至少2.1版本以上的。
-8.--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	后期需要注意：安装完高版本的openvswitch之后，需要通过软连接ln -s /usr/local/bin/ovs-* /usr/bin否则创建虚拟机报error。
-	获取不到ip：查看是否在security-group给予相关的访问权限。
-	
+\subsection{}
+	\begin{itemize}
+        \item[1.]下载openvswitch源码 http://openvswitch.org/download/ ，选择的是openvswitch2.4.0
+		\item[2.]解压安装包:tar -xzf openvswitch-2.4.0.tar.gz
+		\item[3.]构建基于Linux内核的交换机，uname -r用来得到自己linux内核版本号，用反引号（键盘上数字1左边）括起来，其中aptitude和apt-get一样，是Debian及其衍生系统中功能极其强大的包管理工具，但是aptitede在处理依赖问题上更佳一些，在删除一个包时，会删除本身所依赖的包，使系统更为干净。
+                 ./configure部分可以用--prefix=参数，可以让OVS完全安装在该目录底下。
+				 命令如下：
+				 \begin{lstlisting}
+					cd openvswitch-2.4.0
+					aptitude install dh-autoreconf libssl-dev openssl                    #预先安装一些库
+					./configure --with-linux=/lib/modules/对应linux内核(可以用uname -r命令获得)/build
+				 \end{lstlisting}
+		\item[4.]编译并安装OVS2.4.0
+		         命令如下：
+				 \begin{lstlisting}
+					make
+					make install
+				 \end{lstlisting}
+		\item[5.]安装并加载构建的内核模块
+				 命令如下：
+				 \begin{lstlisting}
+					modprobe gre
+					insmod datapath/linux/openvswitch.ko(可能会出现错误，insmod: ERROR: could not insert module openvswitch.ko: Unknown symbol in module)
+					如果有错误，找到网上的一个解决方法如下
+					-----------------------------------------
+					rmmod openvswitch
+					modprobe libcrc32c
+					modprobe nf_conntrack_ipv6
+					modprobe nf_nat_ipv6
+					modprobe gre
+					modprobe vxlan
+					insmod ./datapath/linux/openvswitch.ko
+					----------------------------------------
+					make modules_install
+					modprobe openvswitch
+				 \end{lstlisting}
+				 此时可以通过lsmod |grep openvswitch来查看已载入系统的模块，发现有OpenvSwitch
+		\item[6.]使用ovsdb工具初始化配置数据库
+				命令如下：
+				 \begin{lstlisting}
+					ovsdb-tool create /usr/local/etc/openvswitch/conf.db /usr/local/share/openvswitch/vswitch.ovsschema
+				 \end{lstlisting}
+		\item[7.]开启ovsdb-server配置数据库
+				命令如下：
+				 \begin{lstlisting}
+					ovsdb-server --remote=punix:/usr/local/var/run/openvswitch/db.sock \
+					--remote=db:Open_vSwitch,Open_vSwitch,manager_options \
+					--private-key=db:Open_vSwitch,SSL,private_key \
+					--certificate=db:Open_vSwitch,SSL,certificate \
+					--bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \
+					--pidfile --detach --log-file
+				 \end{lstlisting}
+		\item[8.]开启ovs-vsctl
+				命令如下：
+				 \begin{lstlisting}
+					ovs-vsctl --no-wait init
+				 \end{lstlisting}
+		\item[9.]开启ovs-switchd功能，即主进程
+				命令如下：
+				 \begin{lstlisting}
+					ovs-vswitchd --pidfile --detach
+				 \end{lstlisting}
+		\item[10.]开机自动加载内核模块
+				命令如下：
+				 \begin{lstlisting}
+					echo "openvswitch " >> /etc/modules
+					echo "gre" >> /etc/modules
+					echo "libcrc32c" >> /etc/modules
+				 \end{lstlisting}
+		\item[11.]开机自动启动
+				首先新建一个文件
+				命令如下：
+				 \begin{lstlisting}
+					vim /etc/init.d/openvswitch
+				 \end{lstlisting}
+				文件内容如下：
+				#!/bin/sh
+				start-stop-daemon -q -S -x /usr/local/sbin/ovsdb-server -- --remote=punix:/usr/local/var/run/openvswitch/db.sock --remote=db:Open_vSwitch,Open_vSwitch,manager_options --pidfile --detach --log-file
+				sleep 3 # waiting ovsdb-server 
+				start-stop-daemon -q -S -x /usr/local/bin/ovs-vsctl -- --no-wait init
+				start-stop-daemon -q -S -x /usr/local/sbin/ovs-vswitchd -- --pidfile --detach --log-file
+				接着改变文件权限，执行开机启动命令
+				chmod +x /etc/init.d/openvswitch
+				updata-rc.d -f openvswitch defaults
+	\end{itemize}
 \end{document}
-
-	
-	
