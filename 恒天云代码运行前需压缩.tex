@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{pycharm中设置python代码模板\qquad}
+\chead{恒天云代码运行前需压缩\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,15 +146,9 @@
 
 \clearpage
 
-\subsection{pycharm下载}
-	设置 File > Settings > File and Code Template > Python Script
-	\begin{lstlisting}
-		#!/usr/bin/env python
-		# -*- coding: utf-8 -*-
-		# Created by WeiGuangzhou on $DATE
-
-
-		if __name__ == '__main__':
-			pass
-	\end{lstlisting}
+\section{压缩过程相关命令}
+    切换到项目目录：cd patches/juno/horizon/
+	搜集静态文件：sudo python manage.py collectstatic 
+	压缩文件：sudo python manage.py compress
+    运行项目：python manage.py runserver 0.0.0.0:8080
 \end{document}

@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{pycharm中设置python代码模板\qquad}
+\chead{\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,15 +146,27 @@
 
 \clearpage
 
-\subsection{pycharm下载}
-	设置 File > Settings > File and Code Template > Python Script
-	\begin{lstlisting}
-		#!/usr/bin/env python
-		# -*- coding: utf-8 -*-
-		# Created by WeiGuangzhou on $DATE
+section{}
+2017-05-16 11:22:57.277 10014 AUDIT nova.compute.manager [req-985096af-edbb-4d3a-b014-43000ac9cf85 None] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] Starting instance...
+2017-05-16 11:22:57.335 10014 AUDIT nova.compute.claims [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] Attempting claim: memory 64 MB, disk 1 GB
+2017-05-16 11:22:57.335 10014 AUDIT nova.compute.claims [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] Total memory: 7887 MB, used: 576.00 MB
+2017-05-16 11:22:57.335 10014 AUDIT nova.compute.claims [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] memory limit: 11830.50 MB, free: 11254.50 MB
+2017-05-16 11:22:57.335 10014 AUDIT nova.compute.claims [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] Total disk: 93 GB, used: 1.00 GB
+2017-05-16 11:22:57.336 10014 AUDIT nova.compute.claims [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] disk limit not specified, defaulting to unlimited
+2017-05-16 11:22:57.353 10014 AUDIT nova.compute.claims [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] Claim successful
+2017-05-16 11:22:57.419 10014 INFO nova.scheduler.client.report [-] Compute_service record updated for ('hty-compute1', 'hty-compute1')
+2017-05-16 11:22:57.494 10014 INFO nova.scheduler.client.report [-] Compute_service record updated for ('hty-compute1', 'hty-compute1')
+2017-05-16 11:22:57.670 10014 INFO nova.virt.libvirt.driver [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] Creating image
+2017-05-16 11:22:57.896 10014 INFO nova.virt.disk.vfs.api [-] Unable to import guestfsfalling back to VFSLocalFS
+2017-05-16 11:22:58.619 10014 INFO nova.scheduler.client.report [-] Compute_service record updated for ('hty-compute1', 'hty-compute1')
+2017-05-16 11:22:59.631 10014 INFO nova.compute.manager [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] VM Started (Lifecycle Event)
+2017-05-16 11:22:59.688 10014 INFO nova.compute.manager [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] During sync_power_state the instance has a pending task (spawning). Skip.
+2017-05-16 11:22:59.689 10014 INFO nova.compute.manager [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] VM Paused (Lifecycle Event)
+2017-05-16 11:22:59.756 10014 INFO nova.compute.manager [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] During sync_power_state the instance has a pending task (spawning). Skip.
+2017-05-16 11:23:01.943 10014 INFO nova.compute.manager [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] VM Resumed (Lifecycle Event)
+2017-05-16 11:23:01.946 10014 INFO nova.virt.libvirt.driver [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] Instance spawned successfully.
+2017-05-16 11:23:02.003 10014 INFO nova.compute.manager [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] During sync_power_state the instance has a pending task (spawning). Skip.
+2017-05-16 11:23:02.004 10014 INFO nova.compute.manager [-] [instance: 0e4af4ed-1879-4e10-82fd-0ce2489537ae] VM Resumed (Lifecycle Event)
 
-
-		if __name__ == '__main__':
-			pass
-	\end{lstlisting}
+	
 \end{document}
