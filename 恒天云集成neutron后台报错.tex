@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{正则表达式\qquad}
+\chead{恒天云集成neutron后台报错\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,7 +146,17 @@
 
 \clearpage
 
-\section{正则表达式}
-    \subsection{}
-	
+\section{恒天云集成neutron后台报错}
+\subsection{当删除router或者net的时候，在后台服务中会出现下面的错误}
+     问题描述：当删除router或者net的时候，在后台服务中会出现下面的错误
+	 错误日志：/root/venv/bin/neutron-rootwrap: Unauthorized command: kill -9 9738 (no filter matched)
+	 问题排查：通过ps -aux|grep 9738查看对应进程
+	 结果显示：root      9738  0.0  0.8 115900 48760 ?        S    12:38   0:00 /root/venv/bin/python /usr/bin/neutron-ns-metadata-proxy --pid_file=/var/lib/neutron/external/pids/1a977c2a-0be1-475a-a3f3-6fc229e40af9.pid --metadata_proxy_socket=/var/lib/neutron/metadata_proxy --router_id=1a977c2a-0be1-475a-a3f3-6fc229e40af9 --state_path=/var/lib/neutron --metadata_port=9697 --metadata_proxy_user=0 --metadata_proxy_group=0
+     分析：删除router和net，也就是将其对应的命名空间删除。命名空间的创建是由neutron-ns-metadata-proxy来完成，删除命名空间，也就是停掉启动命名空间的那个进程，也就是类似上面的那种进程。每个
+	 router或者net都对应一个进程。删除进程使用kill -9 pid这个命令，在正常的物理环境中是可以使用这个命令完成删除操作的。由于neutron是在虚拟环境中搭建，此命令却无法完成。
+	 kill -9 pip命令的执行是需要root权限的，服务运行过程中对应的权限是非特权用户，非特权用户执行特权命令，是有限制的，查看对应的配置文件。在neutron中，此配置文件都在/etc/neutron/rootwrap.d/的文件夹下
+	 找到router对应的l3.filters,net对应的dhcp.filters。
+	 将kill_metadata: KillFilter, root, python, -9 更改为 kill_metadata: KillFilter, root, /root/venv/bin/python, -9
+     
+
 \end{document}
