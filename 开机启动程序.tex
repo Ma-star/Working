@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{常用命令\qquad}
+\chead{开机启动程序\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,27 +146,14 @@
 
 \clearpage
 
-\subsection{查看系统版本}
-\begin{itemize}
-	\item[1.]uname -a 查看系统内核版本 
-	\item[2.]lsb_release -a 查看系统套件版本
-\end{itemize}
+\section{开机启动程序}
+\subsection{方法一}
+直接在/etc/rc.local添加，不够友好
+\subsection{方法二}
+/etc/init.d/创建要启动的脚本test
+chmod 755 test 更改脚本为可执行
+update-rc.d test defaults 95 该命令将脚本放到启动脚本中，95为脚本的启动顺序
+update-rc.d -f test remove 将test脚本从启动脚本中卸载
 
-\subsection{su命令}
-	su命令切换当前用户到其他身份的用户，变更时需输入用户名和密码
-	语法：
-	begin{lstlisting}
-		su (选项)(参数)
-	end{lstlisting}
-	参数：
-	\begin{itemize}
-		\item[1.]-c<指令>,--command=<指令>:执行完指定的指令后，即恢复身份;
-		\item[2.]-f,--fast:使shell不去读取启动文件;
-		\item[3.]-l,--login:改变身份时，也同时变更工作目录，也会变更path变量;
-		\item[4.]-m,-p,--preserve-environment:变更身份时，不要变更环境变量;
-		\item[5.]-s<指令>,--shell=<指令>:指定要执行的shell;
-		\item[6.]--help:显示帮助;
-		\item[7.]--version:显示版本信息;
-	\end{itemize}
-
+https://jingxin.me/blog/blog/2013/06/19/start-stop-daemon/
 \end{document}
