@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{恒天云代码运行前需压缩\qquad}
+\chead{horizon代码修改重要部分\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -145,10 +145,15 @@
 \tableofcontents
 
 \clearpage
-
-\section{压缩过程相关命令}
-    切换到项目目录：cd patches/juno/horizon/
+\section{horizon代码修改注意事项}
+\subsection{修改静态代码需要在运行环境执行如下命令}
+	切换到项目目录：cd patches/juno/horizon/
 	搜集静态文件：sudo python manage.py collectstatic 
 	压缩文件：sudo python manage.py compress
     运行项目：python manage.py runserver 0.0.0.0:8080
+\subsection{horizon启用neutron}
+	horizon/openstack_dashboard/local/htyun_settings.py：最后一行添加USE_NEUTRON = True
+\subsection{horizon中英文内容汉化}
+patches/juno/horizon/openstack_dashboard/locale：参照以前的修改在最后添加
+django-admin compilemessages：远程到开发环境，切换到patches/juno/horizon/openstack_dashboard，执行该命令
 \end{document}

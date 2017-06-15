@@ -155,10 +155,24 @@
 	\item[1.] useradd + 用户名：生成一个用户和同名的用户组，但存在三无，无用户目录，无用户密码，无系统shell
 	\item[2.] useradd -m -p 123456 -s /bin/bash weiguangzhou：此条命令创建用户以及同名的用户组，-m表示生成用户目录，-p设置用户密码，-s设置系统shell
 	\item[3.] 设置新创建的用户具有sudo功能，也就是让非特权用户执行特权指令，需要在/etc/sudoers添加对应一条记录weiguangzhou ALL=(ALL:ALL) ALL
+	\item[4.] userdel -r weiguangzhou：将用户删除，-r同时删除对应目录
+	\item[5.] 没有分配默认权限
+\end{itemize}
+\subsection{adduser命令}
+\begin{itemize}
+	\item[1.] adduser + 用户名：生成用户，用户组，设置密码，系统shell，分配默认权限
+	\item[2.] 设置使其具有sudo功能，也就是让非特权用户执行特权指令，需要在/etc/sudoers添加对应一条记录weiguangzhou ALL=(ALL:ALL) ALL
 \end{itemize}
 \subsection{chown命令}
 \begin{itemize}
 	\item[1.] chown -r 用户名：用户组 文件名 将文件的所有者改为对应用户
 	\item[2.] 
+\end{itemize}
+\subsection{chmod命令}
+\begin{itemize}
+	\item[1.] chmod -r 777 文件： 更改文件及文件夹内的所有文件访问权限
+	\item[2.] 
+
+
 \end{itemize}
 \end{document}

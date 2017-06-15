@@ -1016,9 +1016,9 @@ neutron subnet-create ext-net --name ext-subnet \
 --allocation-pool start=172.16.19.170,end=172.16.19.172  \
 --gateway 172.16.19.254 --dns-nameserver 8.8.8.8 172.16.19.0/24
 
-neutron net-create demo-net
-neutron subnet-create demo-net --name demo-subnet \
---gateway 10.0.0.1 --dns-nameserver 8.8.8.8 10.0.0.0/24
+neutron net-create demo-net2
+neutron subnet-create demo-net2 --name demo-subnet2 \
+--gateway 10.0.1.1 --dns-nameserver 8.8.8.8 10.0.1.0/24
 创建路由并绑定端口：
 neutron router-create demo-router
 neutron router-interface-add demo-router demo-subnet

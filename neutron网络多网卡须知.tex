@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{horizon代码修改重要部分\qquad}
+\chead{neutron网络多网卡须知\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -145,8 +145,12 @@
 \tableofcontents
 
 \clearpage
+\section{neutron网络多网卡须知}
+\subsection{}
+	\begin{itemize}
+		\item[1.]测试组合全部通过：单网卡gre,单网卡vxlan,双网卡vxlan+ext,双网卡gre+ext，双网卡gre+vxlan，三网卡gre1+gre2+ext，三网卡：gre+vxlan+ext
+		\item[2.]通：gre1+vxlan1+ext---->vxlan2；gre1+vxlan1---->vxlan2；gre1+gre2---->vxlan2;
+		\item[3.]不通：gre1+gre2+ext---->vxlan2;
+    \end{itemize}
 
-\subsection{horizon代码修改重要部分}
-	horizon/openstack_dashboard/local/htyun_settings.py：最后一行添加USE_NEUTRON = True
-	
 \end{document}
