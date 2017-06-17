@@ -136,8 +136,7 @@
 \usepackage{lastpage}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\lhead{\space \qquad \space}
-\chead{neutron网络多网卡须知\qquad}
+\lhead{shell变量 \qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -145,12 +144,60 @@
 \tableofcontents
 
 \clearpage
-\section{neutron网络多网卡须知}
-\subsection{}
-	\begin{itemize}
-		\item[1.]测试组合全部通过：单网卡gre,单网卡vxlan,双网卡vxlan+ext,双网卡gre+ext，双网卡gre+vxlan，三网卡gre1+gre2+ext，三网卡：gre+vxlan+ext
-		\item[2.]通：gre1+vxlan1+ext---->vxlan2；gre1+vxlan1---->vxlan2；gre1+gre2---->vxlan2;
-		\item[3.]不通：gre1+gre2+ext---->vxlan2;
-    \end{itemize}
-172.16.19.33 文件系统
+
+\section{shell变量}
+\subsection{变量相关命令}
+\begin{itemize}
+    \item[1.]name=weiguangzhou：设置变量
+	\item[2.]echo \${name}：输出变量
+	\item[3.]export name：将变量设为环境变量，在子程序中也可以使用
+	\item[4.]\$(uname -r)和`uname -r`：输出命令执行的结果
+	\item[5.]env：查看所有的环境变量
+	\item[6.]unset：取消变量的设置
+	\item[6.]alias ll='ls -alF'：设置别名
+	\item[7.]unalias ll：取消ll别名的设置
+	\item[8.]set：查看所有环境变量和自定义变量以及其他的一些信息
+	\item[9.]export：查看所有的环境变量
+	\item[10.]locale：查看可支持的语言
+	\item[11.]read -p "请输入你的名字：" -t 5 yourname：从键盘读取信息，赋值给yourname，-p是提示信息，-t是输入等待时间
+	\item[12.]declare：不加任何参数，查看所有的变量，等同与set
+	\item[13.]declare -aixr：将变量设置为数组，整型，环境变量，只读
+	\item[14.]declare +x：取消之前设置的环境变量动作
+	\item[15.]declare -p sum：列出变量的类型
+	\item[16.]ulimit HSacfdltu：限制用户使用的系统资源,H严格的限制，s警告不能超过该配额，a显示所有配额，c核心文件大小,f普通文件大小,d最大segments大小，
+	l锁定内存大小，t可使用的最大cpu时间，u单一用户可使用的最大程序数量。
+\end{itemize}
+\subsection{变量内容的删除与取代}
+\begin{itemize}
+	\item[1.]\${变量名#最开始的匹配*最后的匹配}：删除变量，从左到右最短匹配。*表示任意多个字符，#表示从左到右最短匹配,##表示从左到右最长匹配
+	\item[2.]\${变量名\%最开始的匹配*最后的匹配}：删除变量，从右到左最短匹配。*表示任意多个字符，\%表示从右到左最短匹配,\%\%表示从右到左最长匹配
+	\item[3.]注意：#最开始的匹配一定要是最开头，\%最后的匹配一定是最末尾
+	\item[4.]\${path//sbin/SBIN}：将sbin替换成SBIN，单/表示替换一个，双/表示替换全部。
+	\item[5.]上面所有操作不改变原变量的值，只产生一个新的字符串
+\end{itemize}
+\subsection{规则整理}
+\begin{itemize}
+	\item[1.]\${变量#关键词} 若变量内容从头开始的数据符合『关键词』，则将符合的最短数据删除
+	\item[2.]\${变量##关键词}	若变量内容从头开始的数据符合『关键词』，则将符合的最长数据删除
+	\item[3.]\${变量\%关键词} 若变量内容从尾向前的数据符合『关键词』，则将符合的最短数据删除
+	\item[4.]\${变量\%\%关键词}	若变量内容从尾向前的数据符合『关键词』，则将符合的最长数据删除
+	\item[5.]\${变量/旧字符串/新字符串} 若变量内容符合『旧字符串』则『第一个旧字符串会被新字符串取代』
+	\item[6.]\${变量//旧字符串/新字符串} 若变量内容符合『旧字符串』则『全部的旧字符串会被新字符串取代』
+\end{itemize}
+\subsection{根据变量是否存在，对其进行赋值}
+\begin{itemize}
+	\item[1.]new_var=\${old_var:-content}：如果旧变量不存在以及为空串时则不将content内容赋值给新变量
+	\item[2.]new_var=\${old_var+|=|?content}：其他组合方式暂不考虑
+\end{itemize}
+\subsection{命名别名与历史命令}
+\begin{itemize}
+	\item[1.]alias：查看系统所有别名
+	\item[2.]alias hh='ll -alF'：设置一个新的别名
+	\item[3.]unalias hh：取消一个别名
+	\item[4.]histroy n：列出前n条历史命令
+\end{itemize}
+\subsection{命名别名与历史命令}
+\begin{itemize}
+	\item[1.]source或者.：手动将配置文件的内容读取到当前shell环境中，就不需要重新注销登录了。
+\end{itemize}
 \end{document}
