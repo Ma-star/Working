@@ -2,9 +2,9 @@
 %% 字体：方正静蕾简体
 %%		 方正粗宋
 \documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
-\title{恒天云集成neutron后台报错}
-\author{weiguang zhou\footnote{简介：恒天云FTE恒天云FTE恒天云FTE恒天云FTE恒天云FTE恒天云FTE}}
-\date{\today} 
+\title{NBA巨星之小皇帝}
+\author{周威光整理\footnote{简介：恒天云FTE}}
+\date{2017-06-22} 
 \usepackage[utf8]{inputenc}
 \usepackage{fontspec}
 \usepackage{cite}
@@ -139,7 +139,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{ubuntu安装latex \qquad}
+\chead{NBA巨星之小皇帝\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -150,16 +150,22 @@
 
 \maketitle
 \begin{abstract}
-     问题描述：当删除router或者net的时候，在后台服务中会出现下面的错误\\
-	 错误日志：/root/venv/bin/neutron-rootwrap: Unauthorized command: kill -9 9738 (no filter matched)\\
-	 问题排查：通过ps -aux|grep 9738查看对应进程\\
-     分析：删除router和net，也就是将其对应的命名空间删除。命名空间的创建是由neutron-ns-metadata-proxy来完成，删除命名空间，也就是停掉启动命名空间的那个进程，也就是类似上面的那种进程。每个
-	 router或者net都对应一个进程。删除进程使用kill -9 pid这个命令，在正常的物理环境中是可以使用这个命令完成删除操作的。由于neutron是在虚拟环境中搭建，此命令却无法完成。
-	 kill -9 pip命令的执行是需要root权限的，服务运行过程中对应的权限是非特权用户，非特权用户执行特权命令，是有限制的，查看对应的配置文件。在neutron中，此配置文件都在/etc/neutron/rootwrap.d/的文件夹下
-	 找到router对应的l3.filters,net对应的dhcp.filters。将kill\_metadata: KillFilter, root, python, -9 更改为 kill\_metadata: KillFilter, root, /root/venv/bin/python, -9
+勒布朗·詹姆斯（LeBron James），1984年12月30日出生在美国俄亥俄州阿克伦，美国职业篮球运动员，司职小前锋，绰号“小皇帝”，效力于NBA克利夫兰骑士队。
+勒布朗·詹姆斯在2003年NBA选秀中于首轮第1顺位被克利夫兰骑士队选中。2003-2010年，詹姆斯效力于骑士队，期间2次当选NBA最有价值球员（MVP）。
+2010年，詹姆斯转会至迈阿密热火队，与德怀恩·韦德以及克里斯·波什组成“三巨头”阵容。2012年，詹姆斯得到NBA个人生涯的第3座常规赛MVP，第1个总冠军和总决赛MVP。
+詹姆斯代表美国男篮获得了2012年伦敦奥运会金牌，追平了迈克尔·乔丹在1992年所创的纪录。2013年，詹姆斯获得第4个常规赛MVP、第2个NBA总冠军和第2个总决赛MVP，实现两连冠。
+2014年，詹姆斯回归骑士，与凯里·欧文、凯文·乐福组成“三巨头”阵容。2016年，詹姆斯带领骑士逆转战胜卫冕冠军勇士获得队史首个总冠军和个人第3个总决赛MVP。
+2017年06月12日，美国《福布斯》杂志公布了2017年度全球百位名人榜，美国篮球运动员勒布朗·詹姆斯（8600万美元）排名第十。
 \end{abstract} 
 \it{ This is italic.}
-{\sl This is slant.}
-{\bf This is boldface.}
-\tiny{tiny}
+\sl{ This is slant.}\\
+\bf{ This is boldface.}
+\section{一级标题}
+\subsection{二级标题}
+\subsubsection{三级标题}
+\begin{itemize}
+	\item[1.]小标题 
+	\sizedfic{0.4}{king.jpg}
+\end{itemize}
+
 \end{document}
