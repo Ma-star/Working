@@ -2,7 +2,9 @@
 %% 字体：方正静蕾简体
 %%		 方正粗宋
 \documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
-
+\title{恒天云集成neutron后台报错}
+\author{weiguang zhou\footnote{简介：恒天云FTE恒天云FTE恒天云FTE恒天云FTE恒天云FTE恒天云FTE}}
+\date{\today} 
 \usepackage[utf8]{inputenc}
 \usepackage{fontspec}
 \usepackage{cite}
@@ -137,7 +139,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{neutron创建网络总结 \qquad}
+\chead{ubuntu安装latex \qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,37 +148,18 @@
 
 \clearpage
 
-
-\section{neutron创建网络总结}
-\subsection{网络创建}
-\begin{itemize}
-	\item[1.]网络创建主要分为普通用户创建和管理员创建
-	\item[2.]普通用户只能创建租户网络tenant-network，租户网络模式默认为ml2\_conf.ini配置文件中tenant\_network\_types的第一个参数，这里是vxlan
-	\item[3.]管理员不仅能创建普通租户网络，还能在系统管理中创建provider网络，共享网络，供用户使用
-\end{itemize}
-\subsection{flat网络}
-\begin{itemize}
-	\item[1.]管理员创建flat网络需绑定物理网络
-	\item[2.]flat网络只能创建一个，创建第二个会提示，物理网络in use
-	\item[3.]结论：一个项目里，只能创建一个绑定物理网络的虚拟网络，根据物理网络类型进行创建
-\end{itemize}
-\subsection{vlan网络}
-\begin{itemize}
-	\item[1.]现有配置还不支持vlan，需要配置文件中添加额外配置
-	\item[2.]猜想：类似flat，只能创建一个 
-	\item[3.]结论：根据物理网络类型进行创建
-\end{itemize}
-\subsection{gre网络}
-\begin{itemize}
-	\item[1.]内外网均可创建该网络，但外网创建gre网络和内网创建的效果是一样的，都是不依赖于物理网络
-	\item[2.]gre网络可以于vxlan网络同时在内网创建，可共存
-	\item[3.]结论：gre网络确定为内网候选网络之一
-\end{itemize}
-\subsection{vxlan网络}
-\begin{itemize}
-	\item[1.]内外网均可创建该网络，但外网创建vxlan网络和内网创建的效果是一样的，都是不依赖于物理网络
-	\item[2.]vxlan网络可以于gre网络同时在内网创建，可共存
-	\item[3.]结论：vxlan网络确定为内网候选网络之一
-\end{itemize}
-\subsection{结论：provider network选择gre,vxlan;tenant network根据物理网络选择flat,vlan}
+\maketitle
+\begin{abstract}
+     问题描述：当删除router或者net的时候，在后台服务中会出现下面的错误\\
+	 错误日志：/root/venv/bin/neutron-rootwrap: Unauthorized command: kill -9 9738 (no filter matched)\\
+	 问题排查：通过ps -aux|grep 9738查看对应进程\\
+     分析：删除router和net，也就是将其对应的命名空间删除。命名空间的创建是由neutron-ns-metadata-proxy来完成，删除命名空间，也就是停掉启动命名空间的那个进程，也就是类似上面的那种进程。每个
+	 router或者net都对应一个进程。删除进程使用kill -9 pid这个命令，在正常的物理环境中是可以使用这个命令完成删除操作的。由于neutron是在虚拟环境中搭建，此命令却无法完成。
+	 kill -9 pip命令的执行是需要root权限的，服务运行过程中对应的权限是非特权用户，非特权用户执行特权命令，是有限制的，查看对应的配置文件。在neutron中，此配置文件都在/etc/neutron/rootwrap.d/的文件夹下
+	 找到router对应的l3.filters,net对应的dhcp.filters。将kill\_metadata: KillFilter, root, python, -9 更改为 kill\_metadata: KillFilter, root, /root/venv/bin/python, -9
+\end{abstract} 
+\it{ This is italic.}
+{\sl This is slant.}
+{\bf This is boldface.}
+\tiny{tiny}
 \end{document}
