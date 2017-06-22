@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{linux程序注册成系统服务 \qquad}
+\chead{neutron创建网络总结 \qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -147,13 +147,36 @@
 \clearpage
 
 
-\section{linux程序注册成系统服务}
-
-\subsection{}
+\section{neutron创建网络总结}
+\subsection{网络创建}
 \begin{itemize}
-	\item[1.] 
-	\item[2.] 
-	\item[3.] 
+	\item[1.]网络创建主要分为普通用户创建和管理员创建
+	\item[2.]普通用户只能创建租户网络tenant-network，租户网络模式默认为ml2_conf.ini配置文件中tenant_network_types的第一个参数，这里是vxlan
+	\item[3.]管理员不仅能创建普通租户网络，还能在系统管理中创建provider网络，共享网络，供用户使用
 \end{itemize}
-
+\subsection{flat网络}
+\begin{itemize}
+	\item[1.]管理员创建flat网络需绑定物理网络
+	\item[2.]flat网络只能创建一个，创建第二个会提示，物理网络in use
+	\item[3.]结论：一个项目里，只能创建一个绑定物理网络的虚拟网络，根据物理网络类型进行创建
+\end{itemize}
+\subsection{vlan网络}
+\begin{itemize}
+	\item[1.]现有配置还不支持vlan，需要配置文件中添加额外配置
+	\item[2.]猜想：类似flat，只能创建一个 
+	\item[3.]结论：根据物理网络类型进行创建
+\end{itemize}
+\subsection{gre网络}
+\begin{itemize}
+	\item[1.]内外网均可创建该网络，但外网创建gre网络和内网创建的效果是一样的，都是不依赖于物理网络
+	\item[2.]gre网络可以于vxlan网络同时在内网创建，可共存
+	\item[3.]结论：gre网络确定为内网候选网络之一
+\end{itemize}
+\subsection{vxlan网络}
+\begin{itemize}
+	\item[1.]内外网均可创建该网络，但外网创建vxlan网络和内网创建的效果是一样的，都是不依赖于物理网络
+	\item[2.]vxlan网络可以于gre网络同时在内网创建，可共存
+	\item[3.]结论：vxlan网络确定为内网候选网络之一
+\end{itemize}
+\subsection{结论：provider network选择gre,vxlan;tenant network根据物理网络选择flat,vlan}
 \end{document}
