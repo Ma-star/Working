@@ -156,7 +156,7 @@
 				 \begin{lstlisting}
 					cd openvswitch-2.4.0
 					aptitude install dh-autoreconf libssl-dev openssl                    #预先安装一些库
-					./configure --with-linux=/lib/modules/对应linux内核(可以用uname -r命令获得)/build
+					./configure --with-linux=/lib/modules/$(uname -r)/build
 				 \end{lstlisting}
 		\item[4.]编译并安装OVS2.4.0
 		         命令如下：
