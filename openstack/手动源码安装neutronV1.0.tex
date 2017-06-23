@@ -1,0 +1,241 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{手动源码安装neutron\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+\begin{document}
+
+\tableofcontents
+
+\clearpage
+
+\subsection{neutron源码各文件夹作用}
+    \begin{itemize}
+        \item[1.]bin/:可执行的二进制脚本文件
+		\item[2.]etc/:配置文件
+		\item[2.]build/：没有理解到位
+		\item[3.]neutron/:源码文件
+		\item[4.]tools/:工具文件夹，例如install_venv.sh，安装virtualenv,建立独立的pyhton开发环境(安装neutron需要的第三方类库)
+		\item[5.]run_tests.sh:安装virtualenv，并进行单元测试
+		\item[6.]setup.py:利用setuptools工具，安装neutron。
+		\item[7.]setup.cfg:pbr工具，解析过滤该文件，并将解析结果作为setup.py中setup函数的默认参数。
+		\item[8.]requirements.txt:neutron的第三方依赖包
+		\item[9.]test-requirements.txt:neutron的测试依赖包
+		\item[10.]在install_venv.sh就是，利用pip安装requirements.txt，test-requirements.txt，virtualenv
+    \end{itemize}
+\subsection{手动源码安装步骤}
+    \begin{itemize}
+		\item[1.]需要安装pip版本在8.1.2之上，否则会报错
+			apt-get install python-pip
+			pip install --upgrade 'pip>=8.1.2'
+		\item[2.]安装virtualenv
+			begin{lstlisting}
+				pip install virtualenv
+			end{lstlisting}
+		\item[3.]创建名为venv的虚拟环境,并切换	进venv目录
+			begin{lstlisting}
+				virtualenv venv
+				cd venv
+			end{lstlisting}
+			安装之后使用ls命令，查看当前文件夹的内容，会多出来bin,lib,local等文件夹。以后安装的包会放在
+			这些文件夹，将不会和系统的混合在一起。这就是隔离的意义。
+		\item[4.]启动虚拟环境
+			begin{lstlisting}
+				source bin/activate
+			end{lstlisting}
+        \item[5.]切换到neutron源码包，安装neutron依赖包
+			begin{lstlisting}
+				pip install -r requirements.txt
+			end{lstlisting}
+			出现报错：netifaces.c:1:20: fatal error: Python.h: No such file or directory
+			执行下面命令即可
+			begin{lstlisting}
+				sudo apt-get install python2.7-dev
+			end{lstlisting}
+		\item[6.]安装neutron组件
+			begin{lstlisting}
+				python setup.py install
+			end{lstlisting}
+		\item[7.]通过源码的tools文件夹下的generate\_config\_file\_samples.sh脚本生成配置文件，并拷贝到/etc/neutron文件夹下
+			begin{lstlisting}
+				./tools/generate_config_file_samples.sh
+			end{lstlisting}	
+		\item[8.]本以为已经安装成功，可以直接启动服务，投入使用。下面是遇到的问题
+			#直接运行neutron-server,TypeError: set\_defaults() got an unexpected keyword argument 'sqlite_db'？
+			解决办法：/root/venv/local/lib/python2.7/site-packages/neutron/common/config.py，将该参数删除，即可。
+
+			#运行neutron-server,提示neutron中的某个表是不存在的？
+			思路：通过mysql -uroot -p123456，进入数据库,使用use neutron切换到neutron,使用show tables命令，发现neutron数据库
+			确实是空的。
+			解决办法:运行文档中的命令
+			su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
+			--config-file /etc/neutron/plugins/ml2/ml2\_conf.ini upgrade head" neutron
+			提示no passwd entry for neutron，但neutron用户是已经存在的，google查看/etc/passwd果然没有neutron那一栏。
+			了解su 命令之后，发现直接运行下面命令
+			apt
+			再次执行neutron-server，不会报错
+
+			#运行neutron-openvswitch-agent,提示/usr/bin/neutron-rootwrap command not found？
+			思路：由于neutron是装在虚拟环境中，所有对应的neutron-rootwrap的路经不能使用默认的
+			解决办法：vi /etc/neutron/neutron.conf 修改agent节点的root\_helper参数
+			原：root\_helper = sudo /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
+			改为：root\_helper = sudo /root/wgzhou/test/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
+
+			#运行neutron-openvswitch-agent,提示neutron-rootwrap: Executable not found: ovs-vsctl？
+			解决办法：通过apt-get install openvswitch-switch安装switch
+
+			#运行neutron ext-list 提示No module named memcache
+			原因：由于之前的服务都是按照j版openstack进行安装，并没有在之前安装memcached。但m版的neutron是需要memcached服务的支持
+			解决办法：pip install python-memcached
+
+			#由于neutron-openvswitch-agent的配置文件中，bridge_mappings = external:br-ex，需要用命令手动添加br-ex
+			解决办法:ovs-vsctl add-br br-ex
+
+			#计算节点运行python setup.py install的时候，报错It's also possible that there is a mismatch between the package name in setup.cfg and the argument given to pbr.version.VersionInfo
+		    原因：PBR从git标签生成“版本”
+			解决办法：安装git，执行命令apt-get install git 
+
+			#无法进行neutron数据库迁移,需要安装pymysql
+			解决办法：pip install pymysql
+		
+    \end{itemize}
+
+
+\end{document}
