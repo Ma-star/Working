@@ -215,9 +215,16 @@
 	\item[4.]组合逻辑cmd1&&cmd2||cmd3，若cmd1正确执行，则执行cmd2。否则执行cmd3。cmd2和cmd3肯定能正确执行
 	\item[5.]组合逻辑使用时要注意，比如：ls /tmp/abc || mkdir /tmp/abc && touch /tmp/abc/hehe
 	\item[6.]ls /tmp/vbirding && echo "exist" || echo "not exist"与ls /tmp/vbirding || echo "not exist" && echo "exist"
-\subseciton{管线命令}
+\subseciton{管线命令:grep,cut,less,more,head,tail,sort,wc,uniq,tee,tr,col,join,paste,expand,split}
 	\item[1.]|:管道命令，管道之前是运行命令产生结果，管道之后是对产生的结果再次进行处理。管道之后的命令必须能够接受标准输入。
 	\item[2.]cut:对每一行进行处理输出。-d指定分隔符,-f指定分隔后的第几段,-c以字符为单位取出固定字符区间。例子，echo \$PATH | cut -d ':' -f 3,5和export | cut -c 12-
 	\item[3.]grep:对每一行数据进行过滤输出。-c搜寻字符串出现的次数，-i搜寻忽略大小写，-n搜寻结果顺便输出对应行号，-v反向选择，显示没有该内容的一行
 	\item[4.]例子，last | grep 'root' 和 last | grep -v 'root' 和 last | grep 'root' |cut -d ' ' -f1 和 grep --color=auto 'MANPATH' /etc/man.config
+	\item[5.]paste:将文件的每一行合并，默认用tab隔开。paste file1 file2
+	\item[6.]expand:将tab键换成空格键，-t指定替换的空格数
+	\item[7.]split:将一个文件分割成几个文件。-b以大小分割，-l以行数来分割。还可以在最后加上文件名前缀split -l 1 aha test以aha的每一行内容在当前目录下生成testaa,testab...等文件
+	\item[8.]xargs:会将管道|的标准输出以空格作为分割，分割成若干段，作为其后命令的参数。-p执行命令前询问yes or no，-e分割遇到指定的字符停止，-n一次命令使用的参数个数。
+	例子：	cut -d':' -f1 /etc/passwd | xargs -p -n 5 finger
+	cut -d':' -f1 /etc/passwd | xargs -p -e'lp' finger
+	\item[9.]关于减号的用户-：作为标准输入和输出。例子:tar -cvf - /home | tar -xvf -
 \end{document}
