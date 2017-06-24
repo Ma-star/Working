@@ -1,0 +1,236 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+\title{二层网络基础知识}
+\author{周威光整理\footnote{简介：恒天云FTE}}
+\date{2017-06-24} 
+% 引用宏包
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+% 自定义添加图片命令
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+% 
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+% 设置页眉页脚
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{二层网络基础知识\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+% 参考文献
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\indent\llap{#1\enspace}\ignorespaces}
+\def\re{\par\hang\textindent}
+
+\begin{document}
+\maketitle
+\clearpage
+\tableofcontents
+\clearpage
+\section{vlan基础知识}
+\subsection{vlan的含义}
+通俗点说，就是将一个交换机当成多个交换机使用的一种方法。
+\section{二层交换的基础知识}
+\subsection{二层交换机最基本的功能}
+\begin{itemize}
+	\item[(1).]mac地址学习
+	\item[(2).]数据帧的转发
+	\item[(3).]添加vlan标签和剥离vlan标签
+\end{itemize}
+\subsection{数据帧转发和mac学习的过程}
+配置普通的交换机:
+\sizedfic{0.8}{mac学习.jpg}
+\begin{itemize}
+	\item[(1).]PC A 发一个帧到交换机的 1 端口，其目的MAC地址为 PC B 的 MAC。
+	\item[(2).]交换机比较其目的 MAC 地址和它的内部 MAC Table，发现它不存在（此时表为空）。
+	在决定泛洪之前，它把端口 1 和 PC A 的 MAC 地址存进它的 MAC Table。
+	\item[(3).]交换机将帧拷贝多份，分别从2和3端口发出。
+	\item[(4).]PC B 收到该帧以后，发现其目的 MAC 地址和他自己的 MAC 地址相同。它发出一个回复帧进入端口3。
+	\item[(5).]交换机将 PC B 的 MAC地址和端口3 存在它的 MAC 表中。
+	\item[(6).]因为该帧的目的地址为PC A 的 MAC 地址它已经在 MAC 表中，交换机直接将它转发到端口1，达到PC A。
+\end{itemize}
+配置了vlan的交换机的该机制类似:
+\begin{itemize}
+	\item[(1).]MAC 表格中每一行有不同的 VLAN ID。做比较的时候，拿传入帧的目的 MAC 地址和 VLAN ID 和此表中的行数据相比较。
+	如果都相同，则选择其 Ports 作为转发出口端口。
+	\item[(2).]如果没有吻合的表项，则将此帧从所有有同样 VLAN ID 的 Access ports 和 Trunk ports 转发出去。
+\end{itemize}
+
+\subsection{Address Resolution Protocol(ARP)原理}
+功能：ARP 用来将 IP 地址转化为 MAC 地址\par
+情况一：目的 IP 地址在同一网段的话
+\sizedfic{0.5}{arp_1.png}
+该示例中，Host A 和 B 在同一个网段中。A 的 IP 地址是 10.0.0.99，B 的 IP 地址是 10.0.0.100。
+当 A 要和 B 通信时，A 需要知道 B 的 MAC 地址。该过程经过以下步骤：
+\begin{itemize}
+	\item[(1).]A 上的 IP 协议栈知道通过B 的 IP 地址可以直接到达 B。A 检查它的本地 ARP 缓存来看B 的 MAC 地址是否已经存在。
+	\item[(2).]如果A 没有发现B 的 MAC 地址，它发出一个 ARP 广播请求，来询问10.0.0.100 的 MAC 地址是什么？该数据包：
+	\begin{lstlisting}
+	SRC MAC： A 的 MAC
+	DST MAC： FF:FF:FF:FF:FF:FF
+	SRA IP： A 的 IP
+	DST IP:  B 的 IP
+	\end{lstlisting}
+	\item[(3).]该网段中所有的电脑都将收到该包，并且会检查 DST IP 和自己的IP 是否相同。如果不同，则丢弃该包。
+	Host B 发现其IP 地址和 DST IP 相同，它将 A 的 IP/MAP 地址加入到自己的ARP 缓存中。
+	\item[(4).]B 发出一个 ARP 回复消息
+	\begin{lstlisting}
+	SRC MAC： B 的 MAC
+	DST MAC：A 的 MAC
+	SRA IP： B 的 IP
+	DST IP: A 的 IP
+	\end{lstlisting}
+	\item[(5).]交换机直接将该包交给 host A。A 收到后，将 B 的 MAC/IP 地址缓存到 ARP 缓存中。
+	\item[(6).]A 使用 B 的 MAC 作为目的 MAC 地址发出 IP 包。
+\end{itemize}
+情况二：目的IP 地址不在同一个网段的话
+\sizedfic{0.5}{arp_2.png}
+本例子中，A 的地址是 10.0.0.99， B 的地址是 192.168.0.99。Router 的 interface 1 和 A 在同一个网段，其IP 地址为10.0.0.1；
+interface 2 和 B 在同一个网段，其IP地址为 192.168.0.1。 A 使用下面的步骤来获取 Router 的 interface 1 的 MAC 地址。
+\begin{itemize}
+	\item[(1).]根据其路由表，A 上的 IP 协议知道需要通过它上面配置的 gateway 10.0.0.1 才能到达到 B。
+	经过上面例子中的步骤，A 会得到 10.0.0.1 的 MAC 地址。
+	\item[(2).]当 A 收到 Router interface 1 的 MAC 地址后，A 发出了给B 的数据包：
+	\begin{lstlisting}
+	SRC MAC： A 的 MAC
+	DST MAC：Router 的 interface 1 的 MAC 地址
+	SRA IP： A 的 IP
+	DST IP: B 的 IP
+	\end{lstlisting}
+	\item[(3).]路由器的 interface1 收到该数据包后，根据其路由表，首先经过同样的ARP 过程，路由器根据 B 的 IP 地址通过 ARP 获得其 MAC 地址，然后将包发给它。
+	\begin{lstlisting}
+	SRC MAC： Router interface 2 的 MAC
+	DST MAC：B 的 MAC
+	SRA IP： A 的 IP
+	DST IP: B 的 IP
+	\end{lstlisting}
+\end{itemize}
+\section{}
+\end{document}
