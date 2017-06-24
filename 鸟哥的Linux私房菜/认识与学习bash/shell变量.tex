@@ -229,11 +229,4 @@
 	\item[11.]tr:将一段文字中的字符串进行删除或替换-d 删除字符串 -s取代重复的字母(默认) cat 文件|tr -s 'a' 'A'，可以不加-s效果一样
 	\item[12]col:-x将tab转换成对等的空白键
 	\item[13]join:将两个文档中的相同部分合并，最好先排序，感觉很难用
-	\item[5.]paste:将文件的每一行合并，默认用tab隔开。paste file1 file2
-	\item[6.]expand:将tab键换成空格键，-t指定替换的空格数
-	\item[7.]split:将一个文件分割成几个文件。-b以大小分割，-l以行数来分割。还可以在最后加上文件名前缀split -l 1 aha test以aha的每一行内容在当前目录下生成testaa,testab...等文件
-	\item[8.]xargs:会将管道|的标准输出以空格作为分割，分割成若干段，作为其后命令的参数。-p执行命令前询问yes or no，-e分割遇到指定的字符停止，-n一次命令使用的参数个数。
-	例子：	cut -d':' -f1 /etc/passwd | xargs -p -n 5 finger
-	cut -d':' -f1 /etc/passwd | xargs -p -e'lp' finger
-	\item[9.]关于减号的用户-：作为标准输入和输出。例子:tar -cvf - /home | tar -xvf -
 \end{document}
