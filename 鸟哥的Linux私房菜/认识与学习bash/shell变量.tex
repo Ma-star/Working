@@ -220,4 +220,14 @@
 	\item[2.]cut:对每一行进行处理输出。-d指定分隔符,-f指定分隔后的第几段,-c以字符为单位取出固定字符区间。例子，echo \$PATH | cut -d ':' -f 3,5和export | cut -c 12-
 	\item[3.]grep:对每一行数据进行过滤输出。-c搜寻字符串出现的次数，-i搜寻忽略大小写，-n搜寻结果顺便输出对应行号，-v反向选择，显示没有该内容的一行
 	\item[4.]例子，last | grep 'root' 和 last | grep -v 'root' 和 last | grep 'root' |cut -d ' ' -f1 和 grep --color=auto 'MANPATH' /etc/man.config
+	\item[5.]sort:默认以字母顺序排序，-f 忽略大小写 -b忽略最前面的空白部分 -n以数字进行排序 -r反向排序 -u相同行，只出现一次 -t分隔符号，默认是tab键，-k以哪个分区
+	\item[6.]例子：cat /etc/passwd | sort 和 cat /etc/passwd | sort -t ":" -k 3 -n
+	\item[7.]uniq:先排序，再执行，才会输出不相同的行,-i忽略大小写，-c每行出现次数，例子last | cut -d ' ' -f1 | sort | uniq -c
+	\item[8.]wc:列出行数，列数，单词数。-l列出行，-w列出单词数，-m字母个数
+	\item[9.]双向重导向：tee会对接受到的数据执行两步操作，将其存到文件中，同时输出屏幕last|tee -a 文件|more 将last结果追加到文件中
+	\item[10.]字母转换命令：tr,col,join,paste,expand
+	\item[11.]tr:将一段文字中的字符串进行删除或替换-d 删除字符串 -s取代重复的字母(默认) cat 文件|tr -s 'a' 'A'，可以不加-s效果一样
+	\item[12]col:-x将tab转换成对等的空白键
+	\item[13]join:将两个文档中的相同部分合并，最好先排序，感觉很难用
+	\item[14]paste: 
 \end{document}
