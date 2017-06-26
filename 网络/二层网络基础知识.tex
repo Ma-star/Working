@@ -154,9 +154,51 @@
 \clearpage
 \tableofcontents
 \clearpage
+%第一部分
 \section{vlan基础知识}
 \subsection{vlan的含义}
-通俗点说，就是将一个交换机当成多个交换机使用的一种方法。
+LAN 表示 Local Area Network，本地局域网，通常使用 Hub 和 Switch 来连接LAN 中的计算机。
+一般来说，当你将两台计算机连入同一个 Hub 或者 Switch 时，它们就在同一个 LAN 中。
+同样地，你连接两个 Switch 的话，它们也在一个 LAN 中。一个 LAN 表示一个广播域，它的意思是，LAN 中的所有成员都会收到 LAN 中一个成员发出的广播包。
+可见，LAN 的边界在路由器或者类似的3层设备。\par
+VLAN 表示 Virutal LAN。一个带有 VLAN 功能的switch 能够同时处于多个 LAN 中。最简单地说，VLAN 是一种将一个交换机分成多个交换机的一种方法。\par
+IEEE 802.1Q 标准定义了 VLAN Header 的格式。它在普通以太网帧结构的 SA （src addr）之后加入了 4bytes 的 VLAN Tag/Header 数据，其中包括 12-bits 的 VLAN ID。
+VLAN ID 最大值为4096，但是有效值范围是 1 - 4094。
+\sizedfic{0.6}{vlan.png}
+\subsection{vlan交换机端口类型}
+带 VLAN 的交换机的端口分为两类：
+\begin{itemize}
+	\item[(1).]Access port：这些端口被打上了 VLAN Tag。离开交换机的 Access port 进入计算机的以太帧中没有 VLAN Tag，这意味着连接到 access ports 的机器不会觉察到 VLAN 的存在。
+	离开计算机进入这些端口的数据帧被打上了 VLAN Tag。
+	\item[(2).]Trunk port： 有多个交换机时，组A中的部分机器连接到 switch 1，另一部分机器连接到 switch 2。要使得这些机器能够相互访问，你需要连接两台交换机。 
+	要避免使用一根电缆连接每个 VLAN 的两个端口，我们可以在每个交换机上配置一个 VLAN trunk port。Trunk port 发出和收到的数据包都带有 VLAN header，该 header 表明了该数据包属于那个 VLAN。
+	因此，只需要分别连接两个交换机的一个 trunk port 就可以转发所有的数据包了。
+	通常来讲，只使用 trunk port 连接两个交换机，而不是用来连接机器和交换机，因为机器不想看到它们收到的数据包带有 VLAN Header。
+\end{itemize}
+\sizedfic{0.8}{vlan_port.jpg}
+\sizedfic{0.3}{vlan_port2.jpg}
+\subsection{数据包进出交换机不同类型端口表现}
+\begin{center}
+\begin{tabular}{|l|c|c|l|}
+ \hline
+交换机端口类型& tagged（进）& untagged（进）&出（把帧发给包含其 VID 的端口）\\
+ \hline
+Access 端口 & 丢弃 & 打上 PVID &剥离 VID\\
+ \hline
+Trunk 端口 & 若允许，则不变；否则丢弃 & 打上PVID&若VID与PVID不同，则剥离VID \\
+ \hline
+\end{tabular}
+\end{center}
+\subsection{vlan的不足}
+\begin{itemize}
+	\item[(1).]VLAN 使用 12-bit 的 VLAN ID，所以 VLAN 的第一个不足之处就是它最多只支持 4096 个
+	 VLAN 网络（当然这还要除去几个预留的），对于大型数据中心的来说，这个数量是远远不够的。
+	\item[(2).]VLAN 是基于 L2 的，所以很难跨越 L2 的边界，在很大程度上限制了网络的灵活性。
+	\item[(3).]VLAN 操作需手工介入较多，这对于管理成千上万台机器的管理员来说是难以接受的。
+\end{itemize}
+
+
+%第二部分
 \section{二层交换的基础知识}
 \subsection{二层交换机最基本的功能}
 \begin{itemize}
@@ -184,7 +226,7 @@
 \end{itemize}
 
 \subsection{Address Resolution Protocol(ARP)原理}
-功能：ARP 用来将 IP 地址转化为 MAC 地址\par
+功能：ARP 通过 IP 地址获取到 MAC 地址\par
 情况一：目的 IP 地址在同一网段的话
 \sizedfic{0.5}{arp_1.png}
 该示例中，Host A 和 B 在同一个网段中。A 的 IP 地址是 10.0.0.99，B 的 IP 地址是 10.0.0.100。
@@ -195,7 +237,7 @@
 	\begin{lstlisting}
 	SRC MAC： A 的 MAC
 	DST MAC： FF:FF:FF:FF:FF:FF
-	SRA IP： A 的 IP
+	SRC IP： A 的 IP
 	DST IP:  B 的 IP
 	\end{lstlisting}
 	\item[(3).]该网段中所有的电脑都将收到该包，并且会检查 DST IP 和自己的IP 是否相同。如果不同，则丢弃该包。
@@ -204,7 +246,7 @@
 	\begin{lstlisting}
 	SRC MAC： B 的 MAC
 	DST MAC：A 的 MAC
-	SRA IP： B 的 IP
+	SRC IP： B 的 IP
 	DST IP: A 的 IP
 	\end{lstlisting}
 	\item[(5).]交换机直接将该包交给 host A。A 收到后，将 B 的 MAC/IP 地址缓存到 ARP 缓存中。
@@ -221,16 +263,84 @@ interface 2 和 B 在同一个网段，其IP地址为 192.168.0.1。 A 使用下
 	\begin{lstlisting}
 	SRC MAC： A 的 MAC
 	DST MAC：Router 的 interface 1 的 MAC 地址
-	SRA IP： A 的 IP
+	SRC IP： A 的 IP
 	DST IP: B 的 IP
 	\end{lstlisting}
 	\item[(3).]路由器的 interface1 收到该数据包后，根据其路由表，首先经过同样的ARP 过程，路由器根据 B 的 IP 地址通过 ARP 获得其 MAC 地址，然后将包发给它。
 	\begin{lstlisting}
 	SRC MAC： Router interface 2 的 MAC
 	DST MAC：B 的 MAC
-	SRA IP： A 的 IP
+	SRC IP： A 的 IP
 	DST IP: B 的 IP
 	\end{lstlisting}
 \end{itemize}
-\section{}
+\subsection{总结：两个主机通信的大致过程}
+\begin{itemize}
+	\item[(1).]主机A通过主机B的ip访问B
+	\item[(2).]主机A首先查看自己的路由表，目的ip是在本网段，还是在不同网段
+	\item[(3).]如果目的ip是在本网段，查看本机arp缓存是否含有目的ip对应的mac地址。
+	\item[(4).]如果有,则直接发送到B的包。如果没有，则需要通过arp广播获取B的mac包之后，再进行发送。\par
+	arp广播包头如下：
+	\begin{lstlisting}
+	SRC MAC： A 的 MAC
+	DST MAC：FF:FF:FF:FF:FF:FF
+	SRC IP： A 的 IP
+	DST IP: B 的 IP
+	\end{lstlisting}
+	A发送到B的包头如下：
+	\begin{lstlisting}
+	SRC MAC： A 的 MAC
+	DST MAC：B 的 MAC
+	SRC IP： A 的 IP
+	DST IP: B 的 IP
+	\end{lstlisting}
+	\item[(5).]如果目的ip不是在同网段，则通过路由表获取下一跳网关ip。并查看本机arp缓存是否含有该ip对应的mac地址。
+	\item[(6).]如果有，则开始向网关发送到B的包。如果没有，则需要通过arp广播获取网关ip对应的mac地址
+	arp广播包头如下：
+	\begin{lstlisting}
+	SRC MAC： A 的 MAC
+	DST MAC：FF:FF:FF:FF:FF:FF
+	SRC IP： A 的 IP
+	DST IP: 下一跳 的 IP
+	\end{lstlisting}
+	A向网关发送到B的包头如下：
+	\begin{lstlisting}
+	SRC MAC： A 的 MAC
+	DST MAC：下一跳 的 MAC
+	SRC IP： A 的 IP
+	DST IP: B 的 IP
+	\end{lstlisting}
+	\item[(7).]路由器收到A发送到B的包，查看路由表，B所处网段是否与其某个接口直连，还是需要转到另一个路由器进行转发
+	\item[(8).]若需要通过另一个路由器的转发，则需要查看本地arp缓存或arp广播获取下一跳路由的mac，然后再发送包
+	arp广播包头如下：
+	\begin{lstlisting}
+	SRC MAC：路由器1 发送端口的 MAC
+	DST MAC：FF:FF:FF:FF:FF:FF
+	SRC IP： 路由器1 发送端口的 IP
+	DST IP： 路由器2 接收端口 的 IP
+	\end{lstlisting}
+	路由器1转发到路由器2的包头如下：
+	\begin{lstlisting}
+	SRC MAC： 路由器1 发送端口的 MAC
+	DST MAC：路由器2 接收端口 的 MAC
+	SRC IP： A 的 IP
+	DST IP: B 的 IP
+	\end{lstlisting}
+	\item[(9).]若不需要另一个路由器的转发直接到B，则需要查看本地arp缓存或arp广播获取B的mac，然后再发送包
+	arp广播包头如下：
+	\begin{lstlisting}
+	SRC MAC：路由器1 发送端口的 MAC
+	DST MAC：FF:FF:FF:FF:FF:FF
+	SRC IP： 路由器1 发送端口的 IP
+	DST IP： B 的 IP
+	\end{lstlisting}
+	路由器转发到B的包头如下：
+	\begin{lstlisting}
+	SRC MAC： 路由器1 发送端口的 MAC
+	DST MAC： B的 MAC
+	SRC IP： A 的 IP
+	DST IP: B 的 IP
+	\end{lstlisting}
+	\item[(10).]在包的发送过程中，伴随着主机和路由器添加ip和mac映射关系的arp缓存条目，以及交换机添加mac和端口映射的mac表条目。这里不一一赘述。
+\end{itemize}
 \end{document}
