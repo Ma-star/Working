@@ -1,0 +1,223 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+\title{Openstack之SDN性能测试方案}
+\author{周威光整理}
+\date{2017-06-26} 
+% 引用宏包
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+% 自定义添加图片命令
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+% 
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+% 设置页眉页脚
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{Openstack之SDN性能测试方案\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+% 参考文献
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\indent\llap{#1\enspace}\ignorespaces}
+\def\re{\par\hang\textindent}
+
+\begin{document}
+\maketitle
+\clearpage
+\tableofcontents
+\clearpage
+\section{Neutron network划分}
+\subsection{根据创建网络的用户权限划分}
+\begin{itemize}
+	\item[(1).]Provider network：管理员创建的和物理网络有直接映射关系的虚拟网络;
+	\item[(2).]Tenant network：租户普通用户创建的网络，物理网络对创建者透明，其配置由 Neutron根据管理员在系统中的配置决定;
+\end{itemize}
+\subsection{根据网络类型划分}
+\begin{itemize}
+	\item[(1).]local network（本地网络）：一个只允许在本服务器内通信的虚拟网络，不知道跨服务器的通信。主要用于单节点上测试。
+	\item[(2).]flat network：基于不使用 vlan 的物理网络实现的虚拟网络。每个物理网络最多只能实现一个虚拟网络。
+	\item[(3).]vlan network（虚拟局域网） ：基于物理 vlan 网络实现的虚拟网络。共享同一个物理网络的多个 vlan 网络是相互隔离的，甚至可以使用重叠的 ip 地址空间。
+		每个支持 vlan network 的物理网络可以被视为一个分离的 vlan trunk，它使用一组独占的 vlan ID。有效的 vlan ID 范围是 1 到 4094。
+	\item[(4).]gre network （通用路由封装网络）：一个使用 gre 封装网络包的虚拟网络。gre 封装的数据包基于 IP 路由表来进行路由，因此 gre network 不和具体的物理网络绑定。
+	\item[(5).]vxlan network（虚拟可扩展网络）：基于 vxlan 实现的虚拟网络。同 gre network 一样， vxlan network 中 ip 包的路由也基于 ip 路由表，也不和具体的物理网络绑定。
+\end{itemize}
+总结：根据定义可知，local网络主要用在单点测试，不在讨论范围之内。租户网络(Tenant network)包括gre、vxlan，提供者网络(Provider network)包括flat、vlan。
+
+\section{网络模式初步确定}
+\begin{itemize}
+	\item[(1).]vxlan和gre同时解决了vlan id个数限制和跨机房互通问题，但vxlan避免了gre的点对点必须有连接的缺点，同时实现了大2层网络，可用于vm在机房之间的的无缝迁移。基于这些特点，
+	选择vxlan作为租户网络
+	\item[(2).]根据以往市场调研情况，对vlan的需求会比较大，选择vlan为提供者网络
+\end{itemize}
+\begin{center}
+\begin{tabular}[c]{|l|l|}
+\hline
+租户网络 & 提供者网络\\
+\hline
+vxlan & vlan\\
+\hline
+\end{tabular}
+\end{center}
+
+\section{性能测试目标}
+测试目标是两个虚拟机传输数据包时的几个值，包括:数据包传输往返时延(RTT)，数据包丢失率(Lost rate)，数据包传输时的带宽(Bandwidth)。数据包又分为TCP包、UDP包、ICMP(ping)包。
+表格形式如下：
+\begin{center}
+\begin{tabular}[c]{l|l|l|l}
+ & TCP包 & UDP包 & ICMP(ping)包\\
+\hline
+延迟 & & &\\
+\hline
+带宽 & & & \\
+\hline
+丢包 & & & \\
+\hline
+\end{tabular}
+\end{center}
+\section{性能测试场景}
+\subsection{场景一：同时挂在提供者网络的两个vm之间}
+进行如下细分：
+\begin{itemize}
+	\item[(1).]测试同一租户下，传输数据包的延迟、丢包、带宽
+	\item[(2).]测试不同租户下，传输数据包的延迟、丢包、带宽
+	\item[(3).]与物理机接相同vlan下，对比vm之间和物理机之间的性能
+	\item[(4).]测试vm与物理机之间的数据包传输性能
+\end{itemize}
+\subsection{场景二：一个vm挂在租户网络，一个vm在提供者网络上}
+细分如下：
+\begin{itemize}
+	\item[(1).]测试同一租户下，传输数据包的延迟、丢包、带宽
+	\item[(2).]测试不同租户下，传输数据包的延迟、丢包、带宽
+\end{itemize}
+\subsection{场景三：同时挂在租户网络且同一网段的两个vm之间}
+\subsection{场景四：同时挂在租户网络但不同网段的两个vm之间}
+
+\end{document}
