@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.3.2)  25 JUN 2017 20:47
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.3.2)  29 JUN 2017 23:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1422,42 +1422,52 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 ]
 File: vlan.png Graphic file (type QTm)
  <use  "vlan.png" >
+File: vlan_port.jpg Graphic file (type QTm)
+ <use  "vlan_port.jpg" >
+File: vlan_port2.jpg Graphic file (type QTm)
+ <use  "vlan_port2.jpg" >
 
-LaTeX Warning: File `vlan_port.png' not found on input line 176.
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
 
-! Unable to load picture or PDF file 'vlan_port.png'.
-<to be read again> 
-                   }
-l.176 \sizedfic{0.6}{vlan_port.png}
-                                   
-? 
-! Emergency stop.
-<to be read again> 
-                   }
-l.176 \sizedfic{0.6}{vlan_port.png}
-                                   
-End of file on the terminal!
+[3
 
- 
-Here is how much of TeX's memory you used:
- 24115 strings out of 493638
- 443746 string characters out of 6146797
- 515111 words of memory out of 5000000
- 27225 multiletter control sequences out of 15000+600000
- 13510 words of font info for 79 fonts, out of 8000000 for 9000
- 1328 hyphenation exceptions out of 8191
- 48i,12n,72p,10365b,273s stack positions out of 5000i,500n,10000p,200000b,80000s
-Output written on 二层网络基础知识.pdf (2 pages).
-much of TeX's memory you used:
- 24118 strings out of 493638
- 443748 string characters out of 6146797
- 516111 words of memory out of 5000000
- 27226 multiletter control sequences out of 15000+600000
- 13510 words of font info for 79 fonts, out of 8000000 for 9000
- 1328 hyphenation exceptions out of 8191
- 48i,12n,72p,10365b,301s stack positions out of 5000i,500n,10000p,200000b,80000s
-Output written on 二层网络基础知识.pdf (3 pages).
-arning: \headheight is too small (12.0pt): 
+]
+Overfull \hbox (83.97025pt too wide) in paragraph at lines 182--191
+ [] 
+ []
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[4]
+File: mac学习.jpg Graphic file (type QTm)
+ <use  "mac学习.jpg" >
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[5]
+File: arp_1.png Graphic file (type QTm)
+ <use  "arp_1.png" >
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[6]
+File: arp_2.png Graphic file (type QTm)
+ <use  "arp_2.png" >
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
