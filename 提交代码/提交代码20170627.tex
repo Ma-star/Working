@@ -1,0 +1,34 @@
+weiguangzhou@hty-controller:~/hengtianyun\$ git status
+On branch hengtianyun_neutron_dev
+Your branch is up-to-date with 'origin/hengtianyun_neutron_dev'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+    修改了浮动ip问题：
+	modified:patches/juno/horizon/openstack_dashboard/api/neutron.py
+    修改网络拓扑删除主机后台报错：
+	modified:patches/juno/horizon/openstack_dashboard/dashboards/project/instances/views.py
+	修改增加创建虚拟机选择多网卡：
+    modified:patches/juno/horizon/openstack_dashboard/dashboards/project/instances/workflows/diy_create_instance.py
+	修改从网络拓扑点击创建云主机链接到恒天云创建云主机界面，而不是原生openstack创建云主机界面
+    modified:patches/juno/horizon/openstack_dashboard/dashboards/project/network_topology/views.py
+    修改创建网络后台报错，定义的函数参数与传递过来的不匹配
+	modified:patches/juno/horizon/openstack_dashboard/dashboards/project/networks/workflows.py
+    修改恒天云配置启用neutron
+	modified:patches/juno/horizon/openstack_dashboard/local/htyun_settings.py
+    添加中英文映射
+	modified:patches/juno/horizon/openstack_dashboard/locale/zh_CN/LC_MESSAGES/django.mo
+	modified:patches/juno/horizon/openstack_dashboard/locale/zh_CN/LC_MESSAGES/django.po
+	在创建云主机部分增加云网络step,调整workflow的样式
+	modified:patches/juno/horizon/openstack_dashboard/static/dark/templates/project/instances/create.html
+	自动生成，忽略
+	modified:patches/juno/horizon/static/dashboard/manifest.json
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+    添加原生的多网卡选择页面
+	patches/juno/horizon/openstack_dashboard/static/dark/templates/horizon/common/_workflow_step_select_nets.html
+	patches/juno/horizon/openstack_dashboard/static/dark/templates/project/instances/_select_network.html
+
+no changes added to commit (use "git add" and/or "git commit -a")

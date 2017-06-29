@@ -1,0 +1,549 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+\title{基于恒天云3.8.1源码安装neutron}
+\author{周威光整理}
+\date{2017-06-28} 
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{基于恒天云3.8.1源码安装neutron\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+\begin{document}
+% 生成标题、作者、日期
+\maketitle
+\clearpage
+% 生成目录
+\tableofcontents
+\clearpage
+\section{环境准备}
+\subsection{物理环境}
+\begin{itemize}
+	\item[(1).]两台3网卡的物理机，一台作为控制节点hty-controller，一台作为计算节点hty-compute1
+	\item[(2).]提前在两台机器上用恒天云3.8.1分别安装控制节点和计算节点
+	\item[(3).]每台物理机的一张网卡 eth0 访问外网，一张网卡 eth1 作为管理网络的网卡，一张网卡 eth2 作为neutron隧道网络的网卡
+	\item[(4).]下面是控制节点和计算节点的网络配置：\\
+	控制节点如下：
+	\begin{lstlisting}
+	# This file describes the network interfaces available on your system
+	# and how to activate them. For more information, see interfaces(5).
+
+	# The loopback network interface
+	auto lo
+	iface lo inet loopback
+
+	# The primary network interface
+	auto eth0
+	iface eth0 inet static
+	address 172.16.19.147
+	netmask 255.255.255.0
+	gateway 172.16.19.254
+	dns-nameservers 172.16.5.1
+
+	auto eth1
+	iface eth1 inet static
+	address 10.10.10.11
+	netmask 255.255.255.0
+
+	auto eth2
+	iface eth2 inet static
+	address 10.10.11.11
+	netmask 255.255.255.0
+	\end{lstlisting}
+	计算节点如下：
+	\begin{lstlisting}
+	# This file describes the network interfaces available on your system
+	# and how to activate them. For more information, see interfaces(5).
+
+	# The loopback network interface
+	auto lo
+	iface lo inet loopback
+
+	# The primary network interface
+	auto eth0
+	iface eth0 inet static
+	address 172.16.19.151
+	netmask 255.255.255.0
+	gateway 172.16.19.254
+	dns-nameservers 172.16.5.1
+
+	auto eth1
+	iface eth1 inet static
+	address 10.10.10.12
+	netmask 255.255.255.0
+
+	auto eth2
+	iface eth2 inet static
+	address 10.10.11.12 
+	netmask 255.255.255.0
+	\end{lstlisting}
+\end{itemize}
+\subsection{软件环境}
+\begin{itemize}
+	\item[(1).]M版openstack的neutron源码包：由于恒天云是基于J版的openstack，安装高版本neutron会出现兼容性问题。需要在虚拟环境通过源码安装neutron
+	\item[(2).]openvswitch2.4.0源码包：neutron的DVR特性需要openvswitch2.1版本以上的支持，直接apt-get安装的是低版本的。需要源码安装高版本的。
+	\item[(3).]openvswitch和neutron各服务启动脚本：源码安装的服务启动比较麻烦，为了方便部署，准备了管理脚本，需将其拷贝到/etc/init.d，并注册。
+\end{itemize}
+\section{openvswitch和neutron源码安装}
+\subsection{openvswitch2.4.0源码安装}
+\begin{itemize}
+    \item[1.]下载openvswitch源码 http://openvswitch.org/download/ ，选择的是openvswitch2.4.0
+	\item[2.]解压安装包:tar -xzf openvswitch-2.4.0.tar.gz
+	\item[3.]构建基于Linux内核的交换机，uname -r用来得到自己linux内核版本号，./configure部分可以用--prefix=参数，可以让OVS完全安装在该目录底下。\\
+	命令如下：
+	\begin{lstlisting}
+	cd openvswitch-2.4.0
+	aptitude install dh-autoreconf libssl-dev openssl          #预先安装一些库
+	./configure --with-linux=/lib/modules/$(uname -r)/build
+	\end{lstlisting}
+	\item[4.]编译并安装OVS2.4.0\\
+	命令如下：
+	\begin{lstlisting}
+	make & make install
+	\end{lstlisting}
+	\item[5.]安装并加载构建的内核模块\\
+	命令如下：
+	\begin{lstlisting}
+	modprobe libcrc32c
+	modprobe gre
+	modprobe vxlan
+	modprobe openvswitch
+	insmod datapath/linux/openvswitch.ko
+	make modules_install
+    \end{lstlisting}
+    此时可以通过lsmod |grep openvswitch来查看已载入系统的模块，发现有OpenvSwitch
+	\item[6.]使用ovsdb工具初始化配置数据库\\
+	命令如下：
+	\begin{lstlisting}
+	ovsdb-tool create /usr/local/etc/openvswitch/conf.db /usr/local/share/openvswitch/vswitch.ovsschema
+    \end{lstlisting}
+	\item[7.]将准备好的openvswitch脚本复制到/etc/init.d/，使用如下命令注册服务，并使用注册的服务启动openvswitch
+	\begin{lstlisting}
+	update-rc.d openvswitch defaults
+	mkdir /var/log/openvswitch    #创建存放日志文件夹，否则启动会报错
+	service openvswitch start 
+	\end{lstlisting}
+	\item[8.]手动添加一个虚拟网桥，用于neutron服务使用
+	ovs-vsctl add-br br-ex
+	\item[9.]向/etc/modules写入如下参数，使得开机自动加载内核模块\\
+	命令如下：
+	\begin{lstlisting}
+	echo "openvswitch " >> /etc/modules
+	echo "gre" >> /etc/modules
+	echo "vxlan" >> /etc/modules
+	echo "libcrc32c" >> /etc/modules
+	\end{lstlisting}
+\end{itemize}
+\subsection{neutron源码安装}
+\begin{itemize}
+	\item[1.]需要安装pip版本在8.1.2之上，否则可能会报错
+	\begin{lstlisting}
+	apt-get install python-pip
+	pip install --upgrade 'pip>=8.1.2'
+	\end{lstlisting}
+	\item[2.]安装virtualenv，用于创建虚拟环境
+	\begin{lstlisting}
+	pip install virtualenv
+	\end{lstlisting}
+	\item[3.]创建名为venv的虚拟环境用于安装neutron,并切换进venv目录
+	\begin{lstlisting}
+	virtualenv venv
+	cd venv
+	\end{lstlisting}
+	安装之后使用ls命令，查看当前文件夹的内容，会多出来bin,lib,local等文件夹。以后安装的包会放在
+	这些文件夹，将不会和系统的混合在一起。这就是隔离的意义。
+	\item[4.]启动虚拟环境
+	\begin{lstlisting}
+	source bin/activate
+	\end{lstlisting}
+    \item[5.]切换到neutron源码包，安装neutron依赖包。要先安装python2.7-dev，再安装neutron依赖包，否则可能会报错
+	\begin{lstlisting}
+	sudo apt-get install python2.7-dev
+	pip install -r requirements.txt
+	\end{lstlisting}
+	\item[6.]安装neutron组件，要先安装git,再安装neutron组件，否则可能会报错
+	\begin{lstlisting}
+	apt-get install git
+	python setup.py install
+	\end{lstlisting}
+	\item[7.]通过源码的tools文件夹下的generate\_config\_file\_samples.sh脚本生成配置文件，并拷贝到/etc/neutron文件夹下
+	ps:配置文件可以从已有的环境直接拷贝过来，可以节省许多时间
+	\begin{lstlisting}
+	./tools/generate_config_file_samples.sh
+	\end{lstlisting}	
+	\item[8.]在mysql创建neutron数据库，并使用keystone命令生成neutron的service和endpoint端点\\
+	ps:只需要在控制节点执行如下操作
+	\begin{lstlisting}
+	#创建neutron数据库
+	mysql -uroot -phtYun@2014
+	CREATE DATABASE neutron;
+	GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' \
+	IDENTIFIED BY 'NEUTRON_DBPASS';
+	GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' \
+	IDENTIFIED BY 'NEUTRON_DBPASS';
+    #创建neutron用户
+	keystone user-create --name neutron --pass neutron_pass@2014
+	keystone user-role-add --user neutron --tenant service --role admin
+	#创建neutron服务
+	keystone service-create --name neutron --type network \
+	--description "OpenStack Networking"
+    #创建neutron服务端点endpoint
+	keystone endpoint-create \
+	--service-id $(keystone service-list | awk '/ network / {print $2}') \
+	--publicurl http://hty-controller:9696 \
+	--adminurl http://hty-controller:9696 \
+	--internalurl http://hty-controller:9696 \
+	--region regionOne
+	\end{lstlisting}
+    \item[9.]修改/etc/nova/nova.conf，主要是注释掉nova-network的配置，加入neutron配置，其余部分不用修改。
+	控制节点参考172.16.19.147,计算节点参考172.16.19.151。\\
+	nova.conf文件修改如下：
+	\begin{lstlisting}
+	[DEFAULT]
+	...
+	
+	#下面注释nova-network的配置
+	#network_api_class = nova.network.api.API
+	#security_group_api = nova
+	#firewall_driver =nova.virt.libvirt.firewall.IptablesFirewallDriver
+	#firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+	#network_manager = nova.network.manager.FlatDHCPManager
+	#network_manager = nova.network.manager.VlanManager
+
+	#启用neutron配置
+	network_api_class = nova.network.neutronv2.api.API
+	security_group_api = neutron
+	linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
+	firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
+	use_neutron = True
+	...
+
+	[glance] #保持原有配置
+	...
+
+	[keystone_authtoken] #保持原有配置
+	...
+	
+	[neutron] #新增
+	url = http://hty-controller:9696
+	auth_strategy = keystone
+	admin_auth_url = http://hty-controller:35357/v2.0
+	admin_tenant_name = service
+	admin_username = neutron
+	admin_password = neutron_pass@2014
+
+	[database] #保持原有配置
+	...
+
+	[libvirt]  #保持原有配置
+	...
+	\end{lstlisting}
+	上面配置可能会有遗漏，建议参考172.16.19.147
+	\item[10.]复制/etc/neutron文件夹下的各服务配置文件，控制节点复制172.16.19.147，计算节点复制172.16.19.151。这里不再赘述。\\
+	ps:也可以通过源码脚本生成各配置文件，参考官方neutron配置，手动配置。会比较麻烦。
+	\item[11.]如果在步骤10直接拷贝的，此处可以忽略。如果手动参照官方配置，需要注意控制节点/etc/neutron/rootwrap.d/l3.filters和dhcp.filters这两个文件
+	这是由于使用了虚拟环境的缘故
+	\begin{lstlisting}
+	#将文件中的下面一行
+	kill_metadata: KillFilter, root, python, -9
+	#改为
+	kill_metadata: KillFilter, root, /root/venv/bin/python, -9
+	\end{lstlisting}
+\end{itemize}
+\subsection{额外软件包安装}
+neutron源码安装并不能将服务依赖的其他软件包全部下载，还需要手动下载。下载如下包：
+\begin{lstlisting}
+pip install python-memcached
+pip install pymysql
+apt-get install arping 
+ln -s /root/venv/bin/neutron-ns-metadata-proxy /usr/bin/
+apt-get install conntrack
+apt-get install dnsmasq-utils
+apt-get install ipset
+\end{lstlisting}
+\subsection{兼容neutron恒天云代码修改部分}
+\begin{itemize}
+	\item[1.]修改neutron/common/config.py文件
+	\begin{lstlisting}
+	vi /root/venv/local/lib/python2.7/site-packages/neutron/common/config.py
+	#修改config.py文件中的如下函数
+	def set_db_defaults():
+    # Update the default QueuePool parameters. These can be tweaked by the
+    # conf variables - max_pool_size, max_overflow and pool_timeout
+    db_options.set_defaults(
+        cfg.CONF,
+        connection='sqlite://',
+        #sqlite_db='', max_pool_size=10, #注释掉这一行
+        max_pool_size=10,                #添加这一行
+        max_overflow=20, pool_timeout=10)
+	\end{lstlisting}
+	\item[2.]修改servers.py文件
+	\begin{lstlisting}
+	vi /usr/lib/python2.7/dist-packages/nova/api/openstack/compute/servers.py
+	#搜索关键字floating_ips修改floating_ips的语句如下：
+	floating_ips = body['server'].get('fips', None)
+	\end{lstlisting}
+	\item[3.]修改neutron/agent/common/config.py文件
+	\begin{lstlisting}
+	vi /root/venv/lib/python2.7/site-packages/neutron/agent/common/config.py
+	#搜索关键字verbose修改verbose的条件语句如下：
+	def get_log_args(conf, log_file_name, **kwargs):
+    ...
+    #if conf.verbose:        #注释这一行
+    if getattr(conf, "verbose", False): #新增这一行
+	...
+	\end{lstlisting}
+\end{itemize}
+\subsection{根据neutron配置文件填充数据库}
+\begin{lstlisting}
+neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head
+\end{lstlisting}
+\subsection{配置外网网卡桥接}
+租户网络内的vm若要访问外网，需要将外网网卡桥接到br-ex \\
+有如下两部分修改
+\begin{itemize}
+	\item[1.]命令行进行如下操作：
+	\begin{lstlisting}
+	ip link set eth0 address br-ex的mac
+	ovs-vsctl add-port br-ex eth0
+	\end{lstlisting}
+	\item[2.]修改网卡配置如下
+	控制节点如下：
+	\begin{lstlisting}
+	# This file describes the network interfaces available on your system
+	# and how to activate them. For more information, see interfaces(5).
+
+	# The loopback network interface
+	auto lo
+	iface lo inet loopback
+
+	# The primary network interface
+	#auto eth0
+	#iface eth0 inet static
+	#address 172.16.19.147
+	#netmask 255.255.255.0
+	#gateway 172.16.19.254
+	#dns-nameservers 172.16.5.1
+
+	auto br-ex
+	iface br-ex inet static
+	address 172.16.19.147
+	netmask 255.255.255.0
+	gateway 172.16.19.254
+	dns-nameservers 8.8.8.8
+
+	auto eth0
+	iface eth0 inet manual
+	up ifconfig $IFACE 0.0.0.0 up
+	up ip link set $IFACE promisc on
+	down ip link set $IFACE promisc off
+	down ifconfig $IFACE down
+
+	auto eth1
+	iface eth1 inet static
+	address 10.10.10.11
+	netmask 255.255.255.0
+
+	auto eth2
+	iface eth2 inet static
+	address 10.10.11.11
+	netmask 255.255.255.0
+	\end{lstlisting}
+	计算节点如下：
+	\begin{lstlisting}
+	# This file describes the network interfaces available on your system
+	# and how to activate them. For more information, see interfaces(5).
+
+	# The loopback network interface
+	auto lo
+	iface lo inet loopback
+
+	# The primary network interface
+	#auto eth0
+	#iface eth0 inet static
+	#address 172.16.19.151
+	#netmask 255.255.255.0
+	#gateway 172.16.19.254
+	#dns-nameservers 172.16.5.1
+
+	auto br-ex
+	iface br-ex inet static
+	address 172.16.19.151
+	netmask 255.255.255.0
+	gateway 172.16.19.254
+	dns-nameservers 8.8.8.8
+
+	auto eth0
+	iface eth0 inet manual
+	up ifconfig $IFACE 0.0.0.0 up
+	up ip link set $IFACE promisc on
+	down ip link set $IFACE promisc off
+	down ifconfig $IFACE down
+
+	auto eth1
+	iface eth1 inet static
+	address 10.10.10.12
+	netmask 255.255.255.0
+
+	auto eth2
+	iface eth2 inet static
+	address 10.10.11.12 
+	netmask 255.255.255.0
+	\end{lstlisting}
+\end{itemize}
+更改网络配置，重启网卡，会出现外网无法访问
+\subsection{注册neutron各服务管理脚本并启动各服务}
+\begin{lstlisting}
+#复制脚本到/etc/init.d/
+cp neutron-server neutron-openvswitch-agent neutron-l3-agent neutron-dhcp-agent neutron-metadata-agent /etc/init.d/
+#注册服务
+update-rc.d neutron-server defaults
+update-rc.d neutron-openvswitch-agent defaults
+update-rc.d neutron-l3-agent defaults
+update-rc.d neutron-dhcp-agent defaults
+update-rc.d neutron-metadata-agent defaults
+#启动服务，控制节点全部启动，计算节点只需要启动
+#neutron-openvswitch-agent，neutron-l3-agent，neutron-metadata-agent
+mkdir /var/log/neutron #创建neutron日志文件夹，否则启动会报错
+service neutron-server start
+service neutron-openvswitch-agent start
+service neutron-l3-agent start
+service neutron-dhcp-agent start
+service neutron-metadata-agent start
+\end{lstlisting}			
+\end{document}

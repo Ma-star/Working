@@ -137,7 +137,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{openvswitch2.4.0源码安装\qquad}
+\chead{3楼性能测试环境\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -146,82 +146,28 @@
 
 \clearpage
 
-\subsection{}
+\subsection{控制节点：hty-controller}
 	\begin{itemize}
-        \item[1.]下载openvswitch源码 http://openvswitch.org/download/ ，选择的是openvswitch2.4.0
-		\item[2.]解压安装包:tar -xzf openvswitch-2.4.0.tar.gz
-		\item[3.]构建基于Linux内核的交换机，uname -r用来得到自己linux内核版本号，用反引号（键盘上数字1左边）括起来，其中aptitude和apt-get一样，是Debian及其衍生系统中功能极其强大的包管理工具，但是aptitede在处理依赖问题上更佳一些，在删除一个包时，会删除本身所依赖的包，使系统更为干净。
-                 ./configure部分可以用--prefix=参数，可以让OVS完全安装在该目录底下。
-				 命令如下：
-				 \begin{lstlisting}
-					cd openvswitch-2.4.0
-					aptitude install dh-autoreconf libssl-dev openssl                    #预先安装一些库
-					./configure --with-linux=/lib/modules/$(uname -r)/build
-				 \end{lstlisting}
-		\item[4.]编译并安装OVS2.4.0
-		         命令如下：
-				 \begin{lstlisting}
-					make
-					make install
-				 \end{lstlisting}
-		\item[5.]安装并加载构建的内核模块
-				 命令如下：
-				 \begin{lstlisting}
-				 	modprobe libcrc32c
-					modprobe gre
-					modprobe vxlan
-					modprobe openvswitch
-					insmod datapath/linux/openvswitch.ko
-					make modules_install
-				 \end{lstlisting}
-				 此时可以通过lsmod |grep openvswitch来查看已载入系统的模块，发现有OpenvSwitch
-		\item[6.]使用ovsdb工具初始化配置数据库
-				命令如下：
-				 \begin{lstlisting}
-					ovsdb-tool create /usr/local/etc/openvswitch/conf.db /usr/local/share/openvswitch/vswitch.ovsschema
-				 \end{lstlisting}
-		\item[7.]开启ovsdb-server配置数据库
-				命令如下：
-				 \begin{lstlisting}
-					ovsdb-server --remote=punix:/usr/local/var/run/openvswitch/db.sock \
-					--remote=db:Open_vSwitch,Open_vSwitch,manager_options \
-					--private-key=db:Open_vSwitch,SSL,private_key \
-					--certificate=db:Open_vSwitch,SSL,certificate \
-					--bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \
-					--pidfile --detach --log-file
-				 \end{lstlisting}
-		\item[8.]开启ovs-vsctl
-				命令如下：
-				 \begin{lstlisting}
-					ovs-vsctl --no-wait init
-				 \end{lstlisting}
-		\item[9.]开启ovs-switchd功能，即主进程
-				命令如下：
-				 \begin{lstlisting}
-					ovs-vswitchd --pidfile --detach
-				 \end{lstlisting}
-		\item[10.]开机自动加载内核模块
-				命令如下：
-				 \begin{lstlisting}
-					echo "openvswitch " >> /etc/modules
-					echo "gre" >> /etc/modules
-					echo "vxlan" >> /etc/modules
-					echo "libcrc32c" >> /etc/modules
-				 \end{lstlisting}
-		\item[11.]开机自动启动
-				首先新建一个文件
-				命令如下：
-				 \begin{lstlisting}
-					vim /etc/init.d/openvswitch
-				 \end{lstlisting}
-				文件内容如下：
-				#!/bin/sh
-				start-stop-daemon -q -S -x /usr/local/sbin/ovsdb-server -- --remote=punix:/usr/local/var/run/openvswitch/db.sock --remote=db:Open_vSwitch,Open_vSwitch,manager_options --pidfile --detach --log-file
-				sleep 3 # waiting ovsdb-server 
-				start-stop-daemon -q -S -x /usr/local/bin/ovs-vsctl -- --no-wait init
-				start-stop-daemon -q -S -x /usr/local/sbin/ovs-vswitchd -- --pidfile --detach --log-file
-				接着改变文件权限，执行开机启动命令
-				chmod +x /etc/init.d/openvswitch
-				update-rc.d -f openvswitch defaults
+        \item[1.]位置：第二个机柜，第三台服务器 
+		\item[2.]用户名:root 密码：hengtian
+		\item[3.]eth0:外网网卡;ip:172.16.133.10
+		\item[4.]eth1:管理网络;ip:10.10.10.11
+		\item[5.]eth2:隧道网络;ip:10.10.11.11
+    \end{itemize}
+\subsection{计算节点1:hty-compute1}
+	\begin{itemize}
+		\item[1.]位置：第四个机柜，第一台服务器 
+		\item[2.]用户名:root 密码：hengtian
+		\item[3.]eth2:外网网卡;ip:172.16.133.15
+		\item[4.]eth0:管理网络;ip:10.10.10.12
+		\item[5.]eth1:隧道网络;ip:10.10.11.12
+	\end{itemize}
+\subsection{计算节点2:hty-compute2}
+	\begin{itemize}
+		\item[1.]位置：第四个机柜，最后一台服务器 
+		\item[2.]用户名:root 密码：hengtian
+		\item[3.]eth2:外网网卡;ip:172.16.133.16
+		\item[4.]eth0:管理网络;ip:10.10.10.13
+		\item[5.]eth1:隧道网络;ip:10.10.11.13
 	\end{itemize}
 \end{document}
