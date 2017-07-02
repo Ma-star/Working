@@ -148,6 +148,16 @@
 \def\hang{\hangindent\parindent}
 \def\textindent#1{\indent\llap{#1\enspace}\ignorespaces}
 \def\re{\par\hang\textindent}
+%超链接
+\usepackage[CJKbookmarks=true,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks, %注释掉此项则交叉引用为彩色边框(将colorlinks和pdfborder同时注释掉)
+            pdfborder=001,   %注释掉此项则交叉引用为彩色边框
+            linkcolor=green,
+            anchorcolor=green,
+            citecolor=green
+            ]{hyperref}  
 
 \begin{document}
 \maketitle
@@ -235,8 +245,10 @@ Mac OS & MacTeX & TeXShop \\
 门广场天安门广场天安门广场天安门广场天安门广场天安门广场
 天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场
 天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场天安门广场
-
-
-\re{[1]} Nordhaus E,Stewart B,WhiteA.On the Maximum Genus of a Graph.{\it J.combinatorial Theory B},1971,11:258-267  
-\re{[2]} Skoviera M.The Maximum Genus of Graphs of Diameter Two.{\it Discrete Math}.1991, 87:175-180
+\clearpage
+\begin{center}%参考文献的书写
+参考文献
+\end{center}
+\re{[1]} \href{https://docs.openstack.org/mitaka/networking-guide/}{OpenStack Networking Guide}  
+\re{[2]} \href{https://docs.openstack.org/mitaka/}{openstack官网}
 \end{document}
