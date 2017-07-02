@@ -1,0 +1,304 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+\title{git常用命令}
+\author{周威光整理\footnote{简介：恒天云FTE}}
+\date{2017-7-2} 
+% 引用宏包
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+% 自定义添加图片命令
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+% 
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+% 设置页眉页脚
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{git常用命令\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+% 参考文献
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\indent\llap{#1\enspace}\ignorespaces}
+\def\re{\par\hang\textindent}
+%超链接
+\usepackage[CJKbookmarks=true,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks, %注释掉此项则交叉引用为彩色边框(将colorlinks和pdfborder同时注释掉)
+            pdfborder=001,   %注释掉此项则交叉引用为彩色边框
+            linkcolor=green,
+            anchorcolor=green,
+            citecolor=green
+            ]{hyperref}  
+
+\begin{document}
+\maketitle
+\clearpage
+\tableofcontents
+\clearpage
+\section{git常用命令}
+\subsection{创建版本库}
+\begin{itemize}
+	\item[1.]ubuntu系统安装git
+	\begin{lstlisting}
+	apt-get install git
+	\end{lstlisting}
+	\item[2.]创建本地版本库
+	\begin{lstlisting}
+	mkdir my_repository
+	cd my_repository
+	git init
+	\end{lstlisting}
+	\item[3]将文件提交到版本库基本步骤
+	\begin{lstlisting}
+	touch readme.txt
+	git add readme.txt
+	git commit -m "wrote readme.txt"
+	\end{lstlisting}
+\end{itemize}
+\subsection{版本回退}
+\begin{itemize}
+	\item[1.]查看本仓库当前所有提交commit
+	\begin{lstlisting}
+	git log
+	\end{lstlisting}
+	\item[2.]回退到上一个版本或多个版本
+	\begin{lstlisting}
+	git reset --hard HEAD^  #回退上个版本
+	git reset --hard HEAD~n #回退n个版本
+	git reset --hard commit_id  #回退到指定版本号
+	\end{lstlisting}
+	\item[3.]查看本仓库HEAD指针改变所有记录
+	\begin{lstlisting}
+	git reflog
+	\end{lstlisting}
+\end{itemize}
+\subsection{工作区和暂存区}
+\sizedfic{0.6}{git.png}
+\begin{itemize}
+	\item[1.]工作区：my\_repository文件夹
+	\item[2.]版本库：工作区的的隐藏目录“.git”，这个不算工作区，而是git的版本库。\\\\
+	Git的版本库里存了很多东西,其中最重要的就是称为stage(或者叫index)的暂存区,
+	还有Git为我们自动创建的第一个分支master,以及指向master的一个指针叫HEAD。\\\\
+	文件往Git版本库里添加的时候,是分两步执行的: \par
+	第一步是用“git add”把文件添加进去,实际上就是把文件修改添加到暂存区; \par
+	第二步是用“git commit”提交更改,实际上就是把暂存区的所有内容提交到当前分支。\\\\
+	因为我们创建Git版本库时,Git自动为我们创建了唯一一个master分支,所以,现在,commit就是往master分支上提交更
+	改。你可以简单理解为,需要提交的文件修改通通放到暂存区,然后,一次性提交暂存区的所有修改。
+\end{itemize}
+\subsection{管理修改}
+\begin{itemize}
+	\item[1.]查看工作区对比版本库中的状态变化
+	\begin{lstlisting}
+	git status
+	\end{lstlisting}
+	\item[2.]查看指定文件的具体修改
+	\begin{lstlisting}
+	git diff readme.txt #如果暂存区中存在该文件，则与暂存区对比，否则与master分支对比
+	git diff HEAD -- readme.txt # 指定和master分支对比
+	\end{lstlisting}
+\end{itemize}
+\subsection{撤销修改}
+\begin{itemize}
+	\item[1.]丢弃工作区的修改
+	\begin{lstlisting}
+	git checkout -- readme.txt #工作区会被还原
+	\end{lstlisting} 
+	命令 git checkout -- readme.txt 意思就是,把readme.txt文件在工作区的修改全部撤销,这里有两种情况:\par
+	一种是readme.txt自修改后还没有被放到暂存区,现在,撤销修改就回到和版本库一模一样的状态;\\
+	一种是readme.txt已经添加到暂存区后,又作了修改,现在,撤销修改就回到添加到暂存区后的状态。\\
+	总之,就是让这个文件回到最近一次git commit或git add时的状态。
+	\item[2.]把暂存区的修改回退到工作区
+	\begin{lstlisting}
+	git reset HEAD readme.txt #暂存区被清理掉,不改变工作区的内容
+	\end{lstlisting} 
+	git reset命令既可以回退版本,也可以把暂存区的修改回退到工作区
+\end{itemize}
+\subsection{删除文件}
+\begin{itemize}
+	\item[1.]若不小心删除了文件，想恢复
+	\begin{lstlisting}
+	rm test.txt
+	git checkout -- test.txt #用版本库中的恢复
+	\end{lstlisting}
+	\item[2.]若删除了文件，想同步到版本库
+	\begin{lstlisting}
+	rm test.txt
+	git rm test.txt 
+	git commit -m "remove test.txt"
+	\end{lstlisting}
+\end{itemize}
+\subsection{远程仓库}
+\begin{itemize}
+	\item[1.]建立本地库与远程库的关联
+	\begin{lstlisting}
+	git remote add Life git@github.com:weiguangzhou/Life.git
+	git pull Life master #将远程的Life仓库的master分支更新到本地，并与本地master合并
+	git push Life master #将本地文件推送到远程库
+	\end{lstlisting}
+	\item[2.]克隆远程库
+	\begin{lstlisting}
+	git clone git@github.com:weiguangzhou/Life.git
+	\end{lstlisting}
+\end{itemize}
+\subsection{分支管理}
+\begin{itemize}
+	\item[1.]创建分支
+	\begin{lstlisting}
+	git branch #看看当前分支
+	git branch -a #查看所有分支
+	git branch dev #创建dev分支
+	git checkout dev #切换到dev分支
+	git checkout -b dev #创建dev分支，并切换到该分支，相当于上面两个命令
+	\end{lstlisting}
+	\item[2.]合并和删除分支
+	\begin{lstlisting}
+	git merge dev
+	git branch -d dev
+	\end{lstlisting}
+	\item[3.]解决冲突
+	\begin{lstlisting}
+	git branch -b feature1 #创建feature1分支，并切换，并修改readme.txt内容，保存提交
+	git checkout master #切回主分支，同样修改readme.txt内容，保存提交。
+	git merge feature1 #合并新建分支时，会冲突
+	git status #查看冲突文件，并手动修改
+	git add readme.txt 
+	git commit -m "conflict merge" #提交合并
+	git log --graph --pretty=oneline --abbrev-commit #查看分支合并情况
+	git log --graph #同样可以查看分支合并情况
+	\end{lstlisting}
+\end{itemize}
+\clearpage
+\begin{center}
+参考文献
+\end{center}
+\re{[1]} \href{http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000}{廖学峰之Git教程}  
+\end{document}
