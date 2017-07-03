@@ -32,3 +32,27 @@ Untracked files:
 	patches/juno/horizon/openstack_dashboard/static/dark/templates/project/instances/_select_network.html
 
 no changes added to commit (use "git add" and/or "git commit -a")
+
+
+
+
+
+/home/weiguangzhou/PycharmProjects/hengtianyun/patches/juno/horizon/openstack_dashboard/dashboards/identity/projects/workflows.py
+创建项目报错，代码修改173行
+ def __init__(self, request, *args, **kwargs):
+        super(CreateProjectInfoAction, self).__init__(request,
+                                                      *args,
+                                                      **kwargs)
+        # For keystone V3, display the two fields in read-only
+        if keystone.VERSIONS.active >= 3:
+            readonlyInput = forms.TextInput(attrs={'readonly': 'readonly'})
+            self.fields["domain_id"].widget = readonlyInput
+            self.fields["domain_name"].widget = readonlyInput
+        if settings.USE_NEUTRON == False :
+            if settings.NETWORK['type'] != 'vlan':
+                self.fields["vlan"].widget = forms.HiddenInput()
+        else :
+            self.fields["vlan"].widget = forms.HiddenInput()
+    class Meta:
+        name = _("Project Information")
+        help_text = _("Create a project to organize users.")
