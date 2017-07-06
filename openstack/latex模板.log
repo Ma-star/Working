@@ -1317,30 +1317,36 @@ File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Option `CJKbookmarks' set `true' on input line 4319.
-Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 4319
-.
-Package hyperref Info: Option `bookmarksopen' set `true' on input line 4319.
-Package hyperref Info: Option `colorlinks' set `true' on input line 4319.
-Package hyperref Info: Hyper figures OFF on input line 4443.
-Package hyperref Info: Link nesting OFF on input line 4448.
-Package hyperref Info: Hyper index ON on input line 4451.
-Package hyperref Info: Plain pages OFF on input line 4458.
-Package hyperref Info: Backreferencing OFF on input line 4463.
-Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4688.
-\c@Hy@tempcnt=\count199
 
-(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
-\Urlmuskip=\muskip18
-Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
-)
-LaTeX Info: Redefining \url on input line 5041.
-\XeTeXLinkMargin=\dimen290
-\Fld@menulength=\count266
-\Field@Width=\dimen291
-\Fld@charsize=\dimen292
-Package hyperref Info: Hyper figures OFF on input line 6295.
+! Package hyperref Error: Wrong DVI mode driver option `dvipdfm',
+(hyperref)                because XeTeX is running.
+
+See the hyperref package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.4319 \ProcessKeyvalOptions{Hyp}
+                                 
+? 
+! Emergency stop.
+ ...                                              
+                                                  
+l.4319 \ProcessKeyvalOptions{Hyp}
+                                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+ 
+Here is how much of TeX's memory you used:
+ 26021 strings out of 493638
+ 470275 string characters out of 6146797
+ 536558 words of memory out of 5000000
+ 29184 multiletter control sequences out of 15000+600000
+ 4020 words of font info for 25 fonts, out of 8000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 48i,0n,72p,10364b,226s stack positions out of 5000i,500n,10000p,200000b,80000s
+No pages of output.
+ures OFF on input line 6295.
 Package hyperref Info: Link nesting OFF on input line 6300.
 Package hyperref Info: Hyper index ON on input line 6303.
 Package hyperref Info: backreferencing OFF on input line 6310.
@@ -1475,12 +1481,9 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
 (Font)                  OT1/cmtt/m/n --> EU1/lmtt/m/n on input line 162.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  EU1/lmr/m/n --> EU1/lmr/bx/n on input line 162.
-LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> EU1/lmr/bx/it on input line 162.
-LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> EU1/lmss/bx/n on input line 162.
+LaTeX F     OT1/cmss/bx/n --> EU1/lmss/bx/n on input line 158.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> EU1/lmtt/bx/n on input line 162.
+(Font)                  OT1/cmtt/m/n --> EU1/lmtt/bx/n on input line 158.
 \c@lstlisting=\count276
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -1518,9 +1521,9 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
-(lastpage)             ! on input line 162.
+(lastpage)             ! on input line 158.
 \AtBeginShipoutBox=\box67
-Package hyperref Info: Link coloring ON on input line 162.
+Package hyperref Info: Link coloring ON on input line 158.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
@@ -1529,11 +1532,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count277
 )
-LaTeX Info: Redefining \ref on input line 162.
-LaTeX Info: Redefining \pageref on input line 162.
-LaTeX Info: Redefining \nameref on input line 162.
-
-(./latex模板.out) (./latex模板.out)
+LaTeX Info: Redefining \ref on input line 158.
+LaTeX Info: Redefining \pageref on input line 158.
+LaTeX Info: Redefining \nameref on input line 158.
 \@outlinefile=\write3
 \openout3 = `latex模板.out'.
 
@@ -1541,11 +1542,11 @@ LaTeX Info: Redefining \nameref on input line 162.
 
 Package hyperref Warning: Rerun to get /PageLabels entry.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 164.
+LaTeX Font Info:    Try loading font information for U+msa on input line 160.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 164.
+LaTeX Font Info:    Try loading font information for U+msb on input line 160.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1559,10 +1560,10 @@ File: se-ascii-print.def 2011/12/02 v1.10 stringenc: Printable ASCII characters
 ]
 
 LaTeX Font Warning: Font shape `EU1/STZHONGS.TTF(0)/bx/n' undefined
-(Font)              using `EU1/STZHONGS.TTF(0)/m/n' instead on input line 165.
+(Font)              using `EU1/STZHONGS.TTF(0)/m/n' instead on input line 161.
 
 
-Overfull \hbox (4.32pt too wide) in paragraph at lines 165--165
+Overfull \hbox (4.32pt too wide) in paragraph at lines 161--161
 | []| 
  []
 
@@ -1572,21 +1573,30 @@ Package hyperref Warning: old toc file detected, not used; run LaTeX again.
 \tf@toc=\write4
 \openout4 = `latex模板.toc'.
 
+! Argument of \Hy@setref@link has an extra }.
+<inserted text> 
+                \par 
+l.162 \clearpage
+                
+? 
+! Emergency stop.
+<inserted text> 
+                \par 
+l.162 \clearpage
+                
+End of file on the terminal!
 
-LaTeX Warning: Reference `LastPage' on page 2 undefined on input line 166.
-
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[2
-
-]
-
-LaTeX Font Warning: Font shape `EU1/STZHONGS.TTF(0)/m/it' undefined
-(Font)              using `EU1/STZHONGS.TTF(0)/m/n' instead on input line 175.
+ 
+Here is how much of TeX's memory you used:
+ 29756 strings out of 493638
+ 525309 string characters out of 6146797
+ 590398 words of memory out of 5000000
+ 32828 multiletter control sequences out of 15000+600000
+ 12293 words of font info for 71 fonts, out of 8000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 48i,11n,72p,10364b,345s stack positions out of 5000i,500n,10000p,200000b,80000s
+Output written on latex模板.pdf (1 page).
+0)/m/n' instead on input line 175.
 
 
 LaTeX Warning: Reference `LastPage' on page 3 undefined on input line 176.
@@ -1610,21 +1620,7 @@ File: king.jpg Graphic file (type QTm)
 File: king.jpg Graphic file (type QTm)
  <use  "king.jpg" >
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 202--213
-
- []
-
-
-LaTeX Warning: Reference `LastPage' on page 4 undefined on input line 215.
-
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
+LaTeX Warning cause the page layout to be inconsistent, however.
 
 [4
 
@@ -1639,9 +1635,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 223--224
  []
 
 
-LaTeX Warning: Reference `LastPage' on page 5 undefined on input line 239.
-
-
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
@@ -1649,20 +1642,32 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [5]
 
-LaTeX Warning: Reference `LastPage' on page 6 undefined on input line 248.
-
-
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
 [6]
+! Undefined control sequence.
+l.250 {\heiti
+               参考文献}
+? 
+! Emergency stop.
+l.250 {\heiti
+               参考文献}
+End of file on the terminal!
 
-Package lastpage Warning: Rerun to get the references right on input line 254.
-
-
-AED: lastpage setting LastPage
+ 
+Here is how much of TeX's memory you used:
+ 30057 strings out of 493638
+ 534697 string characters out of 6146797
+ 599205 words of memory out of 5000000
+ 33106 multiletter control sequences out of 15000+600000
+ 13926 words of font info for 87 fonts, out of 8000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 48i,12n,72p,10364b,1089s stack positions out of 5000i,500n,10000p,200000b,80000s
+Output written on latex模板.pdf (6 pages).
+Page
 
 LaTeX Warning: Reference `LastPage' on page 7 undefined on input line 254.
 

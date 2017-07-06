@@ -1592,38 +1592,30 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [3
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 208--211
+! Missing $ inserted.
+<inserted text> 
+                $
+l.207 ^^I\item[1.]工作区：my_
+                                 repository文件夹
+? 
+! Emergency stop.
+<inserted text> 
+                $
+l.207 ^^I\item[1.]工作区：my_
+                                 repository文件夹
+End of file on the terminal!
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 208--211
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 213--216
-
- []
-
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[4]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[5]
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
+ 
+Here is how much of TeX's memory you used:
+ 29923 strings out of 493638
+ 527766 string characters out of 6146797
+ 622201 words of memory out of 5000000
+ 32979 multiletter control sequences out of 15000+600000
+ 13886 words of font info for 82 fonts, out of 8000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 48i,12n,72p,10364b,1151s stack positions out of 5000i,500n,10000p,200000b,80000s
+Output written on git常用命令.pdf (3 pages).
+ the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
 [6] 
