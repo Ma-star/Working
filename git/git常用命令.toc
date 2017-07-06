@@ -1,4 +1,4 @@
-\contentsline {section}{\numberline {1}git常用命令}{3}{section.1}
+\contentsline {section}{\numberline {1}Git常用命令}{3}{section.1}
 \contentsline {subsection}{\numberline {1.1}创建版本库}{3}{subsection.1.1}
 \contentsline {subsection}{\numberline {1.2}版本回退}{3}{subsection.1.2}
 \contentsline {subsection}{\numberline {1.3}工作区和暂存区}{4}{subsection.1.3}
@@ -7,3 +7,4 @@
 \contentsline {subsection}{\numberline {1.6}删除文件}{5}{subsection.1.6}
 \contentsline {subsection}{\numberline {1.7}远程仓库}{5}{subsection.1.7}
 \contentsline {subsection}{\numberline {1.8}分支管理}{6}{subsection.1.8}
+\contentsline {subsection}{\numberline {1.9}使用心得}{6}{subsection.1.9}
