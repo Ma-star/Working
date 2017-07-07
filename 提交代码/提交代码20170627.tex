@@ -56,3 +56,111 @@ no changes added to commit (use "git add" and/or "git commit -a")
     class Meta:
         name = _("Project Information")
         help_text = _("Create a project to organize users.")
+
+
+from django.conf import settings
+settings.USE_NEUTRON
+
+int_ip = lambda x: '.'.join([str(x/(256**i)%256) for i in range(3,-1,-1)])
+ip_int = lambda x:sum([256**j*int(i) for j,i in enumerate(x.split('.')[::-1])])
+def get_ips(ip1,ip2):
+    f=open('ips.txt','w')
+    ip1_num = ip_int(ip1)
+    ip2_num = ip_int(ip2)
+    for i in range(ip1_num,ip2_num+1):
+        f.write(str(int_ip(i))+'\n')
+get_ips('192.168.0.0','192.168.255.255')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   openstack_dashboard/api/application_notify.py
+	modified:   openstack_dashboard/api/nova.py
+	modified:   openstack_dashboard/dashboards/admin/floatingips/tables.py
+	modified:   openstack_dashboard/dashboards/admin/floatingips/tabs.py
+	modified:   openstack_dashboard/dashboards/admin/floatingips/views.py
+	modified:   openstack_dashboard/dashboards/admin/nagiosalarm/tables.py
+	modified:   openstack_dashboard/dashboards/admin/nagiosalarm/tabs.py
+	modified:   openstack_dashboard/dashboards/project/access_and_security/floating_ips/forms.py
+	modified:   openstack_dashboard/dashboards/project/floating_ips/views.py
+	modified:   openstack_dashboard/dashboards/project/instances/workflows/diy_create_instance.py
+	modified:   openstack_dashboard/local/htyun_settings.py
+	modified:   openstack_dashboard/locale/zh_CN/LC_MESSAGES/django.mo
+	modified:   openstack_dashboard/locale/zh_CN/LC_MESSAGES/django.po
+	modified:   openstack_dashboard/static/dark/templates/project/instances/create.html
+	modified:   static/dashboard/manifest.json
+	modified:   ../nova/virt/libvirt/driver.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+---------------------------------------------------------------------------------------
+/home/weiguangzhou/PycharmProjects/hengtianyun3.8.2/patches/juno/keystoneclient/v2_0/users.py
+
+
+
+
+
+
+#hengtianyun settings file
+
+修改：PROJECT_SERVICE = []
+修改：
+DATABASES = {
+    "default": {},
+    "regionOne": {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'horizon',
+        'USER': 'horizon',
+        'PASSWORD': 'HORIZON_DBPASS',
+        'HOST': '172.16.133.10',
+        'PORT': '3306',
+    },
+    "regionTwo": {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'horizon',
+        'USER': 'horizon',
+        'PASSWORD': 'HORIZON_DBPASS',
+        'HOST': '172.16.133.10',
+        'PORT': '3306',
+    },
+}
+修改
+# Displays information such as billing, price and cost estimates or not
+ENABLE_BILLING = True
+
+# Set vlan mode, if value is true, it is fixed ip vlan mode
+# else it is floating ip vlan mdoe
+# it only work witg vlan type
+WITHOUT_FLOATING_IP = False
+
+# if network strong associations is true, every network should binding a project
+# else it is not necessary
+# it only work while WITHOUT_FLOATING_IP is true now
+NETWORK_STRONG_ASSOCIATIONS = True
+
+# Show hty version
+HTY_VERSION = "3.8.2"
+
+#Elasticsearch url configuration file by bili@hengtiansoft.com
+ELASTICSEARCH_URL = 'http://172.16.19.240:9200'
+
+USE_NEUTRON = True
+
+修改：同步数据库
+sudo python manage.py syncdb --database=regionOne
+
+
