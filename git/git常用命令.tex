@@ -2,7 +2,7 @@
 %% 字体：方正静蕾简体
 %%		 方正粗宋
 \documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
-\title{git常用命令}
+\title{Git常用命令}
 \author{周威光整理\footnote{简介：恒天云FTE}}
 \date{2017-7-2} 
 % 引用宏包
@@ -141,7 +141,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{git常用命令\qquad}
+\chead{Git常用命令\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 % 参考文献
@@ -164,7 +164,7 @@
 \clearpage
 \tableofcontents
 \clearpage
-\section{git常用命令}
+\section{Git常用命令}
 \subsection{创建版本库}
 \begin{itemize}
 	\item[1.]ubuntu系统安装git
@@ -295,6 +295,12 @@
 	git log --graph --pretty=oneline --abbrev-commit #查看分支合并情况
 	git log --graph #同样可以查看分支合并情况
 	\end{lstlisting}
+\end{itemize}
+\subsection{使用心得}
+\begin{itemize}
+	\item[1.]git reset --hard HEAD \^ | 版本号：版本回退，会清空暂存区，清空工作区的更改。（慎用）
+	\item[2.]git reset HEAD 文件名：将暂存区的提交回退到工作区，不更改工作区内容。
+	\item[2.]git checkout -- 文件名：依据缓存区或master分支，丢弃工作区的更改。
 \end{itemize}
 \clearpage
 \begin{center}
