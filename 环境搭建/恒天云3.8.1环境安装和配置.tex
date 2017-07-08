@@ -145,9 +145,198 @@
 \tableofcontents
 
 \clearpage
+\section{控制节点hty-controller}
+\subsection{配置网络}
+\begin{lstlisting}
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
 
-\subsection{}
-	\begin{itemize}
-        \item[1.]
-    \end{itemize}
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 外网ip
+netmask 外网掩码
+gateway 外网网关
+dns-nameservers 域名服务器ip
+
+auto eth1
+iface eth1 inet static
+address 10.10.10.10
+netmask 255.255.255.0
+\end{lstlisting}
+\subsection{配置/etc/hosts}
+\begin{lstlisting}
+127.0.0.1       localhost
+10.10.10.11     hty-compute1
+10.10.10.12     hty-compute2
+
+10.10.10.10 hty-controller hty-keystone hty-ntp hty-glance hty-nova hty-mysql hty-mq hty-ceilometer hty-cinder
+\end{lstlisting}
+\subsection{配置/etc/nova/nova.conf}
+\begin{lstlisting}
+my_ip = 10.10.10.10
+\end{lstlisting}
+\subsection{配置/etc/cinder/cinder.conf}
+\begin{lstlisting}
+my_ip = 10.10.10.10
+\end{lstlisting}
+\subsection{配置监控/usr/local/nagios/libexec/hty_monitor_client/config.py}
+\begin{lstlisting}
+#控制节点两块网卡，注释掉eth2
+monitor_interfaces = {
+                       'public': "eth0",
+                       'manage': "eth1",
+                      # 'data': "eth2",
+                      # 'store': "eth2",
+                      }
+\end{lstlisting}
+\subseciton{配置/usr/share/openstack_dashboard/openstack_dashboard/local/htyun_settings.py}
+\begin{lstlisting}
+#flatDHCP模式注释掉eth2
+NETWORK = {
+    'type': 'vlan',
+    'vlan_start': 100,
+    'vlan_end': 200,
+    'bridge_interface': 'eth2',
+    'ip_address': '10.0.10.0',
+}
+SSH = {
+    'username': 'root',
+    'password': 'hengtian',
+    'timeout': 1,
+}
+ADMIN_EMAIL_ADDRESS = 'xiaojunguan@hengtiansoft.com'
+NAGIOS_SERVER = {'regionOne': '172.16.19.248'}
+\end{lstlisting}
+\subsection{配置/usr/share/openstack_dashboard/openstack_dashboard/local/local_settings.py}
+\begin{lstlisting}
+MAIL_HOST = 'mail.hengtiansoft.com'
+MAIL_PORT = 25
+MAIL_SENDER = '172.16.19.230@hengtiansoft.com'
+#MAIL_PASSWORD = '<PASSWORD>'
+\end{lstlisting}
+\subsection{配置/etc/hengtianyun/hengtianyun.conf}
+\begin{lstlisting}
+region_monitor_mapping = regionOne:172.16.19.248
+[mail]
+host = mail.hengtiansoft.com
+port = 25
+sender = 172.16.19.230@hengtiansoft.com
+password = sender_password
+[mail]
+host = mail.hengtiansoft.com
+port = 25
+sender = 172.16.19.230@hengtiansoft.com
+password = sender_password
+\end{lstlisting}
+\subsection{重启服务}
+\begin{lstlisting}
+bash hty-controller_service.sh
+\end{lstlisting}
+\subsection{计算节点hty-compute1}
+\subsection{配置网络}
+flatDHCP模式配置两张网卡：\\
+\begin{lstlisting}
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 外网ip
+netmask 外网掩码
+gateway 外网网关
+dns-nameservers 域名服务器ip
+
+auto eth1
+iface eth1 inet static
+address 10.10.10.11
+netmask 255.255.255.0
+\end{lstlisting}
+vlan模式要额外多配置一张trunk模式的网卡：\\
+\begin{lstlisting}
+#This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet static
+address 外网ip
+netmask 外网掩码
+gateway 外网网关
+dns-nameservers 域名服务器ip
+
+auto eth1
+iface eth1 inet static
+address 10.10.10.11
+netmask 255.255.255.0
+
+auto eth2
+iface eth2 inet static
+address 0.0.0.0
+netmask 255.255.255.0
+\end{lstlisting}
+\subsection{配置/etc/hosts}
+\begin{lstlisting}
+127.0.0.1       localhost
+10.10.10.11     hty-compute1
+10.10.10.12     hty-compute2
+
+10.10.10.10 hty-controller hty-keystone hty-ntp hty-glance hty-nova hty-mysql hty-mq hty-ceilometer hty-cinder
+\end{lstlisting}
+\subsection{配置/etc/nova/nova.conf}
+\begin{lstlisting}
+my_ip = 10.10.10.11
+vnc_enabled = True
+vncserver_listen = 0.0.0.0
+vncserver_proxyclient_address = 10.10.10.11
+novncproxy_base_url = http://控制节点外网ip:6080/vnc_auto.html
+
+#network_manager = nova.network.manager.FlatDHCPManager
+network_manager = nova.network.manager.VlanManager
+
+flat_interface = eth2
+public_interface = eth0
+#最后一行
+virtio_image_id=<VIRTIO_IMAGE_ID>
+\end{lstlisting}
+\subsection{配置/etc/nova/cinder.conf}
+\begin{lstlisting}
+my_ip = 10.10.10.11
+\end{lstlisting}
+\subsection{配置监控/usr/local/nagios/libexec/hty_monitor_client/config.py}
+\begin{lstlisting}
+#vlan模式启用eth2
+monitor_interfaces = {
+                       'public': "eth0",
+                       'manage': "eth1",
+                       'data': "eth2",
+                      # 'store': "eth2",
+                      }
+service nrpe restart
+\end{lstlisting}
+\subsection{配置断电恢复/root/watch_services/check.conf}
+\begin{lstlisting}
+compute_nodes=(hty-compute1 hty-compute2)
+mail_sender=hengyun@hengtiansoft.com
+
+mail_host=mail.hengtiansoft.com
+bash /root/watch_services/deploy.sh
+\end{lstlisting}
+\subsection{重启所有服务}
+\begin{lstlisting}
+bash hty_compute_service.sh
+\end{lstlisting}
 \end{document}
