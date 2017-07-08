@@ -2,7 +2,7 @@
 %% 字体：方正静蕾简体
 %%		 方正粗宋
 \documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
-\title{基于恒天云3.8.1源码安装neutron}
+\title{基于恒天云3.8源码安装neutron}
 \author{周威光整理}
 \date{2017-06-28} 
 \usepackage[utf8]{inputenc}
@@ -139,7 +139,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{基于恒天云3.8.1源码安装neutron\qquad}
+\chead{基于恒天云3.8源码安装neutron\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -153,7 +153,7 @@
 \subsection{物理环境}
 \begin{itemize}
 	\item[(1).]两台3网卡的物理机，一台作为控制节点hty-controller，一台作为计算节点hty-compute1
-	\item[(2).]提前在两台机器上用恒天云3.8.1分别安装控制节点和计算节点
+	\item[(2).]提前在两台机器上用恒天云3.8分别安装控制节点和计算节点
 	\item[(3).]每台物理机的一张网卡 eth0 访问外网，一张网卡 eth1 作为管理网络的网卡，一张网卡 eth2 作为neutron隧道网络的网卡
 	\item[(4).]下面是控制节点和计算节点的网络配置：\\
 	控制节点如下：
