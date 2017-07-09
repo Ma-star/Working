@@ -1620,31 +1620,31 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [5]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.275 ^^I\item[1.]git reset --hard HEAD^
+                                        |版本号：版本回退，会清�...
 
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
+? 
+! Emergency stop.
+<inserted text> 
+                $
+l.275 ^^I\item[1.]git reset --hard HEAD^
+                                        |版本号：版本回退，会清�...
+End of file on the terminal!
 
-[6] 
-AED: lastpage setting LastPage
-
-Package Fancyhdr Warning: \headheight is too small (12.0pt): 
- Make it at least 13.59999pt.
- We now make it that large for the rest of the document.
- This may cause the page layout to be inconsistent, however.
-
-[7
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 310.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 310.
- (./git常用命令.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 310.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 310.
-
-
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+ 
+Here is how much of TeX's memory you used:
+ 29980 strings out of 493638
+ 530430 string characters out of 6146797
+ 641197 words of memory out of 5000000
+ 33036 multiletter control sequences out of 15000+600000
+ 13886 words of font info for 82 fonts, out of 8000000 for 9000
+ 1328 hyphenation exceptions out of 8191
+ 48i,12n,72p,10364b,1151s stack positions out of 5000i,500n,10000p,200000b,80000s
+Output written on git常用命令.pdf (5 pages).
+not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
