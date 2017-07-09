@@ -2,7 +2,10 @@
 %% 字体：方正静蕾简体
 %%		 方正粗宋
 \documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
-
+\title{获取两个ip之间的所有ip}
+\author{周威光整理\footnote{简介：恒天云FTE}}
+\date{2017-07-04} 
+% 引用宏包
 \usepackage[utf8]{inputenc}
 \usepackage{fontspec}
 \usepackage{cite}
@@ -105,7 +108,7 @@
 \setCJKmainfont{STZHONGS.TTF}
 %\setmainfont{MONACO.TTF}
 %\setsansfont{MONACO.TTF}
-
+% 自定义添加图片命令
 \newcommand{\fic}[1]{\begin{figure}[H]
 		\center
 		\includegraphics[width=0.8\textwidth]{#1}
@@ -115,7 +118,7 @@
 		\center
 		\includegraphics[width=#1\textwidth]{#2}
 	\end{figure}}
-
+% 
 \newcommand{\codefile}[1]{\lstinputlisting{#1}}
 
 \newcommand{\interval}{\vspace{0.5em}}
@@ -134,40 +137,48 @@
 \linespread{1.1}
 
 \usepackage{lastpage}
+% 设置页眉页脚
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{3楼性能测试环境\qquad}
+\chead{获取两个ip之间的所有ip\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
+% 参考文献
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\indent\llap{#1\enspace}\ignorespaces}
+\def\re{\par\hang\textindent}
+%超链接
+\usepackage[CJKbookmarks=true,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks, %注释掉此项则交叉引用为彩色边框(将colorlinks和pdfborder同时注释掉)
+            pdfborder=001,   %注释掉此项则交叉引用为彩色边框
+            linkcolor=green,
+            anchorcolor=green,
+            citecolor=green
+            ]{hyperref}  
+
 \begin{document}
-
-\tableofcontents
-
+\maketitle
 \clearpage
-
-\subsection{控制节点：hty-controller}
-	\begin{itemize}
-        \item[1.]位置：第二个机柜，第三台服务器 
-		\item[2.]用户名:root 密码：hengtian
-		\item[3.]eth0:外网网卡;ip:172.16.133.10 左一
-		\item[4.]eth1:管理网络;ip:10.10.10.11 左二
-		\item[5.]eth2:隧道网络;ip:10.10.11.11 左三
-    \end{itemize}
-\subsection{计算节点1:hty-compute1}
-	\begin{itemize}
-		\item[1.]位置：第四个机柜，第一台服务器 
-		\item[2.]用户名:root 密码：hengtian
-		\item[3.]eth2:外网网卡;ip:172.16.133.15 左三
-		\item[4.]eth0:管理网络;ip:10.10.10.12 左一
-		\item[5.]eth1:隧道网络;ip:10.10.11.12 左二 trunk口
-	\end{itemize}
-\subsection{计算节点2:hty-compute2}
-	\begin{itemize}
-		\item[1.]位置：第四个机柜，最后一台服务器 
-		\item[2.]用户名:root 密码：hengtian
-		\item[3.]eth2:外网网卡;ip:172.16.133.16 左三
-		\item[4.]eth0:管理网络;ip:10.10.10.13 左一
-		\item[5.]eth1:隧道网络;ip:10.10.11.13 左二 trunk口
-	\end{itemize}
+\tableofcontents
+\clearpage
+\section{获取两个ip之间的所有ip}
+\begin{lstlisting}
+int_ip = lambda x: '.'.join([str(x/(256**i)%256) for i in range(3,-1,-1)])
+ip_int = lambda x:sum([256**j*int(i) for j,i in enumerate(x.split('.')[::-1])])
+def get_ips(ip1,ip2):
+    f=open('ips.txt','w')
+    ip1_num = ip_int(ip1)
+    ip2_num = ip_int(ip2)
+    for i in range(ip1_num,ip2_num+1):
+        f.write(str(int_ip(i))+'\n')
+get_ips('192.168.0.0','192.168.255.255')
+\end{lstlisting}
+\clearpage
+\begin{center}%参考文献的书写
+参考文献
+\end{center}
+\re{[1]} \href{http://www.cnblogs.com/Xjng/p/3824666.html}{Python获取两个ip之间的所有ip}
 \end{document}
