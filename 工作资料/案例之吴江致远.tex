@@ -2,7 +2,10 @@
 %% 字体：方正静蕾简体
 %%		 方正粗宋
 \documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
-
+\title{案例之吴江致远}
+\author{周威光整理\footnote{简介：恒天云FTE}}
+\date{2017-07-12} 
+% 引用宏包
 \usepackage[utf8]{inputenc}
 \usepackage{fontspec}
 \usepackage{cite}
@@ -105,7 +108,7 @@
 \setCJKmainfont{STZHONGS.TTF}
 %\setmainfont{MONACO.TTF}
 %\setsansfont{MONACO.TTF}
-
+% 自定义添加图片命令
 \newcommand{\fic}[1]{\begin{figure}[H]
 		\center
 		\includegraphics[width=0.8\textwidth]{#1}
@@ -115,7 +118,7 @@
 		\center
 		\includegraphics[width=#1\textwidth]{#2}
 	\end{figure}}
-
+% 
 \newcommand{\codefile}[1]{\lstinputlisting{#1}}
 
 \newcommand{\interval}{\vspace{0.5em}}
@@ -134,17 +137,211 @@
 \linespread{1.1}
 
 \usepackage{lastpage}
+% 设置页眉页脚
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{恒天云之吴江致远\qquad}
+\chead{案例之吴江致远\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
+% 参考文献
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\indent\llap{#1\enspace}\ignorespaces}
+\def\re{\par\hang\textindent}
+%超链接
+\usepackage[CJKbookmarks=true,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks, %注释掉此项则交叉引用为彩色边框(将colorlinks和pdfborder同时注释掉)
+            pdfborder=001,   %注释掉此项则交叉引用为彩色边框
+            linkcolor=green,
+            anchorcolor=green,
+            citecolor=green
+            ]{hyperref}  
+
 \begin{document}
-
+\maketitle
+\clearpage
 \tableofcontents
-
 \clearpage
 
+\section{部署恒天云服务器配置}
+5台服务器，两台IBM服务器，三台惠普
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|r|}
+ \hline
+节点名& 型号& CPU& 内存& 磁盘 &备注\\
+ \hline
+hty-controller&IBM X3650 M2 & XEON E5530*8核& 12G &300G*2 & 已使用，未做RAID\\
+ \hline
+hty-compute1&HP proliant DL165 G7 & AMD 6218*2块*8核& 16G &1T*2 & 已使用，未做RAID\\
+ \hline
+hty-compute2&IBM X3650 M2 & XEON E5530*8核& 4G &146G*2 & 未使用，故障\\
+ \hline
+hty-compute3&HP proliant DL388 G7& E5620*2块*8核& 16G &300G*7 & 已使用，未做RAID\\
+ \hline
+hty-compute4&HP proliant DL580 G5 & E7420*8核& 8G &146G*2 & 已使用，未做RAID\\
+ \hline
+\end{tabular}
+\end{center}
+\section{安装恒天云3.8.1}
+\subsection{安装工具}
+\begin{itemize}
+	\item[1.]U盘安装iso：由于服务器的bios启动是使用UEFI，携带的Legacy盘无法识别，并且服务器老旧无法调出Legacy模式，放弃
+	\item[2.]DD安装：成功安装
+\end{itemize}
+\subsection{网络架构}
+\begin{itemize}
+	\item[1]控制节点hty-controller
+	eth0管理网卡，eth1是trunk网卡，在eth1上虚拟出vlan网卡vlan2254
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.10
+	netmask 255.255.255.0
 
+	auto eth1
+	iface eth1 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+	虚拟vlan网卡
+	\begin{lstlisting}
+	ip link add link eth1 name vlan2254 type vlan id 2254
+	ip addr add 172.16.254.81/24 dev vlan2254
+	ip link set vlan2254 up 
+	ip route add default via 172.16.254.254 dev vlan2254
+	\end{lstlisting}
+	因为上述命令是临时命令，重启后会失效，需将命令添加到/etc/rc.local
+
+	\item[2]计算节点hty-compute1
+	eth0管理网卡，eth1是trunk网卡，在eth1上虚拟出vlan网卡vlan2254
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.11
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+	虚拟vlan网卡
+	\begin{lstlisting}
+	ip link add link eth1 name vlan2254 type vlan id 2254
+	ip addr add 172.16.254.82/24 dev vlan2254
+	ip link set vlan2254 up 
+	ip route add default via 172.16.254.254 dev vlan2254
+	\end{lstlisting}
+	因为上述命令是临时命令，重启后会失效，需将命令添加到/etc/rc.local
+
+	\item[3]计算节点hty-compute2(故障，可忽略)
+	eth0管理网卡，eth1是trunk网卡，在eth1上虚拟出vlan网卡vlan2254
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.12
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+	虚拟vlan网卡
+	\begin{lstlisting}
+	ip link add link eth1 name vlan2254 type vlan id 2254
+	ip addr add 172.16.254.83/24 dev vlan2254
+	ip link set vlan2254 up 
+	ip route add default via 172.16.254.254 dev vlan2254
+	\end{lstlisting}
+	因为上述命令是临时命令，重启后会失效，需将命令添加到/etc/rc.local
+
+	\item[4]计算节点hty-compute3
+	eth0管理网卡，eth1是trunk网卡，在eth1上虚拟出vlan网卡vlan2254
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.13
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+	虚拟vlan网卡
+	\begin{lstlisting}
+	ip link add link eth1 name vlan2254 type vlan id 2254
+	ip addr add 172.16.254.84/24 dev vlan2254
+	ip link set vlan2254 up 
+	ip route add default via 172.16.254.254 dev vlan2254
+	\end{lstlisting}
+	因为上述命令是临时命令，重启后会失效，需将命令添加到/etc/rc.local
+
+	\item[5]计算节点hty-compute4
+	eth0管理网卡，eth1是trunk网卡，在eth1上虚拟出vlan网卡vlan2254
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.14
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+	虚拟vlan网卡
+	\begin{lstlisting}
+	ip link add link eth1 name vlan2254 type vlan id 2254
+	ip addr add 172.16.254.85/24 dev vlan2254
+	ip link set vlan2254 up 
+	ip route add default via 172.16.254.254 dev vlan2254
+	\end{lstlisting}
+	因为上述命令是临时命令，重启后会失效，需将命令添加到/etc/rc.local
+\end{itemize}
+\subsection{配置文件罗列}
+\subsubsection{控制节点}
+\begin{itemize}
+	\item[1.]/etc/network/interfaces
+	\item[2.]/etc/hosts
+	\item[3.]/etc/nova/nova.conf
+	\item[4.]/etc/cinder/cinder.conf
+	\item[5]/usr/local/nagois/libexec/忘了/config.py
+	\item[6]/usr/share/openstack-dashboard/openstack-dashboad/local/hty\_settings.py
+	\item[7.]/usr/share/openstack-dashboard/openstack-dashboad/local/local\_settings.py
+	\item[8.]/etc/hengtianyun/hengtianyun.conf
+	\item[9.]/root/watch\_services/check.conf
+	\item[10.]修改一改文件的MAX\_NUM=4，将4替换为base64编码NA==
+\end{itemize}
+\subsubsection{计算节点}
+\begin{itemize}
+	\item[1.]/etc/network/interfaces
+	\item[2.]/etc/hosts
+	\item[3.]/etc/nova/nova.conf
+	\item[4.]/etc/cinder/cinder.conf
+	\item[5.]/usr/local/nagois/libexec/忘了/config.py
+	\item[6.]/root/watch\_services/check.conf
+	\item[7.]配置计算节点nova用户无密码访问
+	\begin{lstlisting}
+	su nova
+	cd /var/lib/nova/.ssh/
+	for i in $(seq 1 4);do ssh-copy-id -i id_rsa.pub hty-compute$i;done
+	\end{lstlisting}
+\end{itemize}
+\subsubsection{密码更改}
+\begin{itemize}
+	\item[1]控制节点
+	\begin{lstlisting}
+	用户名：root
+	密码：htYun@wjzy
+	\end{lstlisting}
+	\item[2]计算节点
+	\begin{lstlisting}
+	用户名：root
+	密码：htYun@wjzy
+	\end{lstlisting}
+\end{itemize}
+\subsubsection{监控外网使用vlan号以及ip}
+\begin{lstlisting}
+vlan2255：172.16.255.110
+gateway 172.16.255.254
+\end{lstlisting}
 \end{document}
