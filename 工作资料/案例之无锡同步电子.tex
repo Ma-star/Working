@@ -2,7 +2,10 @@
 %% 字体：方正静蕾简体
 %%		 方正粗宋
 \documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
-
+\title{案例之吴江致远}
+\author{周威光整理\footnote{简介：恒天云FTE}}
+\date{2017-07-12} 
+% 引用宏包
 \usepackage[utf8]{inputenc}
 \usepackage{fontspec}
 \usepackage{cite}
@@ -105,7 +108,7 @@
 \setCJKmainfont{STZHONGS.TTF}
 %\setmainfont{MONACO.TTF}
 %\setsansfont{MONACO.TTF}
-
+% 自定义添加图片命令
 \newcommand{\fic}[1]{\begin{figure}[H]
 		\center
 		\includegraphics[width=0.8\textwidth]{#1}
@@ -115,7 +118,7 @@
 		\center
 		\includegraphics[width=#1\textwidth]{#2}
 	\end{figure}}
-
+% 
 \newcommand{\codefile}[1]{\lstinputlisting{#1}}
 
 \newcommand{\interval}{\vspace{0.5em}}
@@ -134,17 +137,281 @@
 \linespread{1.1}
 
 \usepackage{lastpage}
+% 设置页眉页脚
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{恒天云之无锡同步电子\qquad}
+\chead{案例之无锡同步电子\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
+% 参考文献
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\indent\llap{#1\enspace}\ignorespaces}
+\def\re{\par\hang\textindent}
+%超链接
+\usepackage[CJKbookmarks=true,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks, %注释掉此项则交叉引用为彩色边框(将colorlinks和pdfborder同时注释掉)
+            pdfborder=001,   %注释掉此项则交叉引用为彩色边框
+            linkcolor=green,
+            anchorcolor=green,
+            citecolor=green
+            ]{hyperref}  
+
 \begin{document}
-% 生成目录
-\tableofcontents
-% 换页
+\maketitle
 \clearpage
+\tableofcontents
+\clearpage
+
+\section{安装恒天云3.7.1}
+\subsection{网络架构}
+\begin{itemize}
+	\item[1]控制节点hty-controller
+	eth0管理网卡，eth1 eth4是ceph的网卡，eth3外网，eth5配置0.0.0.0允许虚拟机带vlan的包
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.10
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 10.20.10.10
+	netmask 255.255.255.0
+
+	auto eth3
+	iface eth3 inet static
+	address 172.16.40.10
+	netmask 255.255.255.0
+	gateway 172.16.40.254
+	dns-nameservers 8.8.8.8(忘了）
+	
+	auto eth4
+	iface eth4 inet static
+	address 10.30.10.10
+	netmask 255.255.255.0
+
+	auto eth5
+	iface eth5 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+
+	\item[1]控制节点hty-controller
+	eth0管理网卡，eth1 eth4是ceph的网卡，eth3外网，eth5配置0.0.0.0允许虚拟机带vlan的包
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.10
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 10.20.10.10
+	netmask 255.255.255.0
+
+	auto eth3
+	iface eth3 inet static
+	address 172.16.40.10
+	netmask 255.255.255.0
+	gateway 172.16.40.254
+	dns-nameservers 8.8.8.8(忘了）
+	
+	auto eth4
+	iface eth4 inet static
+	address 10.30.10.10
+	netmask 255.255.255.0
+
+	auto eth5
+	iface eth5 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+
+	\item[1]控制节点hty-controller
+	eth0管理网卡，eth1 eth4是ceph的网卡，eth3外网，eth5配置0.0.0.0允许虚拟机带vlan的包
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.10
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 10.20.10.10
+	netmask 255.255.255.0
+
+	auto eth3
+	iface eth3 inet static
+	address 172.16.40.10
+	netmask 255.255.255.0
+	gateway 172.16.40.254
+	dns-nameservers 8.8.8.8(忘了）
+	
+	auto eth4
+	iface eth4 inet static
+	address 10.30.10.10
+	netmask 255.255.255.0
+
+	auto eth5
+	iface eth5 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+
+	\item[1]控制节点hty-controller
+	eth0管理网卡，eth1 eth4是ceph的网卡，eth3外网，eth5配置0.0.0.0允许虚拟机带vlan的包
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.10
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 10.20.10.10
+	netmask 255.255.255.0
+
+	auto eth3
+	iface eth3 inet static
+	address 172.16.40.10
+	netmask 255.255.255.0
+	gateway 172.16.40.254
+	dns-nameservers 8.8.8.8(忘了）
+	
+	auto eth4
+	iface eth4 inet static
+	address 10.30.10.10
+	netmask 255.255.255.0
+
+	auto eth5
+	iface eth5 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+
+	\item[2]计算节点hty-compute1
+	eth0管理网卡，eth1 eth4是ceph的网卡，eth3外网，eth5配置0.0.0.0允许虚拟机带vlan的包
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.11
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 10.20.10.11
+	netmask 255.255.255.0
+
+	auto eth3
+	iface eth3 inet static
+	address 172.16.40.11
+	netmask 255.255.255.0
+	gateway 172.16.40.254
+	dns-nameservers 8.8.8.8(忘了）
+	
+	auto eth4
+	iface eth4 inet static
+	address 10.30.10.11
+	netmask 255.255.255.0
+
+	auto eth5
+	iface eth5 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+
+	\item[3]计算节点hty-compute2
+	eth0管理网卡，eth1 eth4是ceph的网卡，eth3外网，eth5配置0.0.0.0允许虚拟机带vlan的包
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.12
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 10.20.10.12
+	netmask 255.255.255.0
+
+	auto eth3
+	iface eth3 inet static
+	address 172.16.40.12
+	netmask 255.255.255.0
+	gateway 172.16.40.254
+	dns-nameservers 8.8.8.8(忘了）
+	
+	auto eth4
+	iface eth4 inet static
+	address 10.30.10.12
+	netmask 255.255.255.0
+
+	auto eth5
+	iface eth5 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+
+	\item[4]计算节点hty-compute3
+	eth0管理网卡，eth1 eth4是ceph的网卡，eth3外网，eth5配置0.0.0.0允许虚拟机带vlan的包
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.13
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 10.20.10.13
+	netmask 255.255.255.0
+
+	auto eth3
+	iface eth3 inet static
+	address 172.16.40.13
+	netmask 255.255.255.0
+	gateway 172.16.40.254
+	dns-nameservers 8.8.8.8(忘了）
+	
+	auto eth4
+	iface eth4 inet static
+	address 10.30.10.13
+	netmask 255.255.255.0
+
+	auto eth5
+	iface eth5 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+
+	\item[5]计算节点hty-compute4
+	eth0管理网卡，eth1 eth4是ceph的网卡，eth3外网，eth5配置0.0.0.0允许虚拟机带vlan的包
+	\begin{lstlisting}
+	auto eth0
+	iface eth0 inet static
+	address 10.10.10.14
+	netmask 255.255.255.0
+
+	auto eth1
+	iface eth1 inet static
+	address 10.20.10.14
+	netmask 255.255.255.0
+
+	auto eth3
+	iface eth3 inet static
+	address 172.16.40.14
+	netmask 255.255.255.0
+	gateway 172.16.40.254
+	dns-nameservers 8.8.8.8(忘了）
+	
+	auto eth4
+	iface eth4 inet static
+	address 10.30.10.14
+	netmask 255.255.255.0
+
+	auto eth5
+	iface eth5 inet static
+	address 0.0.0.0
+	\end{lstlisting}
+
+	
+
+\end{itemize}
+
 
 
 \end{document}
