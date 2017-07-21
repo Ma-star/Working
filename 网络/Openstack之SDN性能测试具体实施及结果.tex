@@ -1,0 +1,218 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+\title{Openstack之SDN性能测试具体实施及结果}
+\author{周威光整理\footnote{简介：恒天云FTE}}
+\date{2017-07-21} 
+% 引用宏包
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+% 自定义添加图片命令
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+% 
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+% 设置页眉页脚
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{Openstack之SDN性能测试具体实施及结果\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+% 参考文献
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\indent\llap{#1\enspace}\ignorespaces}
+\def\re{\par\hang\textindent}
+%超链接
+\usepackage[CJKbookmarks=true,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks, %注释掉此项则交叉引用为彩色边框(将colorlinks和pdfborder同时注释掉)
+            pdfborder=001,   %注释掉此项则交叉引用为彩色边框
+            linkcolor=green,
+            anchorcolor=green,
+            citecolor=green
+            ]{hyperref} 
+\begin{document}
+\maketitle
+\clearpage
+\tableofcontents
+\clearpage
+\section{网络性能测试指标}
+常见的网络性能测试指标包含：网络吞吐量（Throughput）、网络延迟（latency）、抖动（jitter）、丢包率等
+\begin{itemize}
+	\item[1.]网络吞吐量：单位时间内通过某个网络（或信道、接口）的数据量，吞吐量受网络的带宽或者网络的额定速率限制的，例如家庭带宽为10M网络，
+	表明网络吞吐量不可能超过10Mbits/s，吞吐量的单位通常表示为位元每秒（bit/s或bps）。
+	\item[2.]网络延迟：通俗的讲，就是数据从电脑这边传到那边所用的时间。这儿有个问题需要确认，数据是指一个数据包的传输还是任意大小，和你传输的数据量相关。
+	可以明显的看到，从A到B传送1个字节的时间和传送100MB的时间肯定是不一样的。标准意义上的延迟，应该仅仅指1个字节的传输时间，类似网络课上讲到的传播时延。
+	（不同意见欢迎讨论）。同样存在一个名词叫做传播延时，这个应该可以标识整个数据包的传输时间，不论包大小为多少。
+	\item[3.]抖动：用于描述包在网络中的传输延时的变化，抖动越小，说明网络质量越稳定越好。抖动是评价一个网络性能的最重要的因素。
+	\item[4.]丢包率：测试中所丢失的数据包数量占所发送的数据包的比率，因为我们知道TCP协议是可靠的，所以，一般在使用UDP传输时，才会统计丢包率。
+\end{itemize}
+\section{网络性能测试工具选择}
+常用的开源网络性能测试工具有两个：iperf 和 netperf，iperf是美国伊利诺斯大学（University of Illinois）开发的一种开源的网络性能测试工具，
+netperf是由惠普公司开发的一种网络性能的测量工具，测试网络栈。（即测试不同类型的网络性能的benchmark工具）
+这两种工具都是可以测试TCP协议和UDP协议的，从可测试的网络性能指标，我们对两种工具进行下对比
+\begin{center}
+\begin{tabular}[c]{l|l|l|l|l|l}
+工具 & 网络吞吐量 & 网络延迟 & 抖动 & 丢包 & 其他\\
+\hline
+iperf & 是 & 否 & 是 & 是 & \\
+\hline
+netperf & 是 & 是 & 是 & 是 & 重传、CPU利用率、延时分布 \\
+\hline
+\end{tabular}
+\end{center}
+可见，iperf也可以完成基本的网络性能测试，但是工具比netperf要略差些，我们测试过程中，选用的工具为netperf
+\section{网络性能测试工具使用}
+Netperf根据应用的不同，可以进行不同模式的网络性能测试，即批量数据传输（bulk data transfer）模式和请求/应答（request/reponse）模式。
+Netperf测试结果所反映的是一个系统能够以多快的速度向另外一个系统发送数据，以及另外一个系统能够以多块的速度接收数据。
+\subsection{网络带宽测试}
+\begin{lstlisting}
+
+\end{lstlisting}
+\subsection{网络延迟测试}
+\begin{lstlisting}
+
+\end{lstlisting}
+\subsection{抖动测试}
+\begin{lstlisting}
+
+\end{lstlisting}
+\subsection{丢包测试}
+\begin{lstlisting}
+
+\end{lstlisting}
+ 
+\clearpage
+\begin{center}%参考文献的书写
+参考文献
+\end{center}
+\re{[1]} \href{http://www.2cto.com/net/201310/253951.html}{初探网络性能测试} 
+\re{[2]} \href{http://www.jianshu.com/p/42e0fa6bf79c}{[Linux-网络性能测试] -- netperf测试}
+\end{document}
