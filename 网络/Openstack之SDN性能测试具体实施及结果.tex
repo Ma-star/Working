@@ -164,15 +164,12 @@
 \tableofcontents
 \clearpage
 \section{网络性能测试指标}
-常见的网络性能测试指标包含：网络吞吐量（Throughput）、网络延迟（latency）、抖动（jitter）、丢包率等
+常见的网络性能测试指标包含：网络带宽（bandwidth）、网络延迟（latency）、抖动（jitter）、丢包率等
 \begin{itemize}
-	\item[1.]网络吞吐量：单位时间内通过某个网络（或信道、接口）的数据量，吞吐量受网络的带宽或者网络的额定速率限制的，例如家庭带宽为10M网络，
-	表明网络吞吐量不可能超过10Mbits/s，吞吐量的单位通常表示为位元每秒（bit/s或bps）。
-	\item[2.]网络延迟：通俗的讲，就是数据从电脑这边传到那边所用的时间。这儿有个问题需要确认，数据是指一个数据包的传输还是任意大小，和你传输的数据量相关。
-	可以明显的看到，从A到B传送1个字节的时间和传送100MB的时间肯定是不一样的。标准意义上的延迟，应该仅仅指1个字节的传输时间，类似网络课上讲到的传播时延。
-	（不同意见欢迎讨论）。同样存在一个名词叫做传播延时，这个应该可以标识整个数据包的传输时间，不论包大小为多少。
+	\item[1.]网络带宽：网络带宽是指在一个固定的时间内（1秒），能通过的最大位数据。
+	\item[2.]网络延迟：通俗的讲，就是数据从电脑这边传到那边所用的时间。
 	\item[3.]抖动：用于描述包在网络中的传输延时的变化，抖动越小，说明网络质量越稳定越好。抖动是评价一个网络性能的最重要的因素。
-	\item[4.]丢包率：测试中所丢失的数据包数量占所发送的数据包的比率，因为我们知道TCP协议是可靠的，所以，一般在使用UDP传输时，才会统计丢包率。
+	\item[4.]丢包率：测试中所丢失的数据包数量占所发送的数据包的比率。
 \end{itemize}
 \section{网络性能测试工具选择}
 \subsection{常见的网络性能测试工具简介}
@@ -289,5 +286,5 @@ ping服务器显示如下：
 \end{center}
 \re{[1]} \href{http://www.sdnlab.com/2961.html}{网络性能测试工具Iperf介绍} 
 \re{[2]} \href{http://www.51testing.com/html/11/255511-805117.html}{使用iperf测试网络性能}
-\re{[3]} \href{http://man.linuxde.net/ping}{ping命令}
+\re{[3]} \href{http://cn.linux.vbird.org/linux_server/0140networkcommand/0140networkcommand-centos4.php#ping}{ping命令}
 \end{document}
