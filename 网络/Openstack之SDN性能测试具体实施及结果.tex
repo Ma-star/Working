@@ -175,44 +175,119 @@
 	\item[4.]丢包率：测试中所丢失的数据包数量占所发送的数据包的比率，因为我们知道TCP协议是可靠的，所以，一般在使用UDP传输时，才会统计丢包率。
 \end{itemize}
 \section{网络性能测试工具选择}
+\subsection{常见的网络性能测试工具简介}
 常用的开源网络性能测试工具有两个：iperf 和 netperf，iperf是美国伊利诺斯大学（University of Illinois）开发的一种开源的网络性能测试工具，
-netperf是由惠普公司开发的一种网络性能的测量工具，测试网络栈。（即测试不同类型的网络性能的benchmark工具）
-这两种工具都是可以测试TCP协议和UDP协议的，从可测试的网络性能指标，我们对两种工具进行下对比
+netperf是由惠普公司开发的一种网络性能的测量工具，测试网络栈。这两种工具都可以测试TCP协议和UDP协议，从可测试的网络性能指标，我们对两种工具进行下对比：
 \begin{center}
-\begin{tabular}[c]{l|l|l|l|l|l}
-工具 & 网络吞吐量 & 网络延迟 & 抖动 & 丢包 & 其他\\
+\begin{tabular}[c]{|l|l|l|l|l|}
 \hline
-iperf & 是 & 否 & 是 & 是 & \\
+工具 & 带宽 & 网络延迟 & 抖动 & 丢包 \\
 \hline
-netperf & 是 & 是 & 是 & 是 & 重传、CPU利用率、延时分布 \\
+iperf & 是 & 否 & 是 & 是 \\
+\hline
+netperf & 是 & 是 & 是 & 否 \\
+\hline
+\end{tabular}
+\end{center}\par
+可见iperf和netperf都可以完成基本的网络性能测试，但netperf更倾向于测试不同网络模式的数据传输，与本次性能测试需求不符。
+而iperf可以经过简单的参数设置，比较直观的给出带宽、抖动和丢包，
+并且还能设置测试时间、发送包的大小，以及带宽。虽然无法对网络延迟进行统一测试，但可以使用ping进行弥补
+\subsection{测试方法确定}
+\begin{center}
+\begin{tabular}[c]{|l|l|l|l|l|}
+\hline
+测试对象 & 带宽 & 延时 & 抖动(Jitter) & 丢包 \\
+\hline
+测试工具 & iperf tcp包测试 & ping测试 & iperf UDP测试 & iperf UDP测试 \\
 \hline
 \end{tabular}
 \end{center}
-可见，iperf也可以完成基本的网络性能测试，但是工具比netperf要略差些，我们测试过程中，选用的工具为netperf
-\section{网络性能测试工具使用}
-Netperf根据应用的不同，可以进行不同模式的网络性能测试，即批量数据传输（bulk data transfer）模式和请求/应答（request/reponse）模式。
-Netperf测试结果所反映的是一个系统能够以多快的速度向另外一个系统发送数据，以及另外一个系统能够以多块的速度接收数据。
-\subsection{网络带宽测试}
-\begin{lstlisting}
 
-\end{lstlisting}
-\subsection{网络延迟测试}
+\section{网络性能测试工具iperf的使用}
+\subsection{使用原理}
+使用Iperf测试时必须将一台主机设置为客户端，一台主机设置为服务器。
+\subsection{iperf使用方法与参数说明}
 \begin{lstlisting}
-
-\end{lstlisting}
-\subsection{抖动测试}
-\begin{lstlisting}
-
-\end{lstlisting}
-\subsection{丢包测试}
-\begin{lstlisting}
-
-\end{lstlisting}
+参数说明
+-s 以server模式启动，eg：iperf -s
+-c host以client模式启动，host是server端地址，eg：iperf -c 222.35.11.23
  
+通用参数
+-f [kmKM] 分别表示以Kbits, Mbits, KBytes, MBytes显示报告，默认以Mbits为单位,eg：iperf -c 222.35.11.23 -f K
+-i sec 以秒为单位显示报告间隔，eg：iperf -c 222.35.11.23 -i 2
+-l 缓冲区大小，默认是8KB,eg：iperf -c 222.35.11.23 -l 16
+-m 显示tcp最大mtu值
+-o 将报告和错误信息输出到文件eg：iperf -c 222.35.11.23 -o ciperflog.txt
+-p 指定服务器端使用的端口或客户端所连接的端口eg：iperf -s -p 9999;iperf -c 222.35.11.23 -p 9999
+-u 使用udp协议
+-w 指定TCP窗口大小，默认是8KB
+-B 绑定一个主机地址或接口（当主机有多个地址或接口时使用该参数）
+-C 兼容旧版本（当server端和client端版本不一样时使用）
+-M 设定TCP数据包的最大mtu值
+-N 设定TCP不延时
+-V 传输ipv6数据包
+ 
+server专用参数
+-D 以服务方式运行iperf，eg：iperf -s -D
+-R 停止iperf服务，针对-D，eg：iperf -s -R
+ 
+client端专用参数
+-d 同时进行双向传输测试
+-n 指定传输的字节数，eg：iperf -c 222.35.11.23 -n 100000
+-r 单独进行双向传输测试
+-t 测试时间，默认10秒,eg：iperf -c 222.35.11.23 -t 5
+-F 指定需要传输的文件
+-T 指定ttl值
+\end{lstlisting}
+\subsection{tcp包测试带宽}
+\begin{lstlisting}
+iperf -s #服务器默认等待接收tcp数据包
+iperf -c 172.16.133.10 -i 1 #客户端向服务器默认发送tcp数据包
+\end{lstlisting}
+服务器给出的数据如下：
+\sizedfic{0.8}{iperf_tcp.png}
+客户端给出的数据如下：
+\sizedfic{0.8}{iperf_tcp2.png}
+\subsection{udp包同时测试抖动和丢包}
+\begin{lstlisting}
+ iperf -s -u -i 1 #服务器等待接收udp数据包，每隔一秒钟显示信息
+ iperf -c 172.16.133.10 -u -i 1 #客户端向服务器发送udp数据包，每隔一秒钟显示信息
+\end{lstlisting}
+服务器给出的数据如下：
+\sizedfic{0.8}{iperf_udp1.png}
+客户端给出的数据如下：
+\sizedfic{0.8}{iperf_udp2.png}
+
+\section{ping命令的使用}
+\subsection{ping使用方法与参数说明}
+\begin{lstlisting}
+语法：
+ping(选项)(参数)
+
+选项：
+-b ：后面接的是 broadcast 的 IP，用在你『需要对整个网域的主机进行 ping 』时；
+-c ：后面接的是运行 ping 的次数，例如 -c 5 ；
+-n ：不进行 IP 与主机名的反查，直接使用 IP ；
+-s ：发送出去的 ICMP 封包大小，默认为 56(bytes)，再加 8 bytes 的 ICMP 表头数据
+-t ：TTL 的数值，默认是 255，每经过一个节点就会少一；
+-M [do|dont] ：主要在侦测网络的 MTU 数值大小，两个常见的项目是：
+   do  ：代表传送一个 DF (Don't Fragment) 旗标，让封包不能重新拆包与打包；
+   dont：代表不要传送 DF 旗标，表示封包可以在其他主机上拆包与打包
+
+参数：
+目的主机：指定发送ICMP报文的目的主机。
+\end{lstlisting}
+\subsection{icmp包测试延迟}
+\begin{lstlisting}
+ping -c 10 172.16.133.10
+\end{lstlisting}
+ping服务器显示如下：
+\sizedfic{0.8}{ping1.png}
 \clearpage
 \begin{center}%参考文献的书写
 参考文献
 \end{center}
-\re{[1]} \href{http://www.2cto.com/net/201310/253951.html}{初探网络性能测试} 
-\re{[2]} \href{http://www.jianshu.com/p/42e0fa6bf79c}{[Linux-网络性能测试] -- netperf测试}
+\re{[1]} \href{http://www.sdnlab.com/2961.html}{网络性能测试工具Iperf介绍} 
+\re{[2]} \href{http://www.51testing.com/html/11/255511-805117.html}{使用iperf测试网络性能}
+\re{[3]} \href{http://man.linuxde.net/ping}{ping命令}
 \end{document}

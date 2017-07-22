@@ -1,7 +1,12 @@
 \contentsline {section}{\numberline {1}网络性能测试指标}{3}{section.1}
 \contentsline {section}{\numberline {2}网络性能测试工具选择}{3}{section.2}
-\contentsline {section}{\numberline {3}网络性能测试工具使用}{3}{section.3}
-\contentsline {subsection}{\numberline {3.1}网络带宽测试}{4}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}网络延迟测试}{4}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}抖动测试}{4}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}丢包测试}{4}{subsection.3.4}
+\contentsline {subsection}{\numberline {2.1}常见的网络性能测试工具简介}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}测试方法确定}{4}{subsection.2.2}
+\contentsline {section}{\numberline {3}网络性能测试工具iperf的使用}{4}{section.3}
+\contentsline {subsection}{\numberline {3.1}使用原理}{4}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}iperf使用方法与参数说明}{4}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}tcp包测试带宽}{5}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}udp包同时测试抖动和丢包}{5}{subsection.3.4}
+\contentsline {section}{\numberline {4}ping命令的使用}{6}{section.4}
+\contentsline {subsection}{\numberline {4.1}ping使用方法与参数说明}{6}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}icmp包测试延迟}{7}{subsection.4.2}
