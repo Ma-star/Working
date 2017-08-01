@@ -195,12 +195,41 @@ netperf & 是 & 是 & 是 & 否 \\
 \hline
 测试对象 & 带宽 & 延时 & 抖动(Jitter) & 丢包 \\
 \hline
-测试工具 & iperf tcp包测试 & ping测试 & iperf UDP测试 & iperf UDP测试 \\
+测试工具 & iperf TCP包测试 & ping测试 & iperf UDP测试 & iperf UDP测试 \\
 \hline
 \end{tabular}
 \end{center}
 
 \section{网络性能测试工具iperf的使用}
+\subsection{功能简介}
+Iperf的主要功能如下：
+\subsubsection{TCP}
+\begin{itemize}
+	\item[1.]测量网络带宽
+	\item[2.]报告MSS/MTU值的大小和观测值
+	\item[3.]支持TCP窗口值通过套接字缓冲
+	\item[4.]当P线程或Win32线程可用时，支持多线程。客户端与服务端支持同时多重连接
+\end{itemize}
+\subsubsection{UDP}
+\begin{itemize}
+	\item[1.]客户端可以创建指定带宽的UDP流
+	\item[2.]测量丢包
+	\item[3.]测量延迟
+	\item[4.]支持多播
+	\item[5.]当P线程可用时，支持多线程。客户端与服务端支持同时多重连接（不支持Windows）
+\end{itemize}
+\subsubsection{其他}
+\begin{itemize}
+	\item[1.]在适当的地方，选项中可以使用K（kilo-）和M（mega-）。例如131072字节可以用128K代替。
+	\item[2.]可以指定运行的总时间，甚至可以设置传输的数据总量。
+	\item[3.]在报告中，为数据选用最合适的单位。
+	\item[4.]服务器支持多重连接，而不是等待一个单线程测试。
+	\item[5.]在指定时间间隔重复显示网络带宽，波动和丢包情况。
+	\item[6.]服务器端可作为后台程序运行。
+	\item[7.]服务器端可作为Windows 服务运行。
+	\item[8.]使用典型数据流来测试链接层压缩对于可用带宽的影响。
+	\item[9.]支持传送指定文件，可以定性和定量测试
+\end{itemize}
 \subsection{使用原理}
 使用Iperf测试时必须将一台主机设置为客户端，一台主机设置为服务器。
 \subsection{iperf使用方法与参数说明}
@@ -236,7 +265,7 @@ client端专用参数
 -F 指定需要传输的文件
 -T 指定ttl值
 \end{lstlisting}
-\subsection{tcp包测试带宽}
+\subsection{tcp包测试带宽示范}
 \begin{lstlisting}
 iperf -s #服务器默认等待接收tcp数据包
 iperf -c 172.16.133.10 -i 1 #客户端向服务器默认发送tcp数据包
@@ -245,7 +274,7 @@ iperf -c 172.16.133.10 -i 1 #客户端向服务器默认发送tcp数据包
 \sizedfic{0.8}{iperf_tcp.png}
 客户端给出的数据如下：
 \sizedfic{0.8}{iperf_tcp2.png}
-\subsection{udp包同时测试抖动和丢包}
+\subsection{udp包同时测试抖动和丢包示范}
 \begin{lstlisting}
  iperf -s -u -i 1 #服务器等待接收udp数据包，每隔一秒钟显示信息
  iperf -c 172.16.133.10 -u -i 1 #客户端向服务器发送udp数据包，每隔一秒钟显示信息
@@ -274,12 +303,31 @@ ping(选项)(参数)
 参数：
 目的主机：指定发送ICMP报文的目的主机。
 \end{lstlisting}
-\subsection{icmp包测试延迟}
+\subsection{icmp包测试延迟示范}
 \begin{lstlisting}
 ping -c 10 172.16.133.10
 \end{lstlisting}
 ping服务器显示如下：
 \sizedfic{0.8}{ping1.png}
+\section{测试用例设计}
+\subsection{带宽测试用例设计}
+\begin{itemize}
+	\item[1.]组一：使用iperf的tcp包测试物理机各网卡的网络带宽
+	\item[2.]组二：使用iperf的tcp包测试不同情况vm的网络带宽
+	\item[3.]对比两组数据，给出可用性结论
+\end{itemize}
+\subsection{延迟测试用例设计}
+\begin{itemize}
+	\item[1.]组一：使用ping命令发送icmp包，测试物理机各网卡的延迟
+	\item[2.]组二：使用ping命令发送icmp包，测试不同情况vm的延迟
+	\item[3.]对比两组数据，给出可用性结论
+\end{itemize}
+\subsection{抖动和丢包测试用例设计}
+\begin{itemize}
+	\item[1.]组一：使用iperf的udp包，指定带宽、传输字节数、测试时间等测试物理机
+	\item[2.]组二：使用iperf的udp包，指定带宽、传输字节数、测试时间等测试虚拟机
+	\item[3.]对比两组数据，给出稳定性结论
+\end{itemize}
 \clearpage
 \begin{center}%参考文献的书写
 参考文献
@@ -287,5 +335,5 @@ ping服务器显示如下：
 \re{[1]} \href{http://www.sdnlab.com/2961.html}{网络性能测试工具Iperf介绍} 
 \re{[2]} \href{http://www.51testing.com/html/11/255511-805117.html}{使用iperf测试网络性能}
 \re{[3]} \href{http://cn.linux.vbird.org/linux_server/0140networkcommand/0140networkcommand-centos4.php#ping}{ping命令}
-
+\re{[4]} \href{http://www.cnblogs.com/legendbaby/p/5056923.html}{网络性能测试工具iperf详细使用图文教程} 
 \end{document}
