@@ -1,0 +1,548 @@
+% !TeX spellcheck = en_US
+%% 字体：方正静蕾简体
+%%		 方正粗宋
+\documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
+\title{Openstack之SDN性能测试方案2}
+\author{周威光}
+\date{2017-08-2} 
+% 引用宏包
+\usepackage[utf8]{inputenc}
+\usepackage{fontspec}
+\usepackage{cite}
+\usepackage{xeCJK}
+\usepackage{indentfirst}
+\usepackage{titlesec}
+\usepackage{etoolbox}%
+\makeatletter
+\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}%
+\patchcmd{\ttlh@hang}{\noindent}{}{}{}%
+\makeatother
+
+\usepackage{longtable}
+\usepackage{empheq}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subfigure}
+\usepackage{tabu}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{amsfonts}
+\usepackage{appendix}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+\setcounter{secnumdepth}{4}
+%\titleformat*{\section}{\LARGE}
+%\renewcommand\refname{参考文献}
+%\titleformat{\chapter}{\centering\bfseries\huge}{}{0.7em}{}{}
+\titleformat{\section}{\LARGE\bf}{\thesection}{1em}{}{}
+\titleformat{\subsection}{\Large\bfseries}{\thesubsection}{1em}{}{}
+\titleformat{\subsubsection}{\large\bfseries}{\thesubsubsection}{1em}{}{}
+\renewcommand{\contentsname}{{ \centerline{目{  } 录}}}
+\setCJKfamilyfont{cjkhwxk}{STXINGKA.TTF}
+%\setCJKfamilyfont{cjkhwxk}{华文行楷}
+%\setCJKfamilyfont{cjkfzcs}{方正粗宋简体}
+%\newcommand*{\cjkfzcs}{\CJKfamily{cjkfzcs}}
+\newcommand*{\cjkhwxk}{\CJKfamily{cjkhwxk}}
+%\newfontfamily\wryh{Microsoft YaHei}
+%\newfontfamily\hwzs{华文中宋}
+%\newfontfamily\hwst{华文宋体}
+%\newfontfamily\hwfs{华文仿宋}
+%\newfontfamily\jljt{方正静蕾简体}
+%\newfontfamily\hwxk{华文行楷}
+\newcommand{\verylarge}{\fontsize{60pt}{\baselineskip}\selectfont}  
+\newcommand{\chuhao}{\fontsize{44.9pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaochu}{\fontsize{38.5pt}{\baselineskip}\selectfont}  
+\newcommand{\yihao}{\fontsize{27.8pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoyi}{\fontsize{25.7pt}{\baselineskip}\selectfont}  
+\newcommand{\erhao}{\fontsize{23.5pt}{\baselineskip}\selectfont}  
+\newcommand{\xiaoerhao}{\fontsize{19.3pt}{\baselineskip}\selectfont} 
+\newcommand{\sihao}{\fontsize{14pt}{\baselineskip}\selectfont}      % 字号设置  
+\newcommand{\xiaosihao}{\fontsize{12pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\wuhao}{\fontsize{10.5pt}{\baselineskip}\selectfont}    % 字号设置  
+\newcommand{\xiaowuhao}{\fontsize{9pt}{\baselineskip}\selectfont}   % 字号设置  
+\newcommand{\liuhao}{\fontsize{7.875pt}{\baselineskip}\selectfont}  % 字号设置  
+\newcommand{\qihao}{\fontsize{5.25pt}{\baselineskip}\selectfont}    % 字号设置 
+
+\usepackage{diagbox}
+\usepackage{multirow}
+\boldmath
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt
+\definecolor{cred}{rgb}{0.8,0.8,0.8}
+\definecolor{cgreen}{rgb}{0,0.3,0}
+\definecolor{cpurple}{rgb}{0.5,0,0.35}
+\definecolor{cdocblue}{rgb}{0,0,0.3}
+\definecolor{cdark}{rgb}{0.95,1.0,1.0}
+\lstset{
+	language=bash,
+	numbers=left,
+	numberstyle=\tiny\color{black},
+	showspaces=false,
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	keywordstyle=\color{purple},
+	commentstyle=\itshape\color{cgreen},
+	stringstyle=\color{blue},
+	frame=lines,
+	% escapeinside=``,
+	extendedchars=true, 
+	xleftmargin=1em,
+	xrightmargin=1em, 
+	backgroundcolor=\color{cred},
+	aboveskip=1em,
+	breaklines=true,
+	tabsize=4
+} 
+
+%\newfontfamily{\consolas}{Consolas}
+%\newfontfamily{\monaco}{Monaco}
+%\setmonofont[Mapping={}]{Consolas}	%英文引号之类的正常显示，相当于设置英文字体
+%\setsansfont{Consolas} %设置英文字体 Monaco, Consolas,  Fantasque Sans Mono
+%\setmainfont{Times New Roman}
+%\setCJKmainfont{STZHONGS.TTF}
+%\setmonofont{Consolas}
+% \newfontfamily{\consolas}{YaHeiConsolas.ttf}
+\newfontfamily{\monaco}{MONACO.TTF}
+\setCJKmainfont{STZHONGS.TTF}
+%\setmainfont{MONACO.TTF}
+%\setsansfont{MONACO.TTF}
+% 自定义添加图片命令
+\newcommand{\fic}[1]{\begin{figure}[H]
+		\center
+		\includegraphics[width=0.8\textwidth]{#1}
+	\end{figure}}
+	
+\newcommand{\sizedfic}[2]{\begin{figure}[H]
+		\center
+		\includegraphics[width=#1\textwidth]{#2}
+	\end{figure}}
+% 
+\newcommand{\codefile}[1]{\lstinputlisting{#1}}
+
+\newcommand{\interval}{\vspace{0.5em}}
+
+\newcommand{\tablestart}{
+	\interval
+	\begin{longtable}{p{2cm}p{10cm}}
+	\hline}
+\newcommand{\tableend}{
+	\hline
+	\end{longtable}
+	\interval}
+
+% 改变段间隔
+\setlength{\parskip}{0.2em}
+\linespread{1.1}
+
+\usepackage{lastpage}
+% 设置页眉页脚
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{\space \qquad \space}
+\chead{Openstack之SDN性能测试方案2\qquad}
+\rhead{\qquad\thepage/\pageref{LastPage}}
+
+% 参考文献
+\def\hang{\hangindent\parindent}
+\def\textindent#1{\indent\llap{#1\enspace}\ignorespaces}
+\def\re{\par\hang\textindent}
+%超链接
+\usepackage[CJKbookmarks=true,
+            bookmarksnumbered=true,
+            bookmarksopen=true,
+            colorlinks, %注释掉此项则交叉引用为彩色边框(将colorlinks和pdfborder同时注释掉)
+            pdfborder=001,   %注释掉此项则交叉引用为彩色边框
+            linkcolor=black,
+            anchorcolor=black,
+            citecolor=black
+            ]{hyperref}  
+
+\begin{document}
+\maketitle
+\clearpage
+\tableofcontents
+\clearpage
+\section{网络性能测试指标}
+常见的网络性能测试指标包含：网络带宽（bandwidth）、网络延迟（latency）、丢包率等
+\begin{itemize}
+	\item[1.]网络带宽：网络带宽是指在一个固定的时间内（1秒），能通过的最大位数据。
+	\item[2.]网络延迟：通俗的讲，就是数据从电脑这边传到那边所用的时间。
+	\item[3.]丢包率：测试中所丢失的数据包数量占所发送的数据包的比率。
+\end{itemize}
+
+\section{网络性能测试工具选择}
+\subsection{常见的网络性能测试工具简介}
+常用的开源网络性能测试工具有：iperf、netperf、qperf，这三种种工具都可以测试TCP协议和UDP协议，从可测试的网络性能指标，我们对两种工具进行下对比：
+\begin{center}
+\begin{tabular}[c]{|l|l|l|l|}
+\hline
+工具 & 带宽 & 网络延迟 & 丢包 \\
+\hline
+iperf & 是 & 否 & 是 \\
+\hline
+netperf & 是 & 否 & 是 \\
+\hline
+qperf & 是 & 是 & 否 \\
+\hline
+\end{tabular}
+\end{center}\par
+可见三个工具都可以完成基本的网络性能测试，但netperf更倾向于测试不同网络模式的数据传输，与本次性能测试需求不符。
+而iperf无法测试网络延迟，因此本次性能测试选择工具qperf。
+\subsection{测试方法确定}
+\begin{center}
+\begin{tabular}[c]{|l|l|l|}
+\hline
+测试对象 & TCP包和UDP包带宽、延迟 & ICMP包延迟  \\
+\hline
+测试工具 & qperf & ping \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{网络性能测试工具qperf的使用}
+\subsection{qperf的工作原理}
+使用两台机器，一台机器运行qperf充当服务器角色，一台机器运行qperf充当客户端角色
+\subsection{qperf测试使用命令}
+\begin{itemize}
+	\item[1.]服务器端运行命令如下：
+	\begin{lstlisting}
+	qperf
+	\end{lstlisting}
+	\item[2.]客户端运行命令测试tcp的极限带宽和延迟
+	\begin{lstlisting}
+	qperf  服务器端ip tcp_bw tcp_lat
+	\end{lstlisting}
+	替换服务器端ip为具体的ip，得到结果如下
+	\begin{lstlisting}
+	tcp_bw:
+		bw  =  117 MB/sec
+	tcp_lat:
+		latency  =  47.1 us
+	\end{lstlisting}
+	其中，tcp\_bw代表tcp带宽，tcp\_lat代表tcp延迟。
+	\item[3]客户端命令测试udp的带宽和延迟
+	\begin{lstlisting}
+	qperf  -oo msg_size:1:64k:*2 服务器端ip udp_bw udp_lat
+	\end{lstlisting}
+	替换服务器端ip，改变udp包的大小（msg\_size），从1个字节到64K，每次倍增的方式，带宽和延迟情况如下
+	\begin{lstlisting}
+	udp_bw:
+		send_bw  =  404 KB/sec
+		recv_bw  =  291 KB/sec
+	udp_bw:
+		send_bw  =  1.01 MB/sec
+		recv_bw  =   728 KB/sec
+	udp_bw:
+		send_bw  =  1.98 MB/sec
+		recv_bw  =  1.37 MB/sec
+	udp_bw:
+		send_bw  =  3.95 MB/sec
+		recv_bw  =  3.06 MB/sec
+	udp_bw:
+		send_bw  =  7.91 MB/sec
+		recv_bw  =  6.51 MB/sec
+	udp_bw:
+		send_bw  =  16.2 MB/sec
+		recv_bw  =  10.7 MB/sec
+	udp_bw:
+		send_bw  =  31.5 MB/sec
+		recv_bw  =  24.8 MB/sec
+	udp_bw:
+		send_bw  =  62.5 MB/sec
+		recv_bw  =  42.3 MB/sec
+	udp_bw:
+		send_bw  =  98.1 MB/sec
+		recv_bw  =    95 MB/sec
+	udp_bw:
+		send_bw  =  110 MB/sec
+		recv_bw  =  110 MB/sec
+	udp_bw:
+		send_bw  =  117 MB/sec
+		recv_bw  =  117 MB/sec
+	udp_bw:
+		send_bw  =  117 MB/sec
+		recv_bw  =  117 MB/sec
+	udp_bw:
+		send_bw  =  119 MB/sec
+		recv_bw  =  119 MB/sec
+	udp_bw:
+		send_bw  =  120 MB/sec
+		recv_bw  =  119 MB/sec
+	udp_bw:
+		send_bw  =  120 MB/sec
+		recv_bw  =  119 MB/sec
+	udp_bw:
+		send_bw  =  120 MB/sec
+		recv_bw  =  120 MB/sec
+	udp_lat:
+		latency  =  51.4 us
+	udp_lat:
+		latency  =  50.3 us
+	udp_lat:
+		latency  =  52.6 us
+	udp_lat:
+		latency  =  49.5 us
+	udp_lat:
+		latency  =  50 us
+	udp_lat:
+		latency  =  55.3 us
+	udp_lat:
+		latency  =  54.9 us
+	udp_lat:
+		latency  =  53.2 us
+	udp_lat:
+		latency  =  56.5 us
+	udp_lat:
+		latency  =  63.8 us
+	udp_lat:
+		latency  =  78.2 us
+	udp_lat:
+		latency  =  96.2 us
+	udp_lat:
+		latency  =  122 us
+	udp_lat:
+		latency  =  155 us
+	udp_lat:
+		latency  =  225 us
+	udp_lat:
+		latency  =  373 us
+	\end{lstlisting}\par
+	由于udp是不可靠传输，传输过程会出现丢包的现象，在测带宽的时候，会有发送带宽和接收带宽两组数据。
+	发送带宽等于发送的总数据除以发送总时间，接收带宽等于接收的总数据除以接收总时间。两者之间的差值，
+	可以侧面表现传输过程的丢包情况，差距越大网路性能越差。
+\end{itemize}
+
+\section{测试场景罗列}
+\subsection{场景一：同时挂在提供者网络的两个 vm 之间}
+\begin{itemize}
+	\item[1.]同一租户相同节点提供者虚拟机
+	\item[2.]同一租户不同节点提供者虚拟机
+	\item[3.]不同租户相同节点提供者虚拟机
+	\item[4.]不同租户不同节点提供者虚拟机
+	\item[5.]计算节点1和计算节点2
+	\item[6.]同一节点提供者虚拟机和物理机
+	\item[7.]不同节点提供者虚拟机和物理机
+\end{itemize}
+\subsection{场景二：一个 vm 挂在租户网络,一个 vm 在提供者网络上}
+\begin{itemize}
+	\item[1.]同一租户相同节点的租户虚拟机和提供者虚拟机
+	\item[2.]同一租户不同节点的租户虚拟机和提供者虚拟机
+	\item[3.]不同租户相同节点的租户虚拟机和提供者虚拟机
+	\item[4.]不同租户不同节点的租户虚拟机和提供者虚拟机
+\end{itemize}
+\subsection{场景三：同时挂在租户网络且同一网段的两个 vm 之间}
+\begin{itemize}
+	\item[1.]相同节点同一网段的虚拟机
+	\item[2.]不同节点同一网段的虚拟机
+\end{itemize}
+\subsection{场景四：同时挂在租户网络且同一网段的两个 vm 之间}
+\begin{itemize}
+	\item[1.]相同节点不同网段的虚拟机
+	\item[2.]不同节点不同网段的虚拟机
+\end{itemize}
+
+\section{测试环境准备}
+\begin{center}
+\begin{tabular}[c]{|l|l|l|l|}
+\hline
+节点 & hty-controller & hty-compute1 & hty-compute2  \\
+\hline
+ip  & 172.16.133.10 & 172.16.133.15 & 172.16.133.16 \\
+\hline
+软件环境  & 恒天云3.8.1集成M版neutron & 同控制节点 & 同控制节点\\
+\hline
+网络模式  & vxlan+vlan & 同控制节点 & 同控制节点 \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{具体测试结果及分析}
+\subsection{tcp带宽和延迟测试}
+测试方法：对每个应用场景的每个情况，创建对应虚拟机，使用上面提到的测试tcp命令，测试5组数据，求出均值。结果如下。
+\begin{center}
+\begin{tabular}[c]{|l|l|l|}
+\hline
+ &  带宽(MByte/s)&延迟(us) \\
+\hline
+ 场景一：同时挂在提供者网络的两个 vm 之间 &  &\\
+\hline
+ 同一租户相同节点提供者虚拟机 & 91.72&257.2 \\
+\hline
+ 同一租户不同节点提供者虚拟机 & 67.96&310.8 \\
+ \hline
+ 不同租户相同节点提供者虚拟机& 97.3&239.8 \\
+ \hline
+ 不同租户不同节点提供者虚拟机的带宽& 66.42&337 \\
+ \hline
+ 服务器的计算节点1和计算节点2& 117&47.84 \\
+ \hline
+ 同一节点提供者虚拟机和物理机& 185.4&95.96 \\
+ \hline
+ 不同节点提供者虚拟机和物理机& 35.22&259.6 \\
+ \hline
+ \hline
+ 场景二：一个 vm 挂在租户网络,一个 vm 在提供者网络上& \\
+ \hline
+ 同一租户相同节点的租户虚拟机和提供者虚拟机& 55.82&371.2 \\
+ \hline
+ 同一租户不同节点的租户虚拟机和提供者虚拟机& 56.4&392.2 \\
+ \hline
+ 不同租户相同节点的租户虚拟机和提供者虚拟机& 51.52&382.6 \\
+ \hline
+ 不同租户不同节点的租户虚拟机和提供者虚拟机& 51.84&376.2 \\
+ \hline
+ \hline
+ 场景三：同时挂在租户网络且同一网段的两个 vm 之间& \\
+ \hline
+ 相同节点同一网段的虚拟机& 89.6&255.4 \\
+ \hline
+ 不同节点同一网段的虚拟机&  39.6&339.8\\
+ \hline
+ \hline
+ 场景四：同时挂在租户网络且不同网段的两个 vm 之间& \\
+ \hline
+ 相同节点不同网段的虚拟机&  78.82&266\\
+ \hline
+ 不同节点不同网段的虚拟机&  44.4&320.4\\
+
+\hline
+\end{tabular}
+\end{center}
+
+根据上表的测试数据可以有如下总结：\\
+结论一：不同租户，只是起到网络隔离的作用，对网络的性能基本没有影响\\
+结论二：\\
+结论三：\\
+
+\subsection{udp带宽和延迟测试}
+测试方法：对每个应用场景的每种情况，测试5组数据，每组改变udp包的大小（msg\_size），从1个字节到64K，每次倍增的方式，获取对应的带宽和延迟，最后对5组数据再次求均值。由于每种情况会有16个数据，无法全部展示，这里只给出最大稳定带宽。
+\begin{center}
+\begin{tabular}[c]{|l|l|l|}
+\hline
+ &发送(MB/s) &接收(MB/s)\\
+\hline
+ 场景一：同时挂在提供者网络的两个 vm 之间 &  & \\
+\hline
+ 同一租户相同节点提供者虚拟机 & 12.772&11.835  \\
+\hline
+ 同一租户不同节点提供者虚拟机 & 14.2822&13.9678  \\
+ \hline
+ 不同租户相同节点提供者虚拟机& 14.318&13.3892  \\
+ \hline
+ 不同租户不同节点提供者虚拟机的带宽&14.1038 &11.57678 \\
+ \hline
+ 服务器的计算节点1和计算节点2&119.884 &119.616  \\
+ \hline
+ 同一节点提供者虚拟机和物理机&126.964 &126.976  \\
+ \hline
+ 同一节点物理机到提供者虚拟机&0 &0  \\
+ \hline
+ 不同节点提供者虚拟机和物理机&136.98 &119.726  \\
+ \hline
+ 不同节点物理机到提供者虚拟机&0 &0  \\
+ \hline
+ \hline
+ 场景二：一个 vm 挂在租户网络,一个 vm 在提供者网络上& & \\
+ \hline
+ 同一租户相同节点的租户虚拟机和提供者虚拟机&12.7682 &12.64  \\
+ \hline
+ 同一租户不同节点的租户虚拟机和提供者虚拟机&13.7534 &13.2396 \\
+ \hline
+ 不同租户相同节点的租户虚拟机和提供者虚拟机&12.7824 &12.7678  \\
+ \hline
+ 不同租户不同节点的租户虚拟机和提供者虚拟机&11.8034 &11.8034  \\
+ \hline
+ \hline
+ 场景三：同时挂在租户网络且同一网段的两个 vm 之间& & \\
+ \hline
+ 相同节点同一网段的虚拟机& 11.63304 &11.61194 \\
+ \hline
+ 不同节点同一网段的虚拟机&  13.7186 &13.732 \\
+ \hline
+ \hline
+ 场景四：同时挂在租户网络且不同网段的两个 vm 之间& &\\
+ \hline
+ 相同节点不同网段的虚拟机&11.2912  &10.932 \\
+ \hline
+ 不同节点不同网段的虚拟机&11.7046  &11.7048 \\
+
+\hline
+\end{tabular}
+\end{center}
+
+根据上表的测试数据，可以有如下总结：\\
+
+结论一：虚拟机之间发送udp包的稳定带宽只能达到物理机的十分之一左右，带宽变化如下图所示\\
+\sizedfic{0.9}{udp1.png}
+上图只是代表性的图片，展示物理机之间以及某两个虚拟机之间的的发送和接收带宽对比。\\\\
+基本走势：物理机之间随着传送数据包的增大，接收和发送带宽都在不断变大，并且能够保持稳定。
+而虚拟机之间随着传送数据包的增大，发送和接收带宽也在不断变大，但当达到物理机极限带宽的十分之一左右之后，发送带宽和接收差距不断变大，出现丢包情况。\\\\
+结论二：在提供者网络的虚拟机向物理机发送数据包，基本上可以达到极限带宽\\
+结论三：物理机向提供者网络虚拟机发送udp数据包，基本被全部丢弃，带宽变化如下图所示\\
+\sizedfic{0.9}{udp2.png}
+上图展示了物理机到提供者网络虚拟机以及提供者网络虚拟机到物理机之间的的发送和接收带宽对比。
+与结论二和三基本吻合。
+
+
+\subsection{icmp延迟测试}
+测试方法：对每个应用场景的每个情况，测试5组数据，每组使用ping命令默认发送大小56字节的icmp包30次的平均延迟，最后对5组数据再次求均值。结果如下。
+\begin{center}
+\begin{tabular}[c]{|l|l|}
+\hline
+ &  平均延迟(ms) \\
+\hline
+ 场景一：同时挂在提供者网络的两个 vm 之间 &  \\
+\hline
+ 同一租户相同节点提供者虚拟机 & 0.6694 \\
+\hline
+ 同一租户不同节点提供者虚拟机 & 0.6456 \\
+ \hline
+ 不同租户相同节点提供者虚拟机& 0.5406 \\
+ \hline
+ 不同租户不同节点提供者虚拟机的带宽& 0.6428 \\
+ \hline
+ 服务器的计算节点1和计算节点2& 0.1638 \\
+ \hline
+ 同一节点提供者虚拟机和物理机& 0.36 \\
+ \hline
+ 不同节点提供者虚拟机和物理机& 0.439 \\
+ \hline
+ \hline
+ 场景二：一个 vm 挂在租户网络,一个 vm 在提供者网络上& \\
+ \hline
+ 同一租户相同节点的租户虚拟机和提供者虚拟机& 0.8736 \\
+ \hline
+ 同一租户不同节点的租户虚拟机和提供者虚拟机& 0.951 \\
+ \hline
+ 不同租户相同节点的租户虚拟机和提供者虚拟机& 0.8826 \\
+ \hline
+ 不同租户不同节点的租户虚拟机和提供者虚拟机& 0.9796 \\
+ \hline
+ \hline
+ 场景三：同时挂在租户网络且同一网段的两个 vm 之间& \\
+ \hline
+ 相同节点同一网段的虚拟机& 0.6242 \\
+ \hline
+ 不同节点同一网段的虚拟机&  0.8342\\
+ \hline
+ \hline
+ 场景四：同时挂在租户网络且不同网段的两个 vm 之间& \\
+ \hline
+ 相同节点不同网段的虚拟机&  0.645\\
+ \hline
+ 不同节点不同网段的虚拟机&  0.8132\\
+
+\hline
+\end{tabular}
+\end{center}
+
+根据上表的测试数据可以有如下总结：\\
+结论一：\\
+结论二：\\
+结论三：\\
+
+\clearpage
+
+\end{document}
