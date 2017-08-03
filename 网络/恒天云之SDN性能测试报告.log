@@ -1,9 +1,9 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.2.23)  3 AUG 2017 09:29
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.2.23)  3 AUG 2017 21:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Openstack之SDN性能测试报告.tex
-(./Openstack之SDN性能测试报告.tex
+**恒天云之SDN性能测试报告.tex
+(./恒天云之SDN性能测试报告.tex
 LaTeX2e <2016/02/01>
 Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -1392,8 +1392,8 @@ Package: xeCJK-listings 2016/02/10 v3.3.4 xeCJK patch file for listings
 LaTeX Warning: Unused global option(s):
     [left=1.5cm,right=1.5cm].
 
-(./Openstack之SDN性能测试报告.aux)
-\openout1 = `Openstack之SDN性能测试报告.aux'.
+(./恒天云之SDN性能测试报告.aux)
+\openout1 = `恒天云之SDN性能测试报告.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 162.
 LaTeX Font Info:    ... okay on input line 162.
@@ -1533,9 +1533,9 @@ LaTeX Info: Redefining \ref on input line 162.
 LaTeX Info: Redefining \pageref on input line 162.
 LaTeX Info: Redefining \nameref on input line 162.
 
-(./Openstack之SDN性能测试报告.out) (./Openstack之SDN性能测试报告.out)
+(./恒天云之SDN性能测试报告.out) (./恒天云之SDN性能测试报告.out)
 \@outlinefile=\write3
-\openout3 = `Openstack之SDN性能测试报告.out'.
+\openout3 = `恒天云之SDN性能测试报告.out'.
 
 LaTeX Font Info:    Try loading font information for U+msa on input line 164.
 
@@ -1563,9 +1563,9 @@ Overfull \hbox (4.32pt too wide) in paragraph at lines 165--165
 | []| 
  []
 
-(./Openstack之SDN性能测试报告.toc)
+(./恒天云之SDN性能测试报告.toc)
 \tf@toc=\write4
-\openout4 = `Openstack之SDN性能测试报告.toc'.
+\openout4 = `恒天云之SDN性能测试报告.toc'.
 
 
 
@@ -1607,12 +1607,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [6]
-Overfull \hbox (21.39738pt too wide) in paragraph at lines 365--412
- [] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 414--415
+File: tcp_bw_1.png Graphic file (type QTm)
+ <use  "tcp_bw_1.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 410--412
 
  []
 
@@ -1623,8 +1620,10 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [7]
-Overfull \hbox (23.67499pt too wide) in paragraph at lines 436--487
- [] 
+File: tcp_lat_1.png Graphic file (type QTm)
+ <use  "tcp_lat_1.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 413--414
+
  []
 
 
@@ -1634,13 +1633,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [8]
-Underfull \hbox (badness 10000) in paragraph at lines 489--490
-
- []
-
-File: udp1.png Graphic file (type QTm)
-<use  "udp1.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 491--492
+File: tcp_bw_2.png Graphic file (type QTm)
+ <use  "tcp_bw_2.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 415--417
 
  []
 
@@ -1651,19 +1646,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [9]
-File: udp2.png Graphic file (type QTm)
- <use  "udp2.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 493--498
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 493--498
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 493--498
+File: tcp_lat_2.png Graphic file (type QTm)
+ <use  "tcp_lat_2.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 418--419
 
  []
 
@@ -1674,6 +1659,16 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [10]
+Underfull \hbox (badness 10000) in paragraph at lines 420--421
+
+ []
+
+File: tcp_bw_11.png Graphic file (type QTm)
+<use  "tcp_bw_11.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 451--453
+
+ []
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1681,31 +1676,129 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [11]
+File: tcp_lat_11.png Graphic file (type QTm)
+ <use  "tcp_lat_11.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 454--455
+
+ []
+
+File: tcp_bw_22.png Graphic file (type QTm)
+<use  "tcp_bw_22.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 456--458
+
+ []
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
  We now make it that large for the rest of the document.
  This may cause the page layout to be inconsistent, however.
 
-[12] 
+[12]
+File: tcp_lat_22.png Graphic file (type QTm)
+ <use  "tcp_lat_22.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 459--460
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 461--462
+
+ []
+
+
+Overfull \hbox (23.67499pt too wide) in paragraph at lines 466--517
+ [] 
+ []
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 519--520
+
+ []
+
+File: udp1.png Graphic file (type QTm)
+<use  "udp1.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 521--522
+
+ []
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[14]
+File: udp2.png Graphic file (type QTm)
+ <use  "udp2.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 523--528
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 523--528
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 523--528
+
+ []
+
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[15]
+File: udp3.png Graphic file (type QTm)
+ <use  "udp3.png" >
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[16]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[17]
+
+Package Fancyhdr Warning: \headheight is too small (12.0pt): 
+ Make it at least 13.59999pt.
+ We now make it that large for the rest of the document.
+ This may cause the page layout to be inconsistent, however.
+
+[18] 
 AED: lastpage setting LastPage
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 560.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 560.
-(./Openstack之SDN性能测试报告.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 560.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 560.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 594.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 594.
+(./恒天云之SDN性能测试报告.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 594.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 594.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 29954 strings out of 493638
- 530292 string characters out of 6146796
- 686231 words of memory out of 5000000
- 33018 multiletter control sequences out of 15000+600000
+ 29972 strings out of 493638
+ 530426 string characters out of 6146796
+ 686207 words of memory out of 5000000
+ 33027 multiletter control sequences out of 15000+600000
  12300 words of font info for 72 fonts, out of 8000000 for 9000
  1328 hyphenation exceptions out of 8191
- 48i,12n,72p,10376b,2068s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,12n,72p,10370b,2068s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Openstack之SDN性能测试报告.pdf (12 pages).
+Output written on 恒天云之SDN性能测试报告.pdf (18 pages).
