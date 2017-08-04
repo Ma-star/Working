@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.2.23)  3 AUG 2017 21:02
+This is XeTeX, Version 3.14159265-2.6-0.99992 (TeX Live 2015/Debian) (preloaded format=xelatex 2017.2.23)  4 AUG 2017 15:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1635,7 +1635,12 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [8]
 File: tcp_bw_2.png Graphic file (type QTm)
  <use  "tcp_bw_2.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 415--417
+Underfull \hbox (badness 10000) in paragraph at lines 419--421
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 419--421
 
  []
 
@@ -1648,7 +1653,7 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 [9]
 File: tcp_lat_2.png Graphic file (type QTm)
  <use  "tcp_lat_2.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 418--419
+Underfull \hbox (badness 10000) in paragraph at lines 422--423
 
  []
 
@@ -1659,16 +1664,6 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 420--421
-
- []
-
-File: tcp_bw_11.png Graphic file (type QTm)
-<use  "tcp_bw_11.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 451--453
-
- []
-
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1676,15 +1671,13 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [11]
-File: tcp_lat_11.png Graphic file (type QTm)
- <use  "tcp_lat_11.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 454--455
-
+Overfull \hbox (23.67499pt too wide) in paragraph at lines 437--488
+ [] 
  []
 
-File: tcp_bw_22.png Graphic file (type QTm)
-<use  "tcp_bw_22.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 456--458
+File: udp1.png Graphic file (type QTm)
+<use  "udp1.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 492--493
 
  []
 
@@ -1695,20 +1688,10 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [12]
-File: tcp_lat_22.png Graphic file (type QTm)
- <use  "tcp_lat_22.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 459--460
+File: udp2.png Graphic file (type QTm)
+ <use  "udp2.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 498--499
 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 461--462
-
- []
-
-
-Overfull \hbox (23.67499pt too wide) in paragraph at lines 466--517
- [] 
  []
 
 
@@ -1718,16 +1701,6 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 519--520
-
- []
-
-File: udp1.png Graphic file (type QTm)
-<use  "udp1.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 521--522
-
- []
-
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1735,19 +1708,9 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [14]
-File: udp2.png Graphic file (type QTm)
- <use  "udp2.png" >
-Underfull \hbox (badness 10000) in paragraph at lines 523--528
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 523--528
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 523--528
+File: tcp_bw_11.png Graphic file (type QTm)
+ <use  "tcp_bw_11.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 588--590
 
  []
 
@@ -1758,8 +1721,18 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [15]
-File: udp3.png Graphic file (type QTm)
- <use  "udp3.png" >
+File: tcp_lat_11.png Graphic file (type QTm)
+ <use  "tcp_lat_11.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 591--592
+
+ []
+
+File: tcp_bw_22.png Graphic file (type QTm)
+<use  "tcp_bw_22.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 595--597
+
+ []
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1767,6 +1740,14 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
  This may cause the page layout to be inconsistent, however.
 
 [16]
+File: tcp_lat_22.png Graphic file (type QTm)
+ <use  "tcp_lat_22.png" >
+Underfull \hbox (badness 10000) in paragraph at lines 598--599
+
+ []
+
+File: udp3.png Graphic file (type QTm)
+<use  "udp3.png" >
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
  Make it at least 13.59999pt.
@@ -1782,11 +1763,11 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 
 [18] 
 AED: lastpage setting LastPage
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 594.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 594.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 616.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 616.
 (./恒天云之SDN性能测试报告.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 594.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 594.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 616.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 616.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.

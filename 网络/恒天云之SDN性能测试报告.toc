@@ -1,6 +1,6 @@
 \contentsline {section}{\numberline {1}网络性能测试指标}{3}{section.1}
 \contentsline {section}{\numberline {2}网络性能测试工具选择}{3}{section.2}
-\contentsline {subsection}{\numberline {2.1}常见的网络性能测试工具简介}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.1}常见的网络性能测试工具}{3}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}测试方法确定}{3}{subsection.2.2}
 \contentsline {section}{\numberline {3}网络性能测试工具qperf的使用}{3}{section.3}
 \contentsline {subsection}{\numberline {3.1}qperf的工作原理}{3}{subsection.3.1}
@@ -13,7 +13,8 @@
 \contentsline {section}{\numberline {5}测试环境准备}{7}{section.5}
 \contentsline {section}{\numberline {6}具体测试结果及分析}{7}{section.6}
 \contentsline {subsection}{\numberline {6.1}集成M版neutron的恒天云tcp带宽和延迟测试}{7}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}恒天云tcp带宽和延迟测试}{11}{subsection.6.2}
-\contentsline {subsection}{\numberline {6.3}集成M版neutron的恒天云udp带宽和延迟测试}{13}{subsection.6.3}
-\contentsline {subsection}{\numberline {6.4}恒天云udp带宽和延迟测试}{16}{subsection.6.4}
-\contentsline {subsection}{\numberline {6.5}icmp延迟测试}{17}{subsection.6.5}
+\contentsline {subsection}{\numberline {6.2}集成M版neutron的恒天云udp带宽和延迟测试}{11}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3}icmp延迟测试}{14}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}恒天云tcp带宽和延迟测试}{15}{subsection.6.4}
+\contentsline {subsection}{\numberline {6.5}恒天云udp带宽和延迟测试}{17}{subsection.6.5}
+\contentsline {subsection}{\numberline {6.6}测试总结}{18}{subsection.6.6}
