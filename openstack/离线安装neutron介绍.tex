@@ -2,9 +2,9 @@
 %% 字体：方正静蕾简体
 %%		 方正粗宋
 \documentclass[a4paper,left=1.5cm,right=1.5cm,11pt]{article}
-\title{基于恒天云3.8源码安装neutron}
+\title{离线安装neutron}
 \author{周威光整理}
-\date{2017-06-28} 
+\date{2017-08-15} 
 \usepackage[utf8]{inputenc}
 \usepackage{fontspec}
 \usepackage{cite}
@@ -139,7 +139,7 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{\space \qquad \space}
-\chead{基于恒天云3.8源码安装neutron\qquad}
+\chead{离线安装neutron\qquad}
 \rhead{\qquad\thepage/\pageref{LastPage}}
 
 \begin{document}
@@ -242,6 +242,8 @@
 	modprobe vxlan
 	modprobe openvswitch
 	make modules_install
+	insmod datapath/linux/openvswitch.ko
+	
     \end{lstlisting}
     此时可以通过lsmod |grep openvswitch来查看已载入系统的模块，发现有OpenvSwitch
 	\item[6.]使用ovsdb工具初始化配置数据库\\
